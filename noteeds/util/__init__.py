@@ -1,1 +1,1 @@
-from .progress_receiver import ProgressReceiver
+from .progress_monitor import ProgressMonitor

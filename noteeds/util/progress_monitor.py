@@ -1,4 +1,4 @@
-class ProgressReceiver:
+class ProgressMonitor:
     def range(self, minimum: float, maximum: float):
         pass
 
