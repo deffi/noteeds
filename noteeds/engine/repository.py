@@ -2,26 +2,25 @@ from typing import Optional
 from pathlib import Path
 import logging
 
-from noteeds.util.io import read_file
+from noteeds.engine import FileEntry
 
 logger = logging.getLogger(__name__)
 
 
 class Repository:
-    def __init__(self, path: Path):
-        self._path: Path = path
-        self._files: Optional[list[str]] = None
-        self._file_contents = {}
+    def __init__(self, root: Path):
+        self._root: Path = root
+        self._entries: Optional[list[FileEntry]] = None
 
-        if not path.is_dir():
-            logger.error("%s is not a directory", (path, ))
+        if not root.is_dir():
+            logger.error("%s is not a directory", (root,))
 
     @property
-    def path(self) -> Path:
-        return self._path
+    def root(self) -> Path:
+        return self._root
 
     @staticmethod
-    def accept_file(path: Path) -> bool:
+    def _accept(path: Path) -> bool:
         if not path.is_file():
             return False
         if path.name[0] == ".":
@@ -29,11 +28,14 @@ class Repository:
         else:
             return True
 
-    def list_files(self):
-        if self._files is None:
-            # TODO walk subdirectories ("**/*"), but make sure to exclude
-            # directories starting with ".".
-            all_files = self._path.glob("*")
-            self._files = [file for file in all_files if self.accept_file(file)]
+    def _read(self) -> list[FileEntry]:
+        # TODO walk subdirectories ("**/*"), but make sure to exclude
+        # directories starting with ".".
+        paths = self._root.glob("*")
+        return [FileEntry(path) for path in paths if self._accept(path)]
 
-        return self._files
+    def entries(self) -> list[FileEntry]:
+        if self._entries is None:
+            self._entries = self._read()
+
+        return self._entries

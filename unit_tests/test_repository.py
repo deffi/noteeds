@@ -2,7 +2,7 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from noteeds.engine.repository import Repository
+from noteeds.engine.repository import FileEntry, Repository
 
 
 class RepositoryTest(unittest.TestCase):
@@ -26,9 +26,9 @@ class RepositoryTest(unittest.TestCase):
             repo = Repository(repo_path)
 
             self.assertSetEqual({
-                repo_path / "foo",
-                repo_path / "bar",
-            }, set(repo.list_files()))
+                FileEntry(repo_path / "foo"),
+                FileEntry(repo_path / "bar"),
+            }, set(repo.entries()))
 
 
 if __name__ == '__main__':
