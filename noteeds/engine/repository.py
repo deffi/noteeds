@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 class Repository:
     def __init__(self, root: Path):
         self._root: Path = root
-        self._entries: Optional[list[FileEntry]] = None
+        self._entries: Optional[set[FileEntry]] = None
 
         if not root.is_dir():
             logger.error("%s is not a directory", (root,))
@@ -28,13 +28,13 @@ class Repository:
         else:
             return True
 
-    def _read(self) -> list[FileEntry]:
+    def _read(self) -> set[FileEntry]:
         # TODO walk subdirectories ("**/*"), but make sure to exclude
         # directories starting with ".".
         paths = self._root.glob("*")
-        return [FileEntry(path) for path in paths if self._accept(path)]
+        return set(FileEntry(path) for path in paths if self._accept(path))
 
-    def entries(self) -> list[FileEntry]:
+    def entries(self) -> set[FileEntry]:
         if self._entries is None:
             self._entries = self._read()
 
