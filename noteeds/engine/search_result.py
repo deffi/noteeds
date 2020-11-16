@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from textwrap import fill
 
 from noteeds.util.string import box
-from noteeds.engine import FileEntry
+from noteeds.engine import FileEntry, Query
 
 
 @dataclass(frozen=True)
@@ -29,13 +29,7 @@ class SearchResult:
         dump_set("Contents - word prefix", self.contents_word_prefix)
         dump_set("Contents - anywhere"   , self.contents_anywhere)
 
-    def long_dump(self, text: str, is_regex: bool):
-        # TODO duplication - factor out Query(text+is_regex+case_sensitive)
-        if not is_regex:
-            text = re.escape(text)
-
-        regex = re.compile(text, re.IGNORECASE)
-
+    def long_dump(self, query: Query):
         def dump_set(caption, result_set):
             print()
             print(box(caption, "*"))
@@ -51,7 +45,7 @@ class SearchResult:
                 print()
                 print(f"{entry.absolute_path.stem}:")
                 for line in entry.contents().splitlines():
-                    if regex.search(line):
+                    if query.anywhere_pattern.search(line):
                         print(f"    {line}")
             print()
 
