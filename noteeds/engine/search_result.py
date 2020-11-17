@@ -1,4 +1,3 @@
-import re
 from dataclasses import dataclass
 from textwrap import fill
 
@@ -21,7 +20,7 @@ class SearchResult:
             print("==== %s ====" % caption)
             names = (entry.absolute_path.stem for entry in result_set)
             text = ", ".join(sorted(names))
-            print(fill(text, width = 120))
+            print(fill(text, width=120))
 
         dump_set("File name - prefix"    , self.name_prefix)
         dump_set("File name - anywhere"  , self.name_anywhere)

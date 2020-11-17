@@ -1,9 +1,7 @@
 from typing import Optional, Pattern
-from pathlib import Path
-import re
+
 
 from noteeds.util import ProgressMonitor
-from noteeds.util.io import read_file
 from noteeds.engine import Repository, SearchResult, FileEntry, Query
 
 

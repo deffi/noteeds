@@ -47,6 +47,6 @@ class Query:
         sa(self, "effective_flags",          effective_flags)
 
         sa(self, "anywhere_pattern"   , re.compile(        effective_regex,         effective_flags))
-        sa(self, "beginning_pattern"  , re.compile("^" +   effective_regex,         effective_flags))
+        sa(self, "beginning_pattern"  , re.compile("^"   + effective_regex,         effective_flags))
         sa(self, "word_pattern"       , re.compile("\\b" + effective_regex + "\\b", effective_flags))
         sa(self, "word_prefix_pattern", re.compile("\\b" + effective_regex,         effective_flags))

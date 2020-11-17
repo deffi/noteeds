@@ -39,8 +39,8 @@ class LogTable(QAbstractTableModel):
         text = record.msg % record.args
 
         if record.exc_info:
-            etype, value, tb = record.exc_info
-            text = f"{text}:\n{''.join(traceback.format_exception(etype, value, tb)).strip()}"
+            exception_type, value, tb = record.exc_info
+            text = f"{text}:\n{''.join(traceback.format_exception(exception_type, value, tb)).strip()}"
 
         return text
 

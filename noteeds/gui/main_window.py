@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+from typing import Optional
 
 from PySide2.QtCore import QSettings, Signal, Slot, QModelIndex
 from PySide2.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent
@@ -16,9 +17,9 @@ logger = logging.getLogger(__name__)
 class MainWindow(QMainWindow):
     value_changed = Signal(int)
 
-    ############
-    ## Window ##
-    ############
+    ##########
+    # Window #
+    ##########
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -38,9 +39,9 @@ class MainWindow(QMainWindow):
 
         self.ui.viewMenu.addAction(self.ui.dock.toggleViewAction())
 
-        self._repository: Repository = None
-        self._engine: Engine = None
-        self._result: SearchResult = None
+        self._repository: Optional[Repository] = None
+        self._engine: Optional[Engine] = None
+        self._result: Optional[SearchResult] = None
 
         self._search_result_model = SearchResultModel(self)
 
@@ -72,10 +73,9 @@ class MainWindow(QMainWindow):
     def set_text(self, text: str):
         self.ui.textInput.setText(text)
 
-
-    ##############
-    ## Settings ##
-    ##############
+    ############
+    # Settings #
+    ############
 
     def store_settings(self):
         settings = QSettings()
@@ -96,9 +96,9 @@ class MainWindow(QMainWindow):
         self.ui.logTable.header().restoreState(settings.value("log_table_header_state"))
         settings.endGroup()
 
-    ########
-    ## UI ##
-    ########
+    ######
+    # UI #
+    ######
 
     # Needs acceptDrops
     def dragEnterEvent(self, event: QDragEnterEvent):
@@ -143,6 +143,7 @@ class MainWindow(QMainWindow):
         if self._highlighter is not None:
             self._highlighter.set_search_term(text)
 
+    # noinspection PyUnusedLocal
     @Slot(QModelIndex, QModelIndex)
     def file_selection_changed(self, index, previous_index):
         # Get the file entry from the model; if the selected index does not

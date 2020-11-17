@@ -1,6 +1,9 @@
+from typing import Optional
+
 from PySide2.QtCore import QAbstractItemModel, QModelIndex, Qt
 
 from noteeds.engine import SearchResult, FileEntry
+
 
 class SearchResultModel(QAbstractItemModel):
     def __init__(self, parent):
@@ -40,23 +43,22 @@ class SearchResultModel(QAbstractItemModel):
 
         self.endResetModel()
 
-
-    ############
-    ## Access ##
-    ############
+    ##########
+    # Access #
+    ##########
 
     def is_file(self, index):
         return index.isValid() and index.internalPointer() is not None
     
-    def file_entry(self, index) -> FileEntry:
+    def file_entry(self, index) -> Optional[FileEntry]:
         if self.is_file(index):
             return index.internalPointer()[index.row()]
         else:
             return None
 
-    ################################
-    ## QAbstractItemModel methods ##
-    ################################
+    ##############################
+    # QAbstractItemModel methods #
+    ##############################
 
     # (root)
     # |- name_prefix     -> _lists
@@ -66,18 +68,15 @@ class SearchResultModel(QAbstractItemModel):
     # |  '- ...
     # '- ...
     
-    def columnCount(self, index = QModelIndex()):
+    def columnCount(self, index=QModelIndex()):
         if not index.isValid():
             # Root item
             return 1
         elif index.internalPointer() is None:
             # A list, internalPointer is None
-            the_list = self._lists[index.row()]
             return 1
         elif index.internalPointer() in self._lists:
             # A file, internalPointer is the list
-            the_list = index.internalPointer()
-            the_file = the_list[index.row()]
             return 1
         else:
             # Unknown
@@ -95,14 +94,13 @@ class SearchResultModel(QAbstractItemModel):
         elif index.internalPointer() in self._lists:
             # A file, internalPointer is the list
             the_list = index.internalPointer()
-            the_file = the_list[index.row()]
             return 0
         else:
             # Unknown
             print("Unknown model index %s with internalPointer %s" % (str(index), str(index.internalPointer())))
             return 0
         
-    def index(self, row, column, index = QModelIndex()):
+    def index(self, row, column, index=QModelIndex()):
         if column != 0:
             print("Column is %s" % column)
             return QModelIndex()
@@ -117,7 +115,6 @@ class SearchResultModel(QAbstractItemModel):
         elif index.internalPointer() in self._lists:
             # A file, internalPointer is the list
             the_list = index.internalPointer()
-            the_file = the_list[index.row()]
             print("index() called for file entry")
             return QModelIndex()
         else:
@@ -125,23 +122,21 @@ class SearchResultModel(QAbstractItemModel):
             print("Unknown model index %s with internalPointer %s" % (str(index), str(index.internalPointer())))
             return 0
 
-    def parent(self, index):
+    def parent(self, index: QModelIndex) -> QModelIndex:
         if not index.isValid():
             # Root item
             return QModelIndex()
         elif index.internalPointer() is None:
             # A list, internalPointer is None
-            the_list = self._lists[index.row()]
             return QModelIndex()
         elif index.internalPointer() in self._lists:
             # A file, internalPointer is the list
             the_list = index.internalPointer()
-            the_file = the_list[index.row()]
             return self.createIndex(self._lists.index(the_list), 0, None)
         else:
             # Unknown
             print("Unknown model index %s with internalPointer %s" % (str(index), str(index.internalPointer())))
-            return 0
+            return QModelIndex()
 
     def data(self, index, role=Qt.DisplayRole):
         # index.internalPointer()
@@ -151,7 +146,6 @@ class SearchResultModel(QAbstractItemModel):
                 return "root"
             elif index.internalPointer() is None:
                 # A list, internalPointer is None
-                the_list = self._lists[index.row()]
                 return self._list_descriptions[index.row()]
             elif index.internalPointer() in self._lists:
                 # A file, internalPointer is the list

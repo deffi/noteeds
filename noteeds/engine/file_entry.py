@@ -17,6 +17,7 @@ class FileEntry:
         return hash(self._absolute_path)
 
     def __lt__(self, other):
+        # noinspection PyProtectedMember
         return self._absolute_path.__lt__(other._absolute_path)
 
     @property
