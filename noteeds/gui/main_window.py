@@ -26,34 +26,27 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.ui.splitter.setStretchFactor(0, 0)
-        self.ui.splitter.setStretchFactor(1, 1)
-
-        # Log model
-        self._log_model = LogTable(self)
-
-        # Set up UI elements
-        self.ui.exitAction.triggered.connect(self.close)
-        self.ui.logTable.setModel(self._log_model)
-        self.ui.viewLogAction.toggled.connect(self.ui.dock.setVisible)
-
-        self.ui.viewMenu.addAction(self.ui.dock.toggleViewAction())
-
+        # *** Data
         self._repository: Optional[Repository] = None
         self._engine: Optional[Engine] = None
-        self._result: Optional[SearchResult] = None
 
+        # *** Models
         self._search_result_model = SearchResultModel(self)
-
-        # Setup the results tree view
-        self.ui.resultsTree.setModel(self._search_result_model)
-
-        # Setup the document
+        self._log_model = LogTable(self)
         self._highlighter = Highlighter(self.ui.textView.document())
 
-        self.ui.resultsTree.selectionModel().currentChanged.connect(self.file_selection_changed)
+        # *** Menu
+        self.ui.exitAction.triggered.connect(self.close)
+        self.ui.viewMenu.addAction(self.ui.dock.toggleViewAction())
 
-    def closeEvent(self, event: QCloseEvent):
+        # *** Widgets ***
+        self.ui.splitter.setStretchFactor(0, 0)
+        self.ui.splitter.setStretchFactor(1, 1)
+        self.ui.resultsTree.setModel(self._search_result_model)
+        self.ui.resultsTree.selectionModel().currentChanged.connect(self.file_selection_changed)
+        self.ui.logTable.setModel(self._log_model)
+
+    def closeEvent(self, event: QCloseEvent) -> None:
         if self.confirm_close():
             event.accept()
             super().closeEvent(event)
@@ -100,24 +93,9 @@ class MainWindow(QMainWindow):
     # UI #
     ######
 
-    # Needs acceptDrops
-    def dragEnterEvent(self, event: QDragEnterEvent):
-        if event.mimeData().hasUrls():
-            event.acceptProposedAction()
-
-    def dropEvent(self, event: QDropEvent):
-        uris = event.mimeData().urls()
-        files = [uri.toLocalFile() for uri in uris]
-        logger.info(str(files))
-
     def confirm_close(self) -> bool:
         result = QMessageBox.question(self, self.windowTitle(), "Really exit?")
         return result == QMessageBox.Yes
-
-    @Slot(int)
-    def on_valueInput_valueChanged(self, value):
-        logger.info(f"Value change: {value}")
-        self.value_changed.emit(value)
 
     @Slot(logging.LogRecord)
     def log_message(self, log_record: logging.LogRecord):
@@ -154,5 +132,3 @@ class MainWindow(QMainWindow):
             self.ui.textView.clear()
         else:
             self.ui.textView.setPlainText(file_entry.contents())
-
-        logger.info(file_entry.absolute_path.name)

@@ -65,6 +65,9 @@
        <property name="uniformRowHeights">
         <bool>true</bool>
        </property>
+       <attribute name="headerVisible">
+        <bool>false</bool>
+       </attribute>
       </widget>
       <widget class="QPlainTextEdit" name="textView">
        <property name="tabChangesFocus">
@@ -141,14 +144,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
-   </property>
-  </action>
-  <action name="viewLogAction">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>&amp;Log</string>
    </property>
   </action>
  </widget>

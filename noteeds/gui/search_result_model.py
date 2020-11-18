@@ -9,37 +9,36 @@ class SearchResultModel(QAbstractItemModel):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self._name_prefix          = None
-        self._name_anywhere        = None
-        self._contents_word        = None
-        self._contents_word_prefix = None
-        self._contents_anywhere    = None
-        self._lists = []
-        self._list_descriptions = None
+        self._name_prefix         : Optional[list[FileEntry]] = []
+        self._name_anywhere       : Optional[list[FileEntry]] = []
+        self._contents_word       : Optional[list[FileEntry]] = []
+        self._contents_word_prefix: Optional[list[FileEntry]] = []
+        self._contents_anywhere   : Optional[list[FileEntry]] = []
 
-    def set_result(self, result: SearchResult):
-        self.beginResetModel()
-        self._name_prefix          = list(sorted(result.name_prefix))
-        self._name_anywhere        = list(sorted(result.name_anywhere))
-        self._contents_word        = list(sorted(result.contents_word))
-        self._contents_word_prefix = list(sorted(result.contents_word_prefix))
-        self._contents_anywhere    = list(sorted(result.contents_anywhere))
-        
-        self._lists = [
+        self._lists: list[list[FileEntry]] = [
             self._name_prefix,
             self._name_anywhere,
             self._contents_word,
             self._contents_word_prefix,
             self._contents_anywhere,
-            ]
-        
-        self._list_descriptions = [
+        ]
+
+        self._list_descriptions: list[str] = [
             "Name prefix",
             "Name anywhere",
             "Contents word",
             "Contents word prefix",
-            "Contents anywhere",                 
-            ]
+            "Contents anywhere",
+        ]
+
+    def set_result(self, result: SearchResult):
+        self.beginResetModel()
+
+        self._name_prefix         [:] = list(sorted(result.name_prefix))
+        self._name_anywhere       [:] = list(sorted(result.name_anywhere))
+        self._contents_word       [:] = list(sorted(result.contents_word))
+        self._contents_word_prefix[:] = list(sorted(result.contents_word_prefix))
+        self._contents_anywhere   [:] = list(sorted(result.contents_anywhere))
 
         self.endResetModel()
 
@@ -47,10 +46,10 @@ class SearchResultModel(QAbstractItemModel):
     # Access #
     ##########
 
-    def is_file(self, index):
+    def is_file(self, index: QModelIndex) -> bool:
         return index.isValid() and index.internalPointer() is not None
     
-    def file_entry(self, index) -> Optional[FileEntry]:
+    def file_entry(self, index: QModelIndex) -> Optional[FileEntry]:
         if self.is_file(index):
             return index.internalPointer()[index.row()]
         else:
@@ -68,7 +67,7 @@ class SearchResultModel(QAbstractItemModel):
     # |  '- ...
     # '- ...
     
-    def columnCount(self, index=QModelIndex()):
+    def columnCount(self, index: QModelIndex = QModelIndex()) -> int:
         if not index.isValid():
             # Root item
             return 1
@@ -83,7 +82,7 @@ class SearchResultModel(QAbstractItemModel):
             print("Unknown model index %s with internalPointer %s" % (str(index), str(index.internalPointer())))
             return 0
     
-    def rowCount(self, index=QModelIndex()):
+    def rowCount(self, index: QModelIndex = QModelIndex()):
         if not index.isValid():
             # Root item
             return len(self._lists)
@@ -100,7 +99,7 @@ class SearchResultModel(QAbstractItemModel):
             print("Unknown model index %s with internalPointer %s" % (str(index), str(index.internalPointer())))
             return 0
         
-    def index(self, row, column, index=QModelIndex()):
+    def index(self, row: int, column: int, index: QModelIndex = QModelIndex()):
         if column != 0:
             print("Column is %s" % column)
             return QModelIndex()
@@ -138,7 +137,7 @@ class SearchResultModel(QAbstractItemModel):
             print("Unknown model index %s with internalPointer %s" % (str(index), str(index.internalPointer())))
             return QModelIndex()
 
-    def data(self, index, role=Qt.DisplayRole):
+    def data(self, index: QModelIndex, role: int = Qt.DisplayRole):
         # index.internalPointer()
         if role == Qt.DisplayRole:
             if not index.isValid():
