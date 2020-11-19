@@ -1,0 +1,55 @@
+General:
+  * Replace print with logging, add logger to all modules
+  * Switching between or merging multiple directories
+
+Configuration:
+  * Use something other than QSettings (appdirs?) so the CLI/CUI doesn't require
+    Qt?
+
+GUI:
+  * GUI cleanup
+  * Progress indicator when loading
+  * Reload changed files
+  * Systray
+  * Global hotkey
+    http://stackoverflow.com/questions/11813823/global-hotkeys-in-a-cross-platform-qt-application
+  * Create Icon
+  * Launch editor (and reload), e. g. VIM:
+        Args without search: ["{file_name}"]
+        Args with search:    ["+/{search_term}", "{file_name}"]
+  * Configuration GUI
+  * When changing the text, always select
+    * the previous file if it is still there
+    * the first one if not
+  * Speed of QTextEdit OK with large files?
+    QTextEdit: setText and setPlainText takes the same time. QPlainTextEdit has
+    setPlainText only.
+  * Jump to next/previous match
+  * Speed up highlighter?
+  * Some files can take long to load
+    * Progress bar?
+    * Use QtWebKit? Qt web engine?
+  * Qt Markdown example with QWebChannel und QWebEngineView
+    https://doc.qt.io/qt-5.10/qtwebengine-webenginewidgets-markdowneditor-example.html
+
+Engine:
+  * Extended matching
+      * qaim -> QAbstractItemModel/q_abstract_item_model
+      * ä / ae
+      * https://github.com/garybernhardt/selecta
+      * https://github.com/forrestthewoods/lib_fts/blob/master/docs/fuzzy_match.md
+
+  * In "[[x]]", is x recognized as a single word?
+  * Inexact file name matching
+      * Ignore underscores
+  * Matching multiple criteria (e. g. Python and integer)
+      * Search in selected file?
+  * Test: file name with spaces and other fancy characters
+  * We might want to exclude certain patterns from the "file contains"
+    categories, e. g. [[foo]] if a file foo also exists.
+
+CLI:
+
+CUI:
+  * Investigate CUI frameworks
+  * Tests: Windows, Linux, WSL, Putty, JuiceSSH
