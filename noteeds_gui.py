@@ -16,8 +16,10 @@ if __name__ == "__main__":
     # Install an excepthook to log unhandled exceptions
     original_excepthook = sys.excepthook
     def excepthook(e_type, e_value, e_traceback):
-        root_logger.error("Unhandled exception", exc_info=(e_type, e_value, e_traceback))
+        # Call the original hook before logging the error, because logging may
+        # fail.
         original_excepthook (e_type, e_value, e_traceback)
+        root_logger.error("Unhandled exception", exc_info=(e_type, e_value, e_traceback))
     sys.excepthook = excepthook
 
     # TODO remove text; GUI configuration for root
