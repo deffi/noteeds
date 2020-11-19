@@ -1,7 +1,5 @@
-import typing
 from typing import Any
 
-import PySide2
 from PySide2.QtCore import QAbstractItemModel, QModelIndex, Qt
 
 
@@ -17,6 +15,8 @@ class AbstractTreeModel(QAbstractItemModel):
         |  '- ...    -> (0, 2)
         '- ...       -> (1)
            '- ...    -> (1, 1)
+
+    This model doesn't currently support model changes apart from resetModel.
     """
     def __init__(self, parent):
         super().__init__(parent)
