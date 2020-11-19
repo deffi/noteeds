@@ -28,7 +28,6 @@ class FileEntry:
         # TODO factor in?
         return read_file(self.absolute_path)
 
-    # TODO rename to content
     def contents(self) -> str:
         if self._contents is None:
             self._contents, _ = self._read()
