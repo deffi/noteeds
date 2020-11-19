@@ -1,5 +1,7 @@
+import typing
 from typing import Any
 
+import PySide2
 from PySide2.QtCore import QAbstractItemModel, QModelIndex, Qt
 
 
@@ -18,12 +20,7 @@ class AbstractTreeModel(QAbstractItemModel):
     """
     def __init__(self, parent):
         super().__init__(parent)
-        self._collection = {}
-
-    def _collect(self, x):
-        if x not in self._collection:
-            self._collection[x] = x
-        return self._collection[x]
+        self._internal_values: dict[tuple, tuple] = {}
 
     # *** Abstract methods
 
@@ -40,13 +37,33 @@ class AbstractTreeModel(QAbstractItemModel):
     def tree_header_data(self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> Any:
         return None
 
-    # *** QAbstractItemModel methods
+    # *** Location bookkeeping
 
     def location(self, index: QModelIndex) -> tuple[int]:
         if index.isValid():
             return index.internalPointer()
         else:
             return tuple()
+
+    def createIndex(self, row: int, column: int, ptr: Any) -> QModelIndex:
+        # As stated by the QAbstractItemModel.createIndex documentation, we must
+        # keep the value use for the internal pointer alive, because the
+        # QModelIndex won't do it.
+        # The way we do this is to store all values ever created. Obviously, we
+        # don't want to store multiple copies of a given value, so we could use
+        # a set. HOWEVER, we will be creating the same values over and over
+        # again, and we must not use a value we're not storing. So we use a dict
+        # that maps each value to itself, and when we created a value that we
+        # already have, we use the original instance of that value.
+
+        if ptr in self._internal_values:
+            ptr = self._internal_values[ptr]
+        else:
+            self._internal_values[ptr] = ptr
+
+        return super().createIndex(row, column, ptr)
+
+    # *** QAbstractItemModel methods
 
     def columnCount(self, index: QModelIndex = QModelIndex()) -> int:
         location = self.location(index)
@@ -58,7 +75,7 @@ class AbstractTreeModel(QAbstractItemModel):
 
     def index(self, row: int, column: int, parent: QModelIndex = QModelIndex()):
         parent_location = self.location(parent)
-        child_location = self._collect(parent_location + (row, ))
+        child_location = parent_location + (row, )
         return self.createIndex(row, column, child_location)
 
     def parent(self, child: QModelIndex) -> QModelIndex:
@@ -66,7 +83,7 @@ class AbstractTreeModel(QAbstractItemModel):
         if len(location) < 2:
             return QModelIndex()
         else:
-            parent_location = self._collect(location[:-1])
+            parent_location = location[:-1]
             return self.createIndex(location[-2], 0, parent_location)
 
     def data(self, index: QModelIndex, role: int = Qt.DisplayRole):
