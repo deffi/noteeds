@@ -1,11 +1,12 @@
-from typing import Optional
+from typing import Optional, Any
 
-from PySide2.QtCore import QAbstractItemModel, QModelIndex, Qt
+from PySide2.QtCore import Qt, QModelIndex
 
+from noteeds.gui import AbstractTreeModel
 from noteeds.engine import SearchResult, FileEntry
 
 
-class SearchResultModel(QAbstractItemModel):
+class SearchResultModel(AbstractTreeModel):
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -46,12 +47,10 @@ class SearchResultModel(QAbstractItemModel):
     # Access #
     ##########
 
-    def is_file(self, index: QModelIndex) -> bool:
-        return index.isValid() and index.internalPointer() is not None
-    
     def file_entry(self, index: QModelIndex) -> Optional[FileEntry]:
-        if self.is_file(index):
-            return index.internalPointer()[index.row()]
+        location = self.location(index)
+        if len(location) == 2:
+            return self._lists[location[0]][location[1]]
         else:
             return None
 
@@ -59,104 +58,30 @@ class SearchResultModel(QAbstractItemModel):
     # QAbstractItemModel methods #
     ##############################
 
-    # (root)
-    # |- name_prefix     -> _lists
-    # |  |- ...            -> the list
-    # |  '- ...
-    # |- name_anywhere
-    # |  '- ...
-    # '- ...
-    
-    def columnCount(self, index: QModelIndex = QModelIndex()) -> int:
-        if not index.isValid():
-            # Root item
-            return 1
-        elif index.internalPointer() is None:
-            # A list, internalPointer is None
-            return 1
-        elif index.internalPointer() in self._lists:
-            # A file, internalPointer is the list
-            return 1
-        else:
-            # Unknown
-            print("Unknown model index %s with internalPointer %s" % (str(index), str(index.internalPointer())))
-            return 0
-    
-    def rowCount(self, index: QModelIndex = QModelIndex()):
-        if not index.isValid():
-            # Root item
+    def tree_column_count(self, location: tuple[int]) -> int:
+        return 1
+
+    def tree_child_count(self, location: tuple[int]) -> int:
+        if len(location) == 0:
+            # Root index -> number of lists
             return len(self._lists)
-        elif index.internalPointer() is None:
-            # A list, internalPointer is None
-            the_list = self._lists[index.row()]
-            return len(the_list)
-        elif index.internalPointer() in self._lists:
-            # A file, internalPointer is the list
-            the_list = index.internalPointer()
-            return 0
+        elif len(location) == 1:
+            # List -> number of items in that list
+            return len(self._lists[location[0]])
         else:
-            # Unknown
-            print("Unknown model index %s with internalPointer %s" % (str(index), str(index.internalPointer())))
-            return 0
-        
-    def index(self, row: int, column: int, index: QModelIndex = QModelIndex()):
-        if column != 0:
-            print("Column is %s" % column)
-            return QModelIndex()
-
-        if not index.isValid():
-            # Root item
-            return self.createIndex(row, column, None)
-        elif index.internalPointer() is None:
-            # A list, internalPointer is None
-            the_list = self._lists[index.row()]
-            return self.createIndex(row, column, the_list)
-        elif index.internalPointer() in self._lists:
-            # A file, internalPointer is the list
-            the_list = index.internalPointer()
-            print("index() called for file entry")
-            return QModelIndex()
-        else:
-            # Unknown
-            print("Unknown model index %s with internalPointer %s" % (str(index), str(index.internalPointer())))
+            # File -> 0
             return 0
 
-    def parent(self, index: QModelIndex) -> QModelIndex:
-        if not index.isValid():
-            # Root item
-            return QModelIndex()
-        elif index.internalPointer() is None:
-            # A list, internalPointer is None
-            return QModelIndex()
-        elif index.internalPointer() in self._lists:
-            # A file, internalPointer is the list
-            the_list = index.internalPointer()
-            return self.createIndex(self._lists.index(the_list), 0, None)
-        else:
-            # Unknown
-            print("Unknown model index %s with internalPointer %s" % (str(index), str(index.internalPointer())))
-            return QModelIndex()
-
-    def data(self, index: QModelIndex, role: int = Qt.DisplayRole):
-        # index.internalPointer()
+    def tree_data(self, location: tuple[int], column: int, role: int = Qt.DisplayRole) -> Any:
         if role == Qt.DisplayRole:
-            if not index.isValid():
-                # Root item
-                return "root"
-            elif index.internalPointer() is None:
-                # A list, internalPointer is None
-                return self._list_descriptions[index.row()]
-            elif index.internalPointer() in self._lists:
-                # A file, internalPointer is the list
-                the_list = index.internalPointer()
-                the_file = the_list[index.row()]
-                return the_file.absolute_path.name
-            else:
-                # Unknown
-                print("Unknown model index %s with internalPointer %s" % (str(index), str(index.internalPointer())))
-                return "unknown"
+            if len(location) == 1:
+                # List -> list description
+                return self._list_descriptions[location[0]]
+            elif len(location) == 2:
+                # Entry -> file name
+                return self._lists[location[0]][location[1]].absolute_path.name
 
-    def headerData(self, section, orientation, role):
+    def tree_header_data(self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> Any:
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
             if section == 0:
                 return "File"
