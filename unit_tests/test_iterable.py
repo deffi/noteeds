@@ -1,6 +1,6 @@
 import unittest
 
-from noteeds.util.iterable import pairs
+from noteeds.util.iterable import pairs, sequence_join
 
 
 class IterableTest(unittest.TestCase):
@@ -9,6 +9,9 @@ class IterableTest(unittest.TestCase):
         self.assertEqual([(1, 2)], list(pairs([1, 2])))
         self.assertEqual([], list(pairs([1])))
         self.assertEqual([], list(pairs([])))
+
+    def test_sequence_join(self):
+        self.assertEqual([1, 2, 3, 11, 22, 4, 5, 11, 22], list(sequence_join([11, 22], [[1,2,3], [4,5], []])))
 
 
 if __name__ == '__main__':

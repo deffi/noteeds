@@ -9,6 +9,7 @@ Configuration:
 GUI:
   * GUI cleanup
   * Progress indicator when loading
+  * Show number of files per category (result set), number of matches per file
   * Reload changed files
   * Systray
   * Global hotkey

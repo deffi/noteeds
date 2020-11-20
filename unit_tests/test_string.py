@@ -18,15 +18,15 @@ class StringTest(unittest.TestCase):
         self.assertEqual("Foo\nBar\nBaz", strip_lines(value).strip())
 
     def test_box(self):
-        self.assertEqual(strip_lines("""
-            **********
-            ** Test **
-            **********""").strip(), box("Test", "*"))
+        self.assertEqual([
+            "**********",
+            "** Test **",
+            "**********"], box("Test", "*"))
 
-        self.assertEqual(strip_lines("""
-            ########
-            # Test #
-            ########""").strip(), box("Test", "#", border_width=1))
+        self.assertEqual([
+            "########",
+            "# Test #",
+            "########"], box("Test", "#", border_width=1))
 
 
 if __name__ == '__main__':

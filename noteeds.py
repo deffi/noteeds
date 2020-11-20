@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import sys
+from noteeds.util.string import join_lines
 
 from noteeds.engine import Repository, Engine, Query
 from noteeds.util.timing import stopwatch
@@ -24,5 +25,5 @@ with stopwatch("searching"):
     result = engine.find(query)
 
 with stopwatch("dumping"):
-    result.short_dump()
-    # result.long_dump(query)
+    print(join_lines(result.short_dump(), width=120))
+    # print(join_lines(result.long_dump(query), width=120))
