@@ -1,5 +1,4 @@
 General:
-  * Replace print with logging, add logger to all modules
   * Switching between or merging multiple directories
 
 Configuration:
