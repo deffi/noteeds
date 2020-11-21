@@ -1,5 +1,6 @@
 General:
   * Switching between or merging multiple directories
+  * Tracker: handle no monitor
 
 Configuration:
   * Use something other than QSettings (appdirs?) so the CLI/CUI doesn't require
