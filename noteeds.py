@@ -6,6 +6,7 @@ from noteeds.util.string import join_lines
 
 from noteeds.engine import Repository, Engine, Query
 from noteeds.util.timing import stopwatch
+from noteeds.util.progress_monitor import TextProgressMonitor
 
 if len(sys.argv) < 3:
     print(f"Usage: {sys.argv[0]} root text")
@@ -19,7 +20,8 @@ engine = Engine([repository])
 query = Query(text, False, None)
 
 with stopwatch("loading"):
-    engine.load_all(None)
+    monitor = TextProgressMonitor(increment=200)
+    engine.load_all(monitor)
 
 with stopwatch("searching"):
     result = engine.find(query)

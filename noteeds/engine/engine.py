@@ -16,9 +16,11 @@ class Engine:
 
         self._entries = set.union(*(repo.entries() for repo in self._repositories))
 
+        progress_monitor.start(len(self._entries))
         entry: FileEntry
         for entry in self._entries:
             entry.contents()
+            progress_monitor.next()
 
         #progress_monitor.range(0, len(self._entries))
         # for i, entry in enumerate(self._entries):
