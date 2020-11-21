@@ -17,7 +17,6 @@ GUI:
   * Systray
   * Global hotkey
     http://stackoverflow.com/questions/11813823/global-hotkeys-in-a-cross-platform-qt-application
-  * Color-code multiple repos
   * Create Icon
   * Launch editor (and reload), e. g. VIM:
         Args without search: ["{file_name}"]

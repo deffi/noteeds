@@ -1,10 +1,10 @@
 from typing import Optional, Any
 
 from PySide2.QtCore import Qt, QModelIndex
-from PySide2.QtGui import QFont
+from PySide2.QtGui import QFont, QColor
 
 from noteeds.gui import AbstractTreeModel
-from noteeds.engine import SearchResult, FileEntry
+from noteeds.engine import SearchResult, FileEntry, Repository
 
 
 class SearchResultModel(AbstractTreeModel):
@@ -87,6 +87,12 @@ class SearchResultModel(AbstractTreeModel):
         elif role == Qt.FontRole:
             if len(location) == 1:
                 return self._list_description_font
+
+        elif role == Qt.BackgroundColorRole:
+            if len(location) == 2:
+                hue = self._lists[location[0]][location[1]].repository.hue
+                if hue is not None:
+                    return QColor.fromHsv(hue*255, 10, 255)
 
     def tree_header_data(self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> Any:
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:

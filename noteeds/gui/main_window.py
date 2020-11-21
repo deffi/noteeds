@@ -60,7 +60,7 @@ class MainWindow(QMainWindow):
 
     def set_root(self, root: Path):
         self.ui.rootLabel.setText(f"Root: {root}")
-        self._repository = Repository(root)
+        self._repository = Repository(root, hue=None)
         self._engine = Engine([self._repository])
         tracker = Tracker(DialogProgressMonitor("Loading", self), delta_t=1/25)
         self._engine.load_all(tracker)

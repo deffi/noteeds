@@ -8,8 +8,10 @@ logger = logging.getLogger(__name__)
 
 
 class Repository:
-    def __init__(self, root: Path):
+    def __init__(self, root: Path, hue: Optional[float] = None):
         self._root: Path = root
+        self._hue: Optional[float] = hue
+
         self._entries: Optional[set[FileEntry]] = None
 
         if not root.is_dir():
@@ -18,6 +20,10 @@ class Repository:
     @property
     def root(self) -> Path:
         return self._root
+
+    @property
+    def hue(self) -> Optional[float]:
+        return self._hue
 
     @staticmethod
     def _accept(path: Path) -> bool:
@@ -32,7 +38,7 @@ class Repository:
         # TODO walk subdirectories ("**/*"), but make sure to exclude
         # directories starting with ".".
         paths = self._root.glob("*")
-        return set(FileEntry(path) for path in paths if self._accept(path))
+        return set(FileEntry(path, self) for path in paths if self._accept(path))
 
     def entries(self) -> set[FileEntry]:
         if self._entries is None:

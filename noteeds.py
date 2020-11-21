@@ -15,7 +15,7 @@ if len(sys.argv) < 3:
 root = Path(sys.argv[1])
 text = sys.argv[2]
 
-repository = Repository(root)
+_patternsitory = Repository(root)
 engine = Engine([repository])
 query = Query(text, False, None)
 

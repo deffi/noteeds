@@ -5,8 +5,10 @@ from noteeds.util.io import read_file
 
 
 class FileEntry:
-    def __init__(self, path: Path):
+    def __init__(self, path: Path, repository: "Repository"):
         self._absolute_path: Path = path
+        self._repository: "Repository" = repository
+
         self._contents: Optional[str] = None
 
     def __eq__(self, other):
@@ -23,6 +25,10 @@ class FileEntry:
     @property
     def absolute_path(self):
         return self._absolute_path
+
+    @property
+    def repository(self) -> "Repository":
+        return self._repository
 
     def _read(self) -> str:
         # # TODO make configurable for debugging purposes
