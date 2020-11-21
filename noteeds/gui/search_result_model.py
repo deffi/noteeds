@@ -1,6 +1,7 @@
 from typing import Optional, Any
 
 from PySide2.QtCore import Qt, QModelIndex
+from PySide2.QtGui import QFont
 
 from noteeds.gui import AbstractTreeModel
 from noteeds.engine import SearchResult, FileEntry
@@ -31,6 +32,9 @@ class SearchResultModel(AbstractTreeModel):
             "Contents word prefix",
             "Contents anywhere",
         ]
+
+        self._list_description_font = QFont()
+        self._list_description_font.setBold(True)
 
     def set_result(self, result: SearchResult):
         self.beginResetModel()
@@ -80,6 +84,9 @@ class SearchResultModel(AbstractTreeModel):
             elif len(location) == 2:
                 # Entry -> file name
                 return self._lists[location[0]][location[1]].absolute_path.name
+        elif role == Qt.FontRole:
+            if len(location) == 1:
+                return self._list_description_font
 
     def tree_header_data(self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> Any:
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
