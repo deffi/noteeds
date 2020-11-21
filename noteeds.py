@@ -20,7 +20,8 @@ engine = Engine([repository])
 query = Query(text, False, None)
 
 with stopwatch("loading"):
-    monitor = TextProgressMonitor(increment=200)
+    # monitor = TextProgressMonitor(increment=200)
+    monitor = TextProgressMonitor(dt = 1/25)
     engine.load_all(monitor)
 
 with stopwatch("searching"):
