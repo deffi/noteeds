@@ -4,12 +4,13 @@ from typing import Optional
 
 from PySide2.QtCore import QSettings, Signal, Slot, QModelIndex
 from PySide2.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent
-from PySide2.QtWidgets import QMainWindow, QMessageBox
+from PySide2.QtWidgets import QMainWindow, QMessageBox, QApplication
 
 from noteeds.engine import Repository, Query, Engine, SearchResult
-from noteeds.gui import SearchResultModel, Highlighter
+from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor
 from noteeds.gui.ui_main_window import Ui_MainWindow
 from noteeds.gui.log_table import LogTable
+from noteeds.util.progress import Tracker, CancelException
 
 logger = logging.getLogger(__name__)
 
@@ -61,7 +62,8 @@ class MainWindow(QMainWindow):
         self.ui.rootLabel.setText(f"Root: {root}")
         self._repository = Repository(root)
         self._engine = Engine([self._repository])
-        self._engine.load_all(None)
+        tracker = Tracker(DialogProgressMonitor("Loading", self), delta_t=1/25)
+        self._engine.load_all(tracker)
 
     def set_text(self, text: str):
         self.ui.textInput.setText(text)

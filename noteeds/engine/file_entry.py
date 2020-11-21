@@ -25,7 +25,12 @@ class FileEntry:
         return self._absolute_path
 
     def _read(self) -> str:
-        # TODO factor in?
+        # # TODO make configurable for debugging purposes
+        # from time import sleep
+        # from random import randrange
+        # if randrange(20) == 0:
+        #     sleep(0.01)
+
         return read_file(self.absolute_path)
 
     def contents(self) -> str:
