@@ -4,7 +4,7 @@ from typing import Optional
 
 from PySide2.QtCore import QSettings, Signal, Slot, QModelIndex
 from PySide2.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent
-from PySide2.QtWidgets import QMainWindow, QMessageBox, QApplication
+from PySide2.QtWidgets import QMainWindow, QMessageBox, QApplication, QWidget
 
 from noteeds.engine import Repository, Query, Engine, SearchResult
 from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor
@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):
     # Window #
     ##########
 
-    def __init__(self, parent):
+    def __init__(self, parent: Optional[QWidget]):
         super().__init__(parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -58,21 +58,21 @@ class MainWindow(QMainWindow):
     # Properties #
     ##############
 
-    def set_root(self, root: Path):
+    def set_root(self, root: Path) -> None:
         self.ui.rootLabel.setText(f"Root: {root}")
         self._repository = Repository(root, hue=None)
         self._engine = Engine([self._repository])
         tracker = Tracker(DialogProgressMonitor("Loading", self), delta_t=1/25)
         self._engine.load_all(tracker)
 
-    def set_text(self, text: str):
+    def set_text(self, text: str) -> None:
         self.ui.textInput.setText(text)
 
     ############
     # Settings #
     ############
 
-    def store_settings(self):
+    def store_settings(self) -> None:
         settings = QSettings()
         settings.beginGroup("main_window")
         settings.setValue("geometry", self.saveGeometry())
@@ -81,8 +81,8 @@ class MainWindow(QMainWindow):
         settings.setValue("log_table_header_state", self.ui.logTable.header().saveState())
         settings.endGroup()
 
-    def load_settings(self):
-        # TODO errors here should be caught (individually) and redirected to the logger
+    def load_settings(self) -> None:
+        # TODO errors here should be caught (individually) and logged
         settings = QSettings()
         settings.beginGroup("main_window")
         self.restoreGeometry(settings.value("geometry"))
@@ -100,7 +100,7 @@ class MainWindow(QMainWindow):
         return result == QMessageBox.Yes
 
     @Slot(logging.LogRecord)
-    def log_message(self, log_record: logging.LogRecord):
+    def log_message(self, log_record: logging.LogRecord) -> None:
         scroll_bar = self.ui.logTable.verticalScrollBar()
         at_end = (scroll_bar.value() == scroll_bar.maximum())
 
@@ -110,7 +110,7 @@ class MainWindow(QMainWindow):
             self.ui.logTable.scrollToBottom()
 
     @Slot(str)
-    def on_textInput_textChanged(self, text):
+    def on_textInput_textChanged(self, text: str) -> None:
         if self._engine is None:
             return
 
@@ -125,7 +125,7 @@ class MainWindow(QMainWindow):
 
     # noinspection PyUnusedLocal
     @Slot(QModelIndex, QModelIndex)
-    def file_selection_changed(self, index, previous_index):
+    def file_selection_changed(self, index: QModelIndex, previous_index: QModelIndex) -> None:
         # Get the file entry from the model; if the selected index does not
         # represent a file, this will be None.
         file_entry = self._search_result_model.file_entry(index)

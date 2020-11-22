@@ -86,9 +86,9 @@ class AbstractTreeModel(QAbstractItemModel):
             parent_location = location[:-1]
             return self.createIndex(location[-2], 0, parent_location)
 
-    def data(self, index: QModelIndex, role: int = Qt.DisplayRole):
+    def data(self, index: QModelIndex, role: int = Qt.DisplayRole) -> Any:
         location = self.location(index)
         return self.tree_data(location, index.column(), role)
 
-    def headerData(self, section: int, orientation: Qt.Orientation, role: int = None):
+    def headerData(self, section: int, orientation: Qt.Orientation, role: int = None) -> Any:
         return self.tree_header_data(section, orientation, role)

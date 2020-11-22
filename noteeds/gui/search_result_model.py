@@ -1,6 +1,6 @@
 from typing import Optional, Any
 
-from PySide2.QtCore import Qt, QModelIndex
+from PySide2.QtCore import Qt, QModelIndex, QObject
 from PySide2.QtGui import QFont, QColor
 
 from noteeds.gui import AbstractTreeModel
@@ -8,7 +8,7 @@ from noteeds.engine import SearchResult, FileEntry, Repository
 
 
 class SearchResultModel(AbstractTreeModel):
-    def __init__(self, parent):
+    def __init__(self, parent: Optional[QObject]):
         super().__init__(parent)
 
         self._name_prefix         : Optional[list[FileEntry]] = []
@@ -36,7 +36,7 @@ class SearchResultModel(AbstractTreeModel):
         self._list_description_font = QFont()
         self._list_description_font.setBold(True)
 
-    def set_result(self, result: SearchResult):
+    def set_result(self, result: SearchResult) -> None:
         self.beginResetModel()
 
         self._name_prefix         [:] = list(sorted(result.name_prefix))

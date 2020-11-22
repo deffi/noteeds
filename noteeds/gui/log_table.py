@@ -1,23 +1,23 @@
-from typing import Any, List
+from typing import Any, List, Optional
 import logging
 import time
 import traceback
 
-from PySide2.QtCore import QAbstractTableModel, QModelIndex, Qt
+from PySide2.QtCore import QAbstractTableModel, QModelIndex, Qt, QObject
 
 
 class LogTable(QAbstractTableModel):
     """Collects log records and provides a table model for them.
 
-    Note that this class combines the data model with the view model (that's why
-    it is called LogTable rather than LogTableModel).
+    Note that this class is a container and an item model at the same time
+    (that's why it is called LogTable rather than LogTableModel).
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent: Optional[QObject]):
         super().__init__(parent)
         self._records: List[logging.LogRecord] = []
 
-    def append(self, record: logging.LogRecord):
+    def append(self, record: logging.LogRecord) -> None:
         row = len(self._records)
         self.beginInsertRows(QModelIndex(), row, row)
         self._records.append(record)

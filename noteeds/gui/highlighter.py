@@ -1,18 +1,19 @@
-from PySide2.QtGui import QSyntaxHighlighter, QTextCharFormat
-from PySide2.QtGui import QFont
-from PySide2.QtCore import Qt
+from typing import Union, Optional
+
+from PySide2.QtGui import QSyntaxHighlighter, QTextCharFormat, QFont, QTextDocument
+from PySide2.QtCore import Qt, QObject
 
 
 class Highlighter(QSyntaxHighlighter):
-    def __init__(self, parent):
+    def __init__(self, parent: Union[QObject, QTextDocument]):
         super().__init__(parent)
         
-        self._search_term = None
+        self._search_term: Optional[str] = None
         
-    def set_search_term(self, search_term):
+    def set_search_term(self, search_term: str) -> None:
         self._search_term = search_term
         
-    def highlightBlock(self, text):
+    def highlightBlock(self, text: str) -> None:
         if self._search_term is None:
             return        
         

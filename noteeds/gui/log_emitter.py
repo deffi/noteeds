@@ -9,7 +9,7 @@ class _Handler(logging.Handler):
         super().__init__()
         self._signal = signal
 
-    def emit(self, log_record: logging.LogRecord):
+    def emit(self, log_record: logging.LogRecord) -> None:
         self._signal.emit(log_record)
         QApplication.processEvents()
 
@@ -20,6 +20,6 @@ class LogEmitter(QObject):
     method."""
     log = Signal(logging.LogRecord)
 
-    def __init__(self, parent):
+    def __init__(self, parent: QObject):
         super().__init__(parent)
         self.handler = _Handler(self.log)
