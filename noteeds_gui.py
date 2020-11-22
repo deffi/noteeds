@@ -2,8 +2,10 @@ import sys
 from pathlib import Path
 
 import logging
+from PySide2.QtCore import QTimer
 from PySide2.QtWidgets import QApplication
 
+from noteeds.engine import FileEntry
 from noteeds.gui import MainWindow, LogEmitter
 
 if __name__ == "__main__":
@@ -30,6 +32,9 @@ if __name__ == "__main__":
     root = Path(sys.argv[1])
     text = sys.argv[2]
 
+    FileEntry.load_delay = 0.01
+    FileEntry.load_delay_probability = 0.05
+
     app = QApplication(sys.argv)
     app.setOrganizationName("noteeds")
     app.setOrganizationDomain("noteeds.invalid")
@@ -41,6 +46,7 @@ if __name__ == "__main__":
     window.set_root(root)
     window.set_text(text)
     window.show()
+    QTimer.singleShot(0, window.startup)
     result = app.exec_()
     window.store_settings()
     sys.exit(result)

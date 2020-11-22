@@ -4,7 +4,7 @@ from typing import Optional
 
 from PySide2.QtCore import QSettings, Signal, Slot, QModelIndex
 from PySide2.QtGui import QCloseEvent
-from PySide2.QtWidgets import QMainWindow, QMessageBox, QWidget
+from PySide2.QtWidgets import QMainWindow, QMessageBox, QWidget, QApplication
 
 from noteeds.engine import Repository, Query, Engine
 from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor
@@ -55,6 +55,14 @@ class MainWindow(QMainWindow):
         else:
             event.ignore()
 
+    def startup(self):
+        QApplication.instance().processEvents()
+        self._engine = Engine([self._repository])
+        tracker = Tracker(DialogProgressMonitor("Loading", self), delta_t=1/25)
+        self._engine.load_all(tracker)
+        self.search(self.ui.textInput.text())
+
+
     ##############
     # Properties #
     ##############
@@ -62,9 +70,6 @@ class MainWindow(QMainWindow):
     def set_root(self, root: Path) -> None:
         self.ui.rootLabel.setText(f"Root: {root}")
         self._repository = Repository(root, hue=None)
-        self._engine = Engine([self._repository])
-        tracker = Tracker(DialogProgressMonitor("Loading", self), delta_t=1/25)
-        self._engine.load_all(tracker)
 
     def set_text(self, text: str) -> None:
         self.ui.textInput.setText(text)
@@ -110,8 +115,7 @@ class MainWindow(QMainWindow):
         if at_end:
             self.ui.logTable.scrollToBottom()
 
-    @Slot(str)
-    def on_textInput_textChanged(self, text: str) -> None:
+    def search(self, text: str) -> None:
         if self._engine is None:
             return
 
@@ -122,6 +126,10 @@ class MainWindow(QMainWindow):
 
         if self._highlighter is not None:
             self._highlighter.set_search_term(text)
+
+    @Slot(str)
+    def on_textInput_textChanged(self, text: str) -> None:
+        self.search(text)
 
     # noinspection PyUnusedLocal
     @Slot(QModelIndex, QModelIndex)
