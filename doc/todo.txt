@@ -1,23 +1,24 @@
-General:
-  * Switching between or merging multiple directories
+Next:
+  * Load (with progress dialog) after starting the QApplication and showing the
+    main window
+  * Multiple repos
+
+Then:
+  * Create Icon
+  * Systray
+  * Global hotkey
 
 Configuration:
   * Use something other than QSettings (appdirs?) so the CLI/CUI doesn't require
     Qt?
-  * Multiple repos
 
 GUI:
-  * Load (with progress dialog) after starting the QApplication and showing the
-    main window
   * Scroll to first match in file
-  * Handle cancelation while loading
+  * Handle cancelation while loading? Load in background?
   * GUI cleanup
   * Show number of files per category (result set), number of matches per file
   * Reload changed files
-  * Systray
-  * Global hotkey
     http://stackoverflow.com/questions/11813823/global-hotkeys-in-a-cross-platform-qt-application
-  * Create Icon
   * Launch editor (and reload), e. g. VIM:
         Args without search: ["{file_name}"]
         Args with search:    ["+/{search_term}", "{file_name}"]
