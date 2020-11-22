@@ -1,23 +1,28 @@
-Then:
+Next:
   * Create Icon
   * Systray
   * Global hotkey
+    http://stackoverflow.com/questions/11813823/global-hotkeys-in-a-cross-platform-qt-application
 
 Configuration:
+  * Different sets of configuration for production/development on the same
+    machine
+  * Configuration data structures
+  * Mechanism for applying changed configuration
   * Use something other than QSettings (appdirs?) so the CLI/CUI doesn't require
     Qt?
+  * Configuration GUI
 
 GUI:
+  * Font in text view is very small
   * Scroll to first match in file
-  * Handle cancelation while loading? Load in background?
-  * GUI cleanup
+  * Handle or disable Cancel while loading? Load in background?
+  * Remove root text (we have multiple repositories now)
   * Show number of files per category (result set), number of matches per file
   * Reload changed files
-    http://stackoverflow.com/questions/11813823/global-hotkeys-in-a-cross-platform-qt-application
   * Launch editor (and reload), e. g. VIM:
         Args without search: ["{file_name}"]
         Args with search:    ["+/{search_term}", "{file_name}"]
-  * Configuration GUI
   * When changing the text, always select
     * the previous file if it is still there
     * the first one if not
@@ -47,9 +52,10 @@ Engine:
   * Test: file name with spaces and other fancy characters
   * We might want to exclude certain patterns from the "file contains"
     categories, e. g. [[foo]] if a file foo also exists.
+  * Match headings (""== xxx ==" or "## xxx")
 
 CLI:
-  * Don't load all, it's not required
+  * Don't load all? All will be loaded when searching
 
 CUI:
   * Investigate CUI frameworks
