@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # *** Data
-        self._repository: Optional[Repository] = None
+        self._repositories: list[Repository] = []
         self._engine: Optional[Engine] = None
 
         # *** Models
@@ -57,19 +57,22 @@ class MainWindow(QMainWindow):
 
     def startup(self):
         QApplication.instance().processEvents()
-        self._engine = Engine([self._repository])
+        self._engine = Engine(self._repositories)
         tracker = Tracker(DialogProgressMonitor("Loading", self), delta_t=1/25)
         self._engine.load_all(tracker)
         self.search(self.ui.textInput.text())
-
 
     ##############
     # Properties #
     ##############
 
-    def set_root(self, root: Path) -> None:
-        self.ui.rootLabel.setText(f"Root: {root}")
-        self._repository = Repository(root, hue=None)
+    def set_repositories(self, paths: list[Path]) -> None:
+        self.ui.rootLabel.setText(f"Root: ...")
+        if len(paths) == 1:
+            self._repositories = [Repository(paths[0], hue=None)]
+        else:
+            self._repositories = [Repository(path, index/len(paths)) for index, path in enumerate(paths)]
+
 
     def set_text(self, text: str) -> None:
         self.ui.textInput.setText(text)

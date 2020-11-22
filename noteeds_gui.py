@@ -48,7 +48,7 @@ def noteeds_gui(args: Args):
     window = MainWindow(None)
     log_emitter.log.connect(window.log_message)
     window.load_settings()
-    window.set_root(root)
+    window.set_repositories(args.repositories)
     window.set_text(text)
     window.show()
     QTimer.singleShot(0, window.startup)
