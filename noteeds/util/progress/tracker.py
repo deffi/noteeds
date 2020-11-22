@@ -5,7 +5,8 @@ from noteeds.util.progress import Monitor
 
 
 class Tracker:
-    def __init__(self, monitor: Monitor, *, steps: Optional[int] = None, delta: Optional[int] = None, delta_t: Optional[float] = None):
+    def __init__(self, monitor: Monitor, *,
+                 steps: Optional[int] = None, delta: Optional[int] = None, delta_t: Optional[float] = None):
         if steps is not None and delta is not None:
             raise ValueError("Only one of steps and delta can be specified")
 

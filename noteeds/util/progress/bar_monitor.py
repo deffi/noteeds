@@ -16,9 +16,9 @@ class BarMonitor(Monitor):
         print("[" + " " * self._length + "]", end="")
 
     def progress(self, value: int) -> None:
-        l = int(self._length * value / self._total)
+        length = int(self._length * value / self._total)
         print("\b" * (self._length + 2), end="")
-        print("[" + "#" * l + " " * (self._length - l) + "]", end="")
+        print("[" + "#" * length + " " * (self._length - length) + "]", end="")
 
     def done(self) -> None:
         print(file=self._file)

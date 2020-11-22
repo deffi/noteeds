@@ -39,12 +39,14 @@ class AbstractTreeModel(QAbstractItemModel):
 
     # *** Location bookkeeping
 
+    # noinspection PyMethodMayBeStatic
     def location(self, index: QModelIndex) -> tuple[int]:
         if index.isValid():
             return index.internalPointer()
         else:
             return tuple()
 
+    # noinspection PyMethodOverriding
     def createIndex(self, row: int, column: int, ptr: Any) -> QModelIndex:
         # As stated by the QAbstractItemModel.createIndex documentation, we must
         # keep the value use for the internal pointer alive, because the

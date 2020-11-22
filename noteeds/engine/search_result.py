@@ -1,7 +1,6 @@
 from dataclasses import dataclass
-from textwrap import fill
 
-from noteeds.util.string import box, grep, prefix
+from noteeds.util.string import box, grep, prefix_lines
 from noteeds.util.iterable import sequence_join
 from noteeds.engine import FileEntry, Query
 
@@ -34,7 +33,7 @@ class SearchResult:
 
         def grep_entry(entry: FileEntry):
             return [f"{entry.absolute_path.stem}:",
-                    *prefix(grep(query.anywhere_pattern, entry.contents().splitlines()), "    "), ""]
+                    *prefix_lines(grep(query.anywhere_pattern, entry.contents().splitlines()), "    "), ""]
 
         def dump_set_and_grep(caption, result_set):
             return [*box(caption, "*"),

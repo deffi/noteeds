@@ -3,18 +3,19 @@ from pathlib import Path
 from typing import Optional
 
 from PySide2.QtCore import QSettings, Signal, Slot, QModelIndex
-from PySide2.QtGui import QCloseEvent, QDragEnterEvent, QDropEvent
-from PySide2.QtWidgets import QMainWindow, QMessageBox, QApplication, QWidget
+from PySide2.QtGui import QCloseEvent
+from PySide2.QtWidgets import QMainWindow, QMessageBox, QWidget
 
-from noteeds.engine import Repository, Query, Engine, SearchResult
+from noteeds.engine import Repository, Query, Engine
 from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor
 from noteeds.gui.ui_main_window import Ui_MainWindow
 from noteeds.gui.log_table import LogTable
-from noteeds.util.progress import Tracker, CancelException
+from noteeds.util.progress import Tracker
 
 logger = logging.getLogger(__name__)
 
 
+# noinspection PyPep8Naming
 class MainWindow(QMainWindow):
     value_changed = Signal(int)
 
@@ -116,7 +117,6 @@ class MainWindow(QMainWindow):
 
         query = Query(text, False, None, 0)
         result = self._engine.find(query)
-        self._result = result
         self._search_result_model.set_result(result)
         self.ui.resultsTree.expandAll()
 
