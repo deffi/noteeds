@@ -1,10 +1,15 @@
 from typing import Optional
 from pathlib import Path
+from time import sleep
+from random import uniform
 
 from noteeds.util.io import read_file
 
 
 class FileEntry:
+    load_delay: Optional[float] = None
+    load_delay_probability: float = 1
+
     def __init__(self, path: Path, repository: "Repository"):
         self._absolute_path: Path = path
         self._repository: "Repository" = repository
@@ -31,11 +36,9 @@ class FileEntry:
         return self._repository
 
     def _read(self) -> str:
-        # # TODO make configurable for debugging purposes
-        # from time import sleep
-        # from random import randrange
-        # if randrange(20) == 0:
-        #     sleep(0.01)
+        if self.load_delay:
+            if uniform(0, 1) <= self.load_delay_probability:
+                sleep(self.load_delay)
 
         return read_file(self.absolute_path)
 
