@@ -12,7 +12,7 @@ class Engine:
 
     def load_all(self, progress_tracker: Optional[Tracker]):
         if progress_tracker is None:
-            progress_tracker = Tracker(None)  # TODO DummyTracker instead
+            progress_tracker = Tracker(None)
 
         self._entries = set.union(*(repo.entries() for repo in self._repositories))
 

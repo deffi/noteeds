@@ -1,6 +1,5 @@
 General:
   * Switching between or merging multiple directories
-  * Tracker: handle no monitor
 
 Configuration:
   * Use something other than QSettings (appdirs?) so the CLI/CUI doesn't require
@@ -10,6 +9,7 @@ Configuration:
 GUI:
   * Load (with progress dialog) after starting the QApplication and showing the
     main window
+  * Scroll to first match in file
   * Handle cancelation while loading
   * GUI cleanup
   * Show number of files per category (result set), number of matches per file

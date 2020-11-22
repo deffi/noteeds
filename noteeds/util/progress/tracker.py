@@ -5,7 +5,7 @@ from noteeds.util.progress import Monitor
 
 
 class Tracker:
-    def __init__(self, monitor: Monitor, *,
+    def __init__(self, monitor: Optional[Monitor], *,
                  steps: Optional[int] = None, delta: Optional[int] = None, delta_t: Optional[float] = None):
         if steps is not None and delta is not None:
             raise ValueError("Only one of steps and delta can be specified")
@@ -23,6 +23,9 @@ class Tracker:
         self._next_value = None
 
     def start(self, total: int):
+        if not self._monitor:
+            return
+
         self._total = total
 
         if self._steps:
@@ -36,6 +39,9 @@ class Tracker:
         self._monitor.start(total)
 
     def progress(self, progress: int):
+        if not self._monitor:
+            return
+
         # Ignore if not yet started or already done
         if not self._running:
             return
