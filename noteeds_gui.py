@@ -1,5 +1,7 @@
 import sys
+from dataclasses import dataclass
 from pathlib import Path
+import argparse
 
 import logging
 from PySide2.QtCore import QTimer
@@ -8,7 +10,16 @@ from PySide2.QtWidgets import QApplication
 from noteeds.engine import FileEntry
 from noteeds.gui import MainWindow, LogEmitter
 
-if __name__ == "__main__":
+
+@dataclass()
+class Args(argparse.Namespace):
+    repositories: list[Path] = None
+    text: str = None
+    load_delay: float = None
+    load_delay_probability: float = 0.05
+
+
+def noteeds_gui(args: Args):
     # Configure logging
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.INFO)
@@ -24,16 +35,10 @@ if __name__ == "__main__":
         root_logger.error("Unhandled exception", exc_info=(e_type, e_value, e_traceback))
     sys.excepthook = excepthook
 
-    # TODO remove text; GUI configuration for root
-    if len(sys.argv) < 3:
-        print(f"Usage: {sys.argv[0]} root text")
-        exit(1)
-
-    root = Path(sys.argv[1])
-    text = sys.argv[2]
-
-    FileEntry.load_delay = 0.01
-    FileEntry.load_delay_probability = 0.05
+    root = args.repositories[0]
+    text = args.text
+    FileEntry.load_delay = args.load_delay
+    FileEntry.load_delay_probability = args.load_delay_probability
 
     app = QApplication(sys.argv)
     app.setOrganizationName("noteeds")
@@ -50,3 +55,16 @@ if __name__ == "__main__":
     result = app.exec_()
     window.store_settings()
     sys.exit(result)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--load-delay", type=float)
+    parser.add_argument("--load-delay-probability", type=float)
+    parser.add_argument("--repository", "-r", action='append', dest="repositories", type=Path)
+    parser.add_argument("text")
+    args = parser.parse_args(namespace=Args())
+    noteeds_gui(args)
+
+if __name__ == "__main__":
+    main()

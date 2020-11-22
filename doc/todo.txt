@@ -1,6 +1,4 @@
 Next:
-  * Load (with progress dialog) after starting the QApplication and showing the
-    main window
   * Multiple repos
 
 Then:

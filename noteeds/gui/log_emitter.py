@@ -1,3 +1,4 @@
+from typing import Optional
 import logging
 
 from PySide2.QtCore import QObject, Signal
@@ -20,6 +21,6 @@ class LogEmitter(QObject):
     method."""
     log = Signal(logging.LogRecord)
 
-    def __init__(self, parent: QObject):
+    def __init__(self, parent: Optional[QObject]):
         super().__init__(parent)
         self.handler = _Handler(self.log)
