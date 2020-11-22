@@ -4,7 +4,7 @@ from time import monotonic
 from noteeds.util.progress import Monitor
 
 
-T = TypeVar()
+T = TypeVar("T")
 
 
 class Tracker:
