@@ -1,7 +1,10 @@
-from typing import Optional
+from typing import Optional, TypeVar
 from time import monotonic
 
 from noteeds.util.progress import Monitor
+
+
+T = TypeVar()
 
 
 class Tracker:
@@ -22,7 +25,7 @@ class Tracker:
         self._next_time = None
         self._next_value = None
 
-    def start(self, total: int):
+    def start(self, total: int) -> None:
         if not self._monitor:
             return
 
@@ -38,7 +41,7 @@ class Tracker:
 
         self._monitor.start(total)
 
-    def progress(self, progress: int):
+    def progress(self, progress: int) -> None:
         if not self._monitor:
             return
 
@@ -68,12 +71,12 @@ class Tracker:
             if notify_monitor:
                 self._monitor.progress(progress)
 
-    def next(self, increment: int = 1):
+    def next(self, increment: int = 1) -> None:
         self.progress(self._progress + increment)
 
-    def done(self):
+    def done(self) -> None:
         self.progress(self._total)
 
-    def wrap(self, value, /, increment: int = 1):
+    def wrap(self, value: T, /, increment: int = 1) -> T:
         self.next(increment)
         return value
