@@ -1,11 +1,14 @@
+import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
 import argparse
+import ctypes
 
 import logging
 from PySide2.QtCore import QTimer
 from PySide2.QtWidgets import QApplication
+from PySide2.QtGui import QIcon
 
 from noteeds.engine import FileEntry
 from noteeds.gui import MainWindow, LogEmitter
@@ -35,6 +38,11 @@ def noteeds_gui(args: Args):
         root_logger.error("Unhandled exception", exc_info=(e_type, e_value, e_traceback))
     sys.excepthook = excepthook
 
+    # On Windows, set the AppUserModelID so the taskbar shows the application's
+    # icon rather than the pythonw.exe icon.
+    if os.name == "nt":
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("noteeds.noteeds")
+
     root = args.repositories[0]
     text = args.text
     FileEntry.load_delay = args.load_delay
@@ -44,6 +52,11 @@ def noteeds_gui(args: Args):
     app.setOrganizationName("noteeds")
     app.setOrganizationDomain("noteeds.invalid")
     app.setApplicationName("noteeds")
+
+    # icon_path = Path(__file__).parent / "images" / "icon48.png"
+    icon_path = Path(__file__).parent / "images" / "icon.ico"
+    icon = QIcon(str(icon_path))
+    app.setWindowIcon(icon)
 
     window = MainWindow(None)
     log_emitter.log.connect(window.log_message)
