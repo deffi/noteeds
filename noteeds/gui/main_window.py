@@ -118,6 +118,9 @@ class MainWindow(QMainWindow):
         if at_end:
             self.ui.logTable.scrollToBottom()
 
+        if log_record.levelno >= logging.ERROR:
+            self.ui.dock.setVisible(True)
+
     def search(self, text: str) -> None:
         if self._engine is None:
             return
