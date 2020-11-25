@@ -47,6 +47,7 @@ class MainWindow(QMainWindow):
         self.ui.resultsTree.setModel(self._search_result_model)
         self.ui.resultsTree.selectionModel().currentChanged.connect(self.file_selection_changed)
         self.ui.logTable.setModel(self._log_model)
+        self.ui.dock.setVisible(False)
 
     def closeEvent(self, event: QCloseEvent) -> None:
         if self.confirm_close():
