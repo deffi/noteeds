@@ -1,6 +1,5 @@
 Next:
-  * Create Icon
-  * Systray
+  * Systray icon
   * Global hotkey
     http://stackoverflow.com/questions/11813823/global-hotkeys-in-a-cross-platform-qt-application
 
