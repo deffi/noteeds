@@ -100,6 +100,7 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <addaction name="hideAction"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="viewMenu"/>
@@ -144,6 +145,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="hideAction">
+   <property name="text">
+    <string>&amp;Hide</string>
+   </property>
+   <property name="toolTip">
+    <string>Hide window to systray</string>
+   </property>
+   <property name="shortcut">
+    <string>Esc</string>
    </property>
   </action>
  </widget>
