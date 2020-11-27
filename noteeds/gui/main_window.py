@@ -2,13 +2,12 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-from PySide2.QtCore import QSettings, Signal, Slot, QModelIndex, QTimer
-from PySide2.QtGui import QCloseEvent, QIcon, QFont
-from PySide2.QtWidgets import QMainWindow, QMessageBox, QWidget, QApplication, QSystemTrayIcon, QMenu, QAction
-from system_hotkey import SystemHotkey
+from PySide2.QtCore import QSettings, Signal, Slot, QModelIndex
+from PySide2.QtGui import QCloseEvent, QFont
+from PySide2.QtWidgets import QMainWindow, QMessageBox, QWidget, QApplication
 
 from noteeds.engine import Repository, Query, Engine
-from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor, SystrayIcon
+from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor, SystrayIcon, GlobalHotkey
 from noteeds.gui.ui_main_window import Ui_MainWindow
 from noteeds.gui.log_table import LogTable
 from noteeds.util.progress import Tracker
@@ -18,10 +17,6 @@ logger = logging.getLogger(__name__)
 
 # noinspection PyPep8Naming
 class MainWindow(QMainWindow):
-    global_hotkey_pressed = Signal()
-
-    value_changed = Signal(int)
-
     ##########
     # Window #
     ##########
@@ -32,14 +27,14 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # *** Window
+        self._exit_on_close: bool = False
         self._systray_icon = SystrayIcon(self)
         self._systray_icon.show_window.connect(self.show_window)
-        self._systray_icon.exit.connect(self.ui.exitAction.triggered)
+        self._systray_icon.exit.connect(self.exit)
 
         # *** Hotkey
-        hk = SystemHotkey()
-        hk.register(('shift', 'alt', 'w'), callback=lambda _: self.global_hotkey_pressed.emit())
-        self.global_hotkey_pressed.connect(self.show_window)
+        self._hotkey = GlobalHotkey(self)
+        self._hotkey.pressed.connect(self.show_window)
 
         # *** Data
         self._repositories: list[Repository] = []
@@ -51,7 +46,7 @@ class MainWindow(QMainWindow):
         self._highlighter = Highlighter(self.ui.textView.document())
 
         # *** Menu
-        self.ui.exitAction.triggered.connect(self.close)
+        self.ui.exitAction.triggered.connect(self.exit)
         self.ui.viewMenu.addAction(self.ui.dock.toggleViewAction())
         self.ui.hideAction.triggered.connect(self.hide_window)
 
@@ -62,13 +57,6 @@ class MainWindow(QMainWindow):
         self.ui.resultsTree.selectionModel().currentChanged.connect(self.file_selection_changed)
         self.ui.logTable.setModel(self._log_model)
         self.ui.dock.setVisible(False)
-
-    def closeEvent(self, event: QCloseEvent) -> None:
-        if self.confirm_close():
-            event.accept()
-            super().closeEvent(event)
-        else:
-            event.ignore()
 
     def startup(self):
         QApplication.instance().processEvents()
@@ -114,9 +102,9 @@ class MainWindow(QMainWindow):
         self.ui.logTable.header().restoreState(settings.value("log_table_header_state"))
         settings.endGroup()
 
-    ######
-    # UI #
-    ######
+    ##########
+    # Window #
+    ##########
 
     @Slot()
     def hide_window(self):
@@ -130,10 +118,22 @@ class MainWindow(QMainWindow):
         self.ui.textInput.selectAll()
         self.ui.textInput.setFocus()
 
-    def confirm_close(self) -> bool:
-        return True
-        #result = QMessageBox.question(self, self.windowTitle(), "Really exit?")
-        # return result == QMessageBox.Yes
+    @Slot()
+    def exit(self):
+        self._exit_on_close = True
+        self.close()
+
+    def closeEvent(self, event: QCloseEvent) -> None:
+        if self._exit_on_close:
+            event.accept()
+            super().closeEvent(event)
+        else:
+            event.ignore()
+            self.hide_window()
+
+    ######
+    # UI #
+    ######
 
     @Slot(logging.LogRecord)
     def log_message(self, log_record: logging.LogRecord) -> None:
