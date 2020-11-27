@@ -1,8 +1,3 @@
-Next:
-  * Systray icon
-  * Global hotkey
-    http://stackoverflow.com/questions/11813823/global-hotkeys-in-a-cross-platform-qt-application
-
 Configuration:
   * Different sets of configuration for production/development on the same
     machine
@@ -13,6 +8,7 @@ Configuration:
   * Configuration GUI
   * Name for repositories
   * Enable/disable repos
+  * Make global hotkey configurable
 
 GUI:
   * Font in text view is very small
@@ -38,6 +34,7 @@ GUI:
   * Qt Markdown example with QWebChannel und QWebEngineView
     https://doc.qt.io/qt-5.10/qtwebengine-webenginewidgets-markdowneditor-example.html
   * Show repository names
+  * Add global hotkey to systray icon tooltip
 
 Engine:
   * Extended matching

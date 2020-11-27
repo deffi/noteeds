@@ -5,6 +5,7 @@ from typing import Optional
 from PySide2.QtCore import QSettings, Signal, Slot, QModelIndex, QTimer
 from PySide2.QtGui import QCloseEvent, QIcon, QFont
 from PySide2.QtWidgets import QMainWindow, QMessageBox, QWidget, QApplication, QSystemTrayIcon, QMenu, QAction
+from system_hotkey import SystemHotkey
 
 from noteeds.engine import Repository, Query, Engine
 from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor
@@ -17,6 +18,8 @@ logger = logging.getLogger(__name__)
 
 # noinspection PyPep8Naming
 class MainWindow(QMainWindow):
+    global_hotkey_pressed = Signal()
+
     value_changed = Signal(int)
 
     ##########
@@ -47,6 +50,11 @@ class MainWindow(QMainWindow):
         self._systray_menu.addAction(self._systray_show_action)
         self._systray_menu.addAction(self._systray_exit_action)
         self._systray_icon.setContextMenu(self._systray_menu)
+
+        # *** Hotkey
+        hk = SystemHotkey()
+        hk.register(('shift', 'alt', 'w'), callback=lambda _: self.global_hotkey_pressed.emit())
+        self.global_hotkey_pressed.connect(self.systray_show)
 
         # *** Data
         self._repositories: list[Repository] = []
@@ -126,6 +134,7 @@ class MainWindow(QMainWindow):
     # UI #
     ######
 
+    @Slot()
     def systray_show(self):
         self.show()
         self._systray_icon.hide()

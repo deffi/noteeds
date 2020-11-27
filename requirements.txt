@@ -1,1 +1,3 @@
 PySide2
+pywin32
+system-hotkey
