@@ -8,7 +8,7 @@ from PySide2.QtWidgets import QMainWindow, QMessageBox, QWidget, QApplication, Q
 from system_hotkey import SystemHotkey
 
 from noteeds.engine import Repository, Query, Engine
-from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor
+from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor, SystrayIcon
 from noteeds.gui.ui_main_window import Ui_MainWindow
 from noteeds.gui.log_table import LogTable
 from noteeds.util.progress import Tracker
@@ -31,30 +31,15 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # *** Systray icon
-        # Icon
-        self._systray_icon = QSystemTrayIcon(QApplication.instance().windowIcon(), self)
-        self._systray_icon.setToolTip("Noteeds")
-        self._systray_icon.activated.connect(self.systray_icon_activated)
-        # Show action
-        font = QFont()
-        self._systray_show_action = QAction("&Show", self)
-        font.setBold(True)
-        self._systray_show_action.setFont(font)
-        self._systray_show_action.triggered.connect(self.systray_show)
-        # Exit action
-        self._systray_exit_action = QAction("E&xit", self)
-        self._systray_exit_action.triggered.connect(self.ui.exitAction.triggered)
-        # Menu
-        self._systray_menu = QMenu(self)
-        self._systray_menu.addAction(self._systray_show_action)
-        self._systray_menu.addAction(self._systray_exit_action)
-        self._systray_icon.setContextMenu(self._systray_menu)
+        # *** Window
+        self._systray_icon = SystrayIcon(self)
+        self._systray_icon.show_window.connect(self.show_window)
+        self._systray_icon.exit.connect(self.ui.exitAction.triggered)
 
         # *** Hotkey
         hk = SystemHotkey()
         hk.register(('shift', 'alt', 'w'), callback=lambda _: self.global_hotkey_pressed.emit())
-        self.global_hotkey_pressed.connect(self.systray_show)
+        self.global_hotkey_pressed.connect(self.show_window)
 
         # *** Data
         self._repositories: list[Repository] = []
@@ -68,8 +53,7 @@ class MainWindow(QMainWindow):
         # *** Menu
         self.ui.exitAction.triggered.connect(self.close)
         self.ui.viewMenu.addAction(self.ui.dock.toggleViewAction())
-        self.ui.hideAction.triggered.connect(self._systray_icon.show)
-        self.ui.hideAction.triggered.connect(self.hide)
+        self.ui.hideAction.triggered.connect(self.hide_window)
 
         # *** Widgets ***
         self.ui.splitter.setStretchFactor(0, 0)
@@ -135,16 +119,16 @@ class MainWindow(QMainWindow):
     ######
 
     @Slot()
-    def systray_show(self):
-        self.show()
+    def hide_window(self):
+        self._systray_icon.show()
+        self.hide()
+
+    @Slot()
+    def show_window(self):
         self._systray_icon.hide()
+        self.show()
         self.ui.textInput.selectAll()
         self.ui.textInput.setFocus()
-
-    @Slot(QSystemTrayIcon.ActivationReason)
-    def systray_icon_activated(self, reason: QSystemTrayIcon.ActivationReason):
-        if reason == QSystemTrayIcon.Trigger:
-            self.systray_show()
 
     def confirm_close(self) -> bool:
         return True
