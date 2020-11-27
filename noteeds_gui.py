@@ -43,7 +43,6 @@ def noteeds_gui(args: Args):
     if os.name == "nt":
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("noteeds.noteeds")
 
-    root = args.repositories[0]
     text = args.text
     FileEntry.load_delay = args.load_delay
     FileEntry.load_delay_probability = args.load_delay_probability
