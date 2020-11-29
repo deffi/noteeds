@@ -77,14 +77,12 @@
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectItems</enum>
         </property>
-        <property name="columnCount">
-         <number>4</number>
+        <property name="rootIsDecorated">
+         <bool>false</bool>
         </property>
-        <column>
-         <property name="text">
-          <string>Enabled</string>
-         </property>
-        </column>
+        <property name="columnCount">
+         <number>3</number>
+        </property>
         <column>
          <property name="text">
           <string>Name</string>

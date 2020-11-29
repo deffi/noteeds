@@ -20,7 +20,7 @@ class SettingsDialog(QDialog):
         self.ui = Ui_SettingsDialog()
         self.ui.setupUi(self)
 
-        self.ui.reposTree.setItemDelegateForColumn(2, ColorDelegate(self))
+        self.ui.reposTree.setItemDelegateForColumn(1, ColorDelegate(self))
         self.ui.reposTree.setEditTriggers(QAbstractItemView.AllEditTriggers & ~QAbstractItemView.CurrentChanged)
 
     def set_config(self, config: Config):
@@ -32,11 +32,11 @@ class SettingsDialog(QDialog):
         for repo in config.repositories:
             item = QTreeWidgetItem()
             item.setFlags(item.flags() & ~Qt.ItemIsDropEnabled | Qt.ItemIsEditable)
-            item.setCheckState(0, (Qt.Checked if repo.enabled else Qt.Unchecked))
-            item.setText(1, repo.name or "")
-            item.setData(2, Qt.DisplayRole, "")
-            item.setData(2, Qt.DecorationRole, repo.color)
-            item.setText(3, str(repo.root))
+            item.setData(0, Qt.CheckStateRole, (Qt.Checked if repo.enabled else Qt.Unchecked))
+            item.setText(0, repo.name or "")
+            item.setData(1, Qt.DisplayRole, "")
+            item.setData(1, Qt.DecorationRole, repo.color)
+            item.setText(2, str(repo.root))
 
             self.ui.reposTree.addTopLevelItem(item)
 

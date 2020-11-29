@@ -1,4 +1,5 @@
 Next:
+  * Browse for path
   * Rename "repository" to "repo", "configuration" to "config"
   * ColorEditorWidget: too narrow, button is clipped
   * Remaining settings in settings dialog

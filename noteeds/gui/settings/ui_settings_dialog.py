@@ -65,7 +65,8 @@ class Ui_SettingsDialog(object):
         self.reposTree.setDragEnabled(True)
         self.reposTree.setDragDropMode(QAbstractItemView.InternalMove)
         self.reposTree.setSelectionBehavior(QAbstractItemView.SelectItems)
-        self.reposTree.setColumnCount(4)
+        self.reposTree.setRootIsDecorated(False)
+        self.reposTree.setColumnCount(3)
 
         self.gridLayout.addWidget(self.reposTree, 0, 0, 3, 1)
 
@@ -104,9 +105,8 @@ class Ui_SettingsDialog(object):
         self.addReposButton.setText(QCoreApplication.translate("SettingsDialog", u"&Add", None))
         self.removeReposButton.setText(QCoreApplication.translate("SettingsDialog", u"&Remove", None))
         ___qtreewidgetitem = self.reposTree.headerItem()
-        ___qtreewidgetitem.setText(3, QCoreApplication.translate("SettingsDialog", u"Path", None));
-        ___qtreewidgetitem.setText(2, QCoreApplication.translate("SettingsDialog", u"Color", None));
-        ___qtreewidgetitem.setText(1, QCoreApplication.translate("SettingsDialog", u"Name", None));
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("SettingsDialog", u"Enabled", None));
+        ___qtreewidgetitem.setText(2, QCoreApplication.translate("SettingsDialog", u"Path", None));
+        ___qtreewidgetitem.setText(1, QCoreApplication.translate("SettingsDialog", u"Color", None));
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("SettingsDialog", u"Name", None));
     # retranslateUi
 
