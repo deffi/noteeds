@@ -2,7 +2,7 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from noteeds.engine.repository import FileEntry, Repository
+from noteeds.engine.repository import FileEntry, Repository, Config as RepositoryConfig
 
 
 class RepositoryTest(unittest.TestCase):
@@ -23,11 +23,11 @@ class RepositoryTest(unittest.TestCase):
             (repo_path / ".dotdir").mkdir()
             (repo_path / ".dotdir" / ".dotfoo").touch()
 
-            repo = Repository(repo_path)
+            repo = Repository(RepositoryConfig(None, repo_path, None))
 
             self.assertSetEqual({
-                FileEntry(repo_path / "foo"),
-                FileEntry(repo_path / "bar"),
+                FileEntry(repo_path / "foo", Repository),
+                FileEntry(repo_path / "bar", Repository),
             }, set(repo.entries()))
 
 

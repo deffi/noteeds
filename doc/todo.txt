@@ -1,14 +1,18 @@
+Next:
+  * Rename "repository" to "repo", "configuration" to "config"
+  * ColorEditorWidget: too narrow, button is clipped
+  * Remaining settings in settings dialog
+  * Store/load settings
+  * Apply new settings
+  * Make GlobalHotkey understand QKeySequence
+
 Configuration:
   * Different sets of configuration for production/development on the same
     machine
-  * Configuration data structures
   * Mechanism for applying changed configuration
   * Use something other than QSettings (appdirs?) so the CLI/CUI doesn't require
     Qt?
-  * Configuration GUI
-  * Name for repositories
-  * Enable/disable repos
-  * Make global hotkey configurable
+  * ColorDelegate: clear button in delegate, get rid of ColorEditWidget?
 
 GUI:
   * Font in text view is very small

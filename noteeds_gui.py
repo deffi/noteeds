@@ -8,7 +8,7 @@ import ctypes
 import logging
 from PySide2.QtCore import QTimer
 from PySide2.QtWidgets import QApplication
-from PySide2.QtGui import QIcon
+from PySide2.QtGui import QIcon, QColor
 
 from noteeds.engine import FileEntry
 from noteeds.gui import MainWindow, LogEmitter
@@ -20,6 +20,7 @@ class Args(argparse.Namespace):
     text: str = None
     load_delay: float = None
     load_delay_probability: float = 0.05
+    settings: bool = False
 
 
 def noteeds_gui(args: Args):
@@ -57,16 +58,31 @@ def noteeds_gui(args: Args):
     icon = QIcon(str(icon_path))
     app.setWindowIcon(icon)
 
-    window = MainWindow(None)
-    log_emitter.log.connect(window.log_message)
-    window.load_settings()
-    window.set_repositories(args.repositories)
-    window.set_text(text)
-    window.show()
-    QTimer.singleShot(0, window.startup)
-    result = app.exec_()
-    window.store_settings()
-    sys.exit(result)
+    if args.settings:
+        from noteeds.gui.settings import SettingsDialog
+        from noteeds.engine.config import Config, GuiConfig
+        from noteeds.engine.repository import Config as RepositoryConfig
+        repos = [RepositoryConfig(
+            Path(repo).stem.capitalize(),
+            Path(repo),
+            QColor.fromHsl(255 * index / len(args.repositories), 255, 223) if index > 0 else None,
+            True) for index, repo in enumerate(args.repositories)]
+        gui_config = GuiConfig(True, True, ("alt", "shift", "w"))
+        config = Config(gui_config, repos)
+        dialog = SettingsDialog(None)
+        dialog.set_config(config)
+        dialog.exec_()
+    else:
+        window = MainWindow(None)
+        log_emitter.log.connect(window.log_message)
+        window.load_settings()
+        window.set_repositories(args.repositories)
+        window.set_text(text)
+        window.show()
+        QTimer.singleShot(0, window.startup)
+        result = app.exec_()
+        window.store_settings()
+        sys.exit(result)
 
 
 def main():
@@ -74,6 +90,7 @@ def main():
     parser.add_argument("--load-delay", type=float)
     parser.add_argument("--load-delay-probability", type=float)
     parser.add_argument("--repository", "-r", action='append', dest="repositories", type=Path)
+    parser.add_argument("--settings", action="store_true")
     parser.add_argument("text")
     args = parser.parse_args(namespace=Args())
     noteeds_gui(args)

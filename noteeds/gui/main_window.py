@@ -3,10 +3,11 @@ from pathlib import Path
 from typing import Optional
 
 from PySide2.QtCore import QSettings, Signal, Slot, QModelIndex
-from PySide2.QtGui import QCloseEvent, QFont
+from PySide2.QtGui import QCloseEvent, QFont, QColor
 from PySide2.QtWidgets import QMainWindow, QMessageBox, QWidget, QApplication
 
 from noteeds.engine import Repository, Query, Engine
+from noteeds.engine.repository import Config as RepositoryConfig
 from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor, SystrayIcon, GlobalHotkey
 from noteeds.gui.ui_main_window import Ui_MainWindow
 from noteeds.gui.log_table import LogTable
@@ -71,10 +72,14 @@ class MainWindow(QMainWindow):
 
     def set_repositories(self, paths: list[Path]) -> None:
         self.ui.rootLabel.setText(f"Root: ...")
+
         if len(paths) == 1:
-            self._repositories = [Repository(paths[0], hue=None)]
+            repos = [RepositoryConfig(None, paths[0], color=None)]
         else:
-            self._repositories = [Repository(path, index/len(paths)) for index, path in enumerate(paths)]
+            repos = [RepositoryConfig(None, path, QColor.fromHsv(int(index/len(paths)*255), 10, 255), True)
+                     for index, path in enumerate(paths)]
+
+        self._repositories = [Repository(config) for config in repos]
 
     def set_text(self, text: str) -> None:
         self.ui.textInput.setText(text)
