@@ -8,7 +8,7 @@ from PySide2.QtWidgets import QDialog, QMessageBox, QWidget, QTreeWidgetItem, QA
 from noteeds.engine.config import Config
 from noteeds.engine.repository import Config as RepositoryConfig
 from noteeds.gui.settings.ui_settings_dialog import Ui_SettingsDialog
-from noteeds.gui.settings import ColorDelegate
+from noteeds.gui.settings import ColorDelegate, PathBrowseDelegate
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +21,7 @@ class SettingsDialog(QDialog):
         self.ui.setupUi(self)
 
         self.ui.reposTree.setItemDelegateForColumn(1, ColorDelegate(self))
+        self.ui.reposTree.setItemDelegateForColumn(2, PathBrowseDelegate(self))
         self.ui.reposTree.setEditTriggers(QAbstractItemView.AllEditTriggers & ~QAbstractItemView.CurrentChanged)
 
     def set_config(self, config: Config):
@@ -36,7 +37,7 @@ class SettingsDialog(QDialog):
             item.setText(0, repo.name or "")
             item.setData(1, Qt.DisplayRole, "")
             item.setData(1, Qt.DecorationRole, repo.color)
-            item.setText(2, str(repo.root))
+            item.setData(2, Qt.EditRole, str(repo.root))
 
             self.ui.reposTree.addTopLevelItem(item)
 

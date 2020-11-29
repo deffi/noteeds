@@ -1,6 +1,7 @@
 Next:
-  * Browse for path
-  * Rename "repository" to "repo", "configuration" to "config"
+  * Rename ColorEditWidget to color_widget (analogous to color_delegate)
+  * ColorWidget, PathBrowseWidget: remove property?
+  * Remove @Slot where not required
   * Remaining settings in settings dialog
   * Store/load settings
   * Apply new settings
