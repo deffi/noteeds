@@ -3,8 +3,9 @@ import unittest
 
 from noteeds.engine import Query
 
+
 class QueryTest(unittest.TestCase):
-    def test_effecitve_regex(self):
+    def test_effective_regex(self):
         self.assertEqual(r"foo", Query("foo", False, None, 0).effective_regex)
         self.assertEqual(r"foo", Query("foo", True , None, 0).effective_regex)
 

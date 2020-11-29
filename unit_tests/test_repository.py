@@ -18,12 +18,12 @@ class RepositoryTest(unittest.TestCase):
             (repo_path / "foo").touch()
             (repo_path / "bar").touch()
             (repo_path / ".dot").touch()
-            (repo_path / "subdir").mkdir()
-            (repo_path / "subdir" / "subfoo").touch()
-            (repo_path / ".dotdir").mkdir()
-            (repo_path / ".dotdir" / ".dotfoo").touch()
+            (repo_path / "sub_dir").mkdir()
+            (repo_path / "sub_dir" / "sub_foo").touch()
+            (repo_path / ".dot_dir").mkdir()
+            (repo_path / ".dot_dir" / ".dot_foo").touch()
 
-            repo = Repository(RepositoryConfig(None, repo_path, None))
+            repo = Repository(RepositoryConfig(None, repo_path, None, True))
 
             self.assertSetEqual({
                 FileEntry(repo_path / "foo", Repository),

@@ -11,7 +11,7 @@ class IterableTest(unittest.TestCase):
         self.assertEqual([], list(pairs([])))
 
     def test_sequence_join(self):
-        self.assertEqual([1, 2, 3, 11, 22, 4, 5, 11, 22], list(sequence_join([11, 22], [[1,2,3], [4,5], []])))
+        self.assertEqual([1, 2, 3, 11, 22, 4, 5, 11, 22], list(sequence_join([11, 22], [[1, 2, 3], [4, 5], []])))
 
 
 if __name__ == '__main__':

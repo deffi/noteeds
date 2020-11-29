@@ -32,6 +32,7 @@ def noteeds_gui(args: Args):
 
     # Install an excepthook to log unhandled exceptions
     original_excepthook = sys.excepthook
+
     def excepthook(e_type, e_value, e_traceback):
         # Call the original hook before logging the error, because logging may
         # fail.
@@ -65,7 +66,7 @@ def noteeds_gui(args: Args):
         repos = [RepositoryConfig(
             Path(repo).stem.capitalize(),
             Path(repo),
-            QColor.fromHsl(255 * index / len(args.repositories), 255, 223) if index > 0 else None,
+            QColor.fromHsl(int(255 * index / len(args.repositories)), 255, 223) if index > 0 else None,
             True) for index, repo in enumerate(args.repositories)]
         gui_config = GuiConfig(True, True, ("alt", "shift", "w"))
         config = Config(gui_config, repos)
@@ -94,6 +95,7 @@ def main():
     parser.add_argument("text")
     args = parser.parse_args(namespace=Args())
     noteeds_gui(args)
+
 
 if __name__ == "__main__":
     main()

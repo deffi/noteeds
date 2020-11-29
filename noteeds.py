@@ -6,7 +6,7 @@ from noteeds.util.string import join_lines
 
 from noteeds.engine import Repository, Engine, Query
 from noteeds.util.timing import stopwatch
-from noteeds.util.progress import Tracker, TextMonitor, BarMonitor
+from noteeds.util.progress import Tracker, BarMonitor
 
 if len(sys.argv) < 3:
     print(f"Usage: {sys.argv[0]} root text")
@@ -15,7 +15,7 @@ if len(sys.argv) < 3:
 root = Path(sys.argv[1])
 text = sys.argv[2]
 
-_patternsitory = Repository(root)
+repository = Repository(root)
 engine = Engine([repository])
 query = Query(text, False, None)
 
