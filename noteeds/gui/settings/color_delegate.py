@@ -7,6 +7,7 @@ from PySide2.QtGui import QPixmap, QIcon, QPainter
 from PySide2.QtWidgets import QStyledItemDelegate, QWidget, QStyleOptionViewItem, QStyle, QStyleOption
 
 from noteeds.gui.settings import ColorEditWidget
+from noteeds.util.geometry import adjust_size
 
 
 logger = logging.getLogger(__name__)
@@ -41,7 +42,15 @@ class ColorDelegate(QStyledItemDelegate):
         model.setData(index, editor.get_color(), Qt.DecorationRole)
 
     def updateEditorGeometry(self, editor: QWidget, option: QStyleOptionViewItem, index: QModelIndex):
-        editor.setGeometry(option.rect)
+        geometry = option.rect
+
+        # If the rectangle is to small for the minimum size of the editor,
+        # enlarge it
+        dw = editor.minimumSizeHint().width() - geometry.width()
+        if dw > 0:
+            adjust_size(geometry, dw, 0, editor.layoutDirection())
+
+        editor.setGeometry(geometry)
 
     def initStyleOption(self, option: QStyleOptionViewItem, index: QModelIndex):
         super().initStyleOption(option, index)
