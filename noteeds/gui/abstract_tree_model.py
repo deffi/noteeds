@@ -80,6 +80,7 @@ class AbstractTreeModel(QAbstractItemModel):
         child_location = parent_location + (row, )
         return self.createIndex(row, column, child_location)
 
+    # noinspection PyMethodOverriding
     def parent(self, child: QModelIndex) -> QModelIndex:
         location = self.location(child)
         if len(location) < 2:

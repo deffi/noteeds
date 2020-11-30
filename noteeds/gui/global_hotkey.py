@@ -13,5 +13,5 @@ class GlobalHotkey(QObject):
         hk = SystemHotkey()
         hk.register(('shift', 'alt', 'w'), callback=self._callback)
 
-    def _callback(self, *args, **kwargs):
+    def _callback(self, *_, **__):
         self.pressed.emit()

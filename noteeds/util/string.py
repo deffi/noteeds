@@ -19,10 +19,10 @@ def box(text: str, character: str, border_width: int = 2) -> list[str]:
     return [border_line, text_line, border_line]
 
 
-#def find_occurrences(self, text, file_name):
-#    file_contents = self.get_file_contents(file_name)
-#    p = re.compile(re.escape(text), re.IGNORECASE)
-#    return [m.span() for m in p.finditer(file_contents)]
+# def find_occurrences(self, text, file_name):
+#     file_contents = self.get_file_contents(file_name)
+#     p = re.compile(re.escape(text), re.IGNORECASE)
+#     return [m.span() for m in p.finditer(file_contents)]
 
 
 def join_lines(lines: Iterator[str], width: Optional[int] = None) -> str:

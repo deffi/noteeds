@@ -74,7 +74,7 @@ class MainWindow(QMainWindow):
         self.ui.rootLabel.setText(f"Root: ...")
 
         if len(paths) == 1:
-            repos = [RepositoryConfig(None, paths[0], color=None)]
+            repos = [RepositoryConfig(None, paths[0], None, True)]
         else:
             repos = [RepositoryConfig(None, path, QColor.fromHsv(int(index/len(paths)*255), 10, 255), True)
                      for index, path in enumerate(paths)]

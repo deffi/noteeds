@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class ColorDelegate(QStyledItemDelegate):
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
         super().__init__(parent)
 
     def createEditor(self, parent: QWidget, option: QStyleOptionViewItem, index: QModelIndex) -> QWidget:
