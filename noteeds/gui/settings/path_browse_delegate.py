@@ -25,7 +25,6 @@ class PathBrowseDelegate(QStyledItemDelegate):
         path = index.data(Qt.EditRole)
         editor.set_path(path)
 
-    @Slot()
     def path_selected(self):
         self.commitData.emit(self.sender())
         self.closeEditor.emit(self.sender())

@@ -41,15 +41,12 @@ class SystrayIcon(QObject):
         self._show_action.triggered.connect(self.show_window)
         self._exit_action.triggered.connect(self.exit)
 
-    @Slot(QSystemTrayIcon.ActivationReason)
     def _activated(self, reason: QSystemTrayIcon.ActivationReason):
         if reason == QSystemTrayIcon.Trigger:
             self.show_window.emit()
 
-    @Slot()
     def show(self):
         self._systray_icon.show()
 
-    @Slot()
     def hide(self):
         self._systray_icon.hide()

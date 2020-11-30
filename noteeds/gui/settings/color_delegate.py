@@ -32,7 +32,6 @@ class ColorDelegate(QStyledItemDelegate):
         color = index.data(Qt.DecorationRole)
         editor.set_color(color)
 
-    @Slot()
     def color_picked(self):
         self.commitData.emit(self.sender())
         self.closeEditor.emit(self.sender())

@@ -111,19 +111,16 @@ class MainWindow(QMainWindow):
     # Window #
     ##########
 
-    @Slot()
     def hide_window(self):
         self._systray_icon.show()
         self.hide()
 
-    @Slot()
     def show_window(self):
         self._systray_icon.hide()
         self.show()
         self.ui.textInput.selectAll()
         self.ui.textInput.setFocus()
 
-    @Slot()
     def exit(self):
         self._exit_on_close = True
         self.close()
@@ -140,7 +137,6 @@ class MainWindow(QMainWindow):
     # UI #
     ######
 
-    @Slot(logging.LogRecord)
     def log_message(self, log_record: logging.LogRecord) -> None:
         scroll_bar = self.ui.logTable.verticalScrollBar()
         at_end = (scroll_bar.value() == scroll_bar.maximum())
@@ -170,7 +166,6 @@ class MainWindow(QMainWindow):
         self.search(text)
 
     # noinspection PyUnusedLocal
-    @Slot(QModelIndex, QModelIndex)
     def file_selection_changed(self, index: QModelIndex, previous_index: QModelIndex) -> None:
         # Get the file entry from the model; if the selected index does not
         # represent a file, this will be None.
