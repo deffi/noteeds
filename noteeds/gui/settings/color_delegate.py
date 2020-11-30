@@ -16,39 +16,9 @@ class ColorDelegate(QStyledItemDelegate):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-    def createEditor(self, parent: QWidget, option: QStyleOptionViewItem, index: QModelIndex) -> QWidget:
-        color = index.data(Qt.DecorationRole)
-        if color is None or isinstance(color, QColor):
-            editor = ColorEditWidget(parent)
-            editor.color_picked.connect(self.color_picked)
-            return editor
-        else:
-            logger.warning("ColorDelegate invoked on non-color")
-            return super().createEditor(parent, option, index)
-
-    def setEditorData(self, editor: QWidget, index: PySide2.QtCore.QModelIndex):
-        editor: ColorEditWidget
-        color = index.data(Qt.DecorationRole)
-        editor.set_color(color)
-
-    def color_picked(self):
-        self.commitData.emit(self.sender())
-        self.closeEditor.emit(self.sender())
-
-    def setModelData(self, editor: QWidget, model: QAbstractItemModel, index: QModelIndex):
-        editor: ColorEditWidget
-        model.setData(index, editor.get_color(), Qt.DecorationRole)
-
-    def updateEditorGeometry(self, editor: QWidget, option: QStyleOptionViewItem, index: QModelIndex):
-        geometry = option.rect
-
-        # If the rectangle is to small for the minimum size of the editor,
-        # enlarge it
-        dw = editor.minimumSizeHint().width() - geometry.width()
-        if dw > 0:
-            adjust_size(geometry, dw, 0, editor.layoutDirection())
-
-        editor.setGeometry(geometry)
+    #########
+    # Paint #
+    #########
 
     def initStyleOption(self, option: QStyleOptionViewItem, index: QModelIndex):
         super().initStyleOption(option, index)
@@ -76,3 +46,41 @@ class ColorDelegate(QStyledItemDelegate):
         super().paint(painter, option, index)
         option.state = option.state & ~QStyle.State_Selected
         super().paint(painter, option, index)
+
+    ########
+    # Edit #
+    ########
+
+    def createEditor(self, parent: QWidget, option: QStyleOptionViewItem, index: QModelIndex) -> QWidget:
+        color = index.data(Qt.DecorationRole)
+        if color is None or isinstance(color, QColor):
+            editor = ColorEditWidget(parent)
+            editor.color_picked.connect(self.color_picked)
+            return editor
+        else:
+            logger.warning("ColorDelegate invoked on non-color")
+            return super().createEditor(parent, option, index)
+
+    def updateEditorGeometry(self, editor: QWidget, option: QStyleOptionViewItem, index: QModelIndex):
+        geometry = option.rect
+
+        # If the rectangle is to small for the minimum size of the editor,
+        # enlarge it
+        dw = editor.minimumSizeHint().width() - geometry.width()
+        if dw > 0:
+            adjust_size(geometry, dw, 0, editor.layoutDirection())
+
+        editor.setGeometry(geometry)
+
+    def setEditorData(self, editor: QWidget, index: PySide2.QtCore.QModelIndex):
+        editor: ColorEditWidget
+        color = index.data(Qt.DecorationRole)
+        editor.set_color(color)
+
+    def setModelData(self, editor: QWidget, model: QAbstractItemModel, index: QModelIndex):
+        editor: ColorEditWidget
+        model.setData(index, editor.get_color(), Qt.DecorationRole)
+
+    def color_picked(self):
+        self.commitData.emit(self.sender())
+        self.closeEditor.emit(self.sender())

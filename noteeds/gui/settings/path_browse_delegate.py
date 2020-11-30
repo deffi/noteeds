@@ -14,23 +14,14 @@ class PathBrowseDelegate(QStyledItemDelegate):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+    ########
+    # Edit #
+    ########
+
     def createEditor(self, parent: QWidget, option: QStyleOptionViewItem, index: QModelIndex) -> QWidget:
         editor = PathBrowseWidget(parent)
         editor.path_selected.connect(self.path_selected)
         return editor
-
-    def setEditorData(self, editor: QWidget, index: PySide2.QtCore.QModelIndex):
-        editor: PathBrowseWidget
-        path = index.data(Qt.EditRole)
-        editor.set_path(path)
-
-    def path_selected(self):
-        self.commitData.emit(self.sender())
-        self.closeEditor.emit(self.sender())
-
-    def setModelData(self, editor: QWidget, model: QAbstractItemModel, index: QModelIndex):
-        editor: PathBrowseWidget
-        model.setData(index, editor.get_path(), Qt.EditRole)
 
     def updateEditorGeometry(self, editor: QWidget, option: QStyleOptionViewItem, index: QModelIndex):
         geometry = option.rect
@@ -42,3 +33,16 @@ class PathBrowseDelegate(QStyledItemDelegate):
             adjust_size(geometry, dw, 0, editor.layoutDirection())
 
         editor.setGeometry(geometry)
+
+    def setEditorData(self, editor: QWidget, index: PySide2.QtCore.QModelIndex):
+        editor: PathBrowseWidget
+        path = index.data(Qt.EditRole)
+        editor.set_path(path)
+
+    def setModelData(self, editor: QWidget, model: QAbstractItemModel, index: QModelIndex):
+        editor: PathBrowseWidget
+        model.setData(index, editor.get_path(), Qt.EditRole)
+
+    def path_selected(self):
+        self.commitData.emit(self.sender())
+        self.closeEditor.emit(self.sender())
