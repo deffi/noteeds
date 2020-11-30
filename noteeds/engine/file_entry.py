@@ -3,7 +3,6 @@ from random import uniform
 from time import sleep
 from typing import Optional
 
-from noteeds.engine import Repository
 from noteeds.util.io import read_file
 
 
