@@ -7,7 +7,7 @@ from PySide2.QtGui import QColor, QPalette
 from PySide2.QtWidgets import QWidget, QColorDialog
 from PySide2.QtCore import QTimer
 
-from noteeds.gui.settings.ui_color_edit_widget import Ui_ColorEditWidget
+from noteeds.gui.settings.ui_color_widget import Ui_ColorWidget
 
 
 logger = logging.getLogger(__name__)
@@ -19,7 +19,7 @@ class ColorEditWidget(QWidget):
 
     def __init__(self, parent: Optional[QWidget]):
         super().__init__(parent)
-        self.ui = Ui_ColorEditWidget()
+        self.ui = Ui_ColorWidget()
         self.ui.setupUi(self)
 
         self.ui.colorButton.clicked.connect(self.pick_color)
