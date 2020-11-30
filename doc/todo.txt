@@ -1,6 +1,4 @@
 Next:
-  * Rename ColorEditWidget to color_widget (analogous to color_delegate)
-  * ColorWidget, PathBrowseWidget: remove property?
   * Remove @Slot where not required
   * Remaining settings in settings dialog
   * Store/load settings

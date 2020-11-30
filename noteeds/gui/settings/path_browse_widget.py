@@ -44,5 +44,3 @@ class PathBrowseWidget(QWidget):
 
     def get_path(self) -> str:
         return self.ui.pathInput.text()
-
-    path = Property(str, get_path, set_path, user=True)

@@ -61,5 +61,3 @@ class ColorEditWidget(QWidget):
 
     def get_color(self) -> Optional[QColor]:
         return self._color
-
-    color = Property(QColor, get_color, set_color, user=True)
