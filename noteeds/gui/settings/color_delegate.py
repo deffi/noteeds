@@ -1,14 +1,13 @@
 import logging
 
 import PySide2
-from PySide2.QtCore import QModelIndex, Qt, QAbstractItemModel, Slot
-from PySide2.QtGui import QColor, QPainter
+from PySide2.QtCore import QModelIndex, Qt, QAbstractItemModel
+from PySide2.QtGui import QColor
 from PySide2.QtGui import QPixmap, QIcon, QPainter
-from PySide2.QtWidgets import QStyledItemDelegate, QWidget, QStyleOptionViewItem, QStyle, QStyleOption
+from PySide2.QtWidgets import QStyledItemDelegate, QWidget, QStyleOptionViewItem, QStyle
 
 from noteeds.gui.settings import ColorEditWidget
 from noteeds.util.geometry import adjust_size
-
 
 logger = logging.getLogger(__name__)
 

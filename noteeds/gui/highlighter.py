@@ -1,7 +1,7 @@
 from typing import Union, Optional
 
-from PySide2.QtGui import QSyntaxHighlighter, QTextCharFormat, QFont, QTextDocument
 from PySide2.QtCore import Qt, QObject
+from PySide2.QtGui import QSyntaxHighlighter, QTextCharFormat, QFont, QTextDocument
 
 
 class Highlighter(QSyntaxHighlighter):

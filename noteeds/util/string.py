@@ -1,5 +1,5 @@
-from typing import Optional, Pattern, Iterator
 from textwrap import fill
+from typing import Optional, Pattern, Iterator
 
 
 def map_lines(function, text: str) -> str:

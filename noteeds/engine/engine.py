@@ -1,8 +1,7 @@
 from typing import Optional, Pattern
 
-
-from noteeds.util.progress import Tracker
 from noteeds.engine import Repository, SearchResult, FileEntry, Query
+from noteeds.util.progress import Tracker
 
 
 class Engine:

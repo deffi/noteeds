@@ -1,13 +1,13 @@
+import io
+import re
+import tarfile
+import textwrap as wrap
 from dataclasses import dataclass
 from pathlib import Path
-import re
-import io
-import textwrap as wrap
 
-from bs4 import BeautifulSoup
 import requests
 import requests_cache
-import tarfile
+from bs4 import BeautifulSoup
 
 version = "4.4.7"
 

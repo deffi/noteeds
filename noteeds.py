@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-from pathlib import Path
 import sys
-from noteeds.util.string import join_lines
+from pathlib import Path
 
 from noteeds.engine import Repository, Engine, Query
-from noteeds.util.timing import stopwatch
 from noteeds.util.progress import Tracker, BarMonitor
+from noteeds.util.string import join_lines
+from noteeds.util.timing import stopwatch
 
 if len(sys.argv) < 3:
     print(f"Usage: {sys.argv[0]} root text")

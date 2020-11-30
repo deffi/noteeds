@@ -1,8 +1,7 @@
-from typing import Optional, TypeVar
 from time import monotonic
+from typing import Optional, TypeVar
 
 from noteeds.util.progress import Monitor
-
 
 T = TypeVar("T")
 

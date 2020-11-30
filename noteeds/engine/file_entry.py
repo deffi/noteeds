@@ -1,7 +1,7 @@
-from typing import Optional
 from pathlib import Path
-from time import sleep
 from random import uniform
+from time import sleep
+from typing import Optional
 
 from noteeds.util.io import read_file
 

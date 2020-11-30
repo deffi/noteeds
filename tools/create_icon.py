@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from pathlib import Path
-import subprocess
 import shutil
+import subprocess
+from pathlib import Path
 
 
 def svg2ico(svg_path: Path, ico_path: Path, verbose: bool):

@@ -1,14 +1,12 @@
 import logging
-from pathlib import Path
 from typing import Optional
 
-from PySide2.QtCore import Qt, Signal, Property, Slot
+from PySide2.QtCore import QTimer
+from PySide2.QtCore import Signal
 from PySide2.QtGui import QColor, QPalette
 from PySide2.QtWidgets import QWidget, QColorDialog
-from PySide2.QtCore import QTimer
 
 from noteeds.gui.settings.ui_color_widget import Ui_ColorWidget
-
 
 logger = logging.getLogger(__name__)
 

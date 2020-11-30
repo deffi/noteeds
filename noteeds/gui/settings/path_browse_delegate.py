@@ -1,12 +1,11 @@
 import logging
 
 import PySide2
-from PySide2.QtCore import QModelIndex, Qt, QAbstractItemModel, Slot
+from PySide2.QtCore import QModelIndex, Qt, QAbstractItemModel
 from PySide2.QtWidgets import QStyledItemDelegate, QWidget, QStyleOptionViewItem
 
 from noteeds.gui.settings import PathBrowseWidget
 from noteeds.util.geometry import adjust_size
-
 
 logger = logging.getLogger(__name__)
 

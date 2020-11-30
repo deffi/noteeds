@@ -1,6 +1,6 @@
 import tempfile
-from pathlib import Path
 import unittest
+from pathlib import Path
 
 from noteeds.engine.repository import FileEntry, Repository, Config as RepositoryConfig
 

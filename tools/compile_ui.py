@@ -1,5 +1,6 @@
 from pathlib import Path
 from subprocess import run
+
 import PySide2
 
 uic = Path(PySide2.__file__).parent / "uic"

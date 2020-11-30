@@ -1,10 +1,10 @@
 from typing import Optional, Any
 
 from PySide2.QtCore import Qt, QModelIndex, QObject
-from PySide2.QtGui import QFont, QColor
+from PySide2.QtGui import QFont
 
-from noteeds.gui import AbstractTreeModel
 from noteeds.engine import SearchResult, FileEntry
+from noteeds.gui import AbstractTreeModel
 
 
 class SearchResultModel(AbstractTreeModel):

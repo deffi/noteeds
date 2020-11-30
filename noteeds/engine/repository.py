@@ -1,7 +1,7 @@
-from dataclasses import dataclass
-from typing import Optional
-from pathlib import Path
 import logging
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Optional
 
 from PySide2.QtGui import QColor
 

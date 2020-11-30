@@ -1,12 +1,11 @@
-from dataclasses import dataclass
-from urllib.parse import urljoin
-from pathlib import Path
 import re
+from dataclasses import dataclass
+from pathlib import Path
+from urllib.parse import urljoin
 
-from bs4 import BeautifulSoup
 import requests
 import requests_cache
-
+from bs4 import BeautifulSoup
 
 requests_cache.install_cache('cache')
 

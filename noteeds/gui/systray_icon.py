@@ -1,6 +1,6 @@
 import logging
 
-from PySide2.QtCore import Signal, Slot, QObject
+from PySide2.QtCore import Signal, QObject
 from PySide2.QtGui import QIcon, QFont
 from PySide2.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QAction, QWidget
 

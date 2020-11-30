@@ -1,14 +1,14 @@
+import argparse
+import ctypes
+import logging
 import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-import argparse
-import ctypes
 
-import logging
 from PySide2.QtCore import QTimer
-from PySide2.QtWidgets import QApplication
 from PySide2.QtGui import QIcon, QColor
+from PySide2.QtWidgets import QApplication
 
 from noteeds.engine import FileEntry
 from noteeds.gui import MainWindow, LogEmitter

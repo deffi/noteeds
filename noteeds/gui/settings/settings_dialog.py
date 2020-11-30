@@ -1,14 +1,12 @@
 import logging
-from pathlib import Path
 from typing import Optional
 
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QDialog, QMessageBox, QWidget, QTreeWidgetItem, QAbstractItemView
+from PySide2.QtWidgets import QDialog, QWidget, QTreeWidgetItem, QAbstractItemView
 
 from noteeds.engine.config import Config
-from noteeds.engine.repository import Config as RepositoryConfig
-from noteeds.gui.settings.ui_settings_dialog import Ui_SettingsDialog
 from noteeds.gui.settings import ColorDelegate, PathBrowseDelegate
+from noteeds.gui.settings.ui_settings_dialog import Ui_SettingsDialog
 
 logger = logging.getLogger(__name__)
 

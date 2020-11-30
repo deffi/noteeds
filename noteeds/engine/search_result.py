@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from noteeds.util.string import box, grep, prefix_lines
-from noteeds.util.iterable import sequence_join
 from noteeds.engine import FileEntry, Query
+from noteeds.util.iterable import sequence_join
+from noteeds.util.string import box, grep, prefix_lines
 
 
 @dataclass(frozen=True)

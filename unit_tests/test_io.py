@@ -1,6 +1,6 @@
-from pathlib import Path
-import unittest
 import tempfile
+import unittest
+from pathlib import Path
 
 from noteeds.util.io import read_file
 

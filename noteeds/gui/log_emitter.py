@@ -1,5 +1,5 @@
-from typing import Optional
 import logging
+from typing import Optional
 
 from PySide2.QtCore import QObject, Signal
 from PySide2.QtWidgets import QApplication
