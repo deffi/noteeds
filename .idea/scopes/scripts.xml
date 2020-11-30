@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="scripts" pattern="file:noteeds.py||file:noteeds_gui.py" />
+</component>

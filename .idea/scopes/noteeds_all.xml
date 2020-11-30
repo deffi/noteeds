@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="noteeds_all" pattern="$noteeds||$unit_tests||$scripts" />
+</component>
