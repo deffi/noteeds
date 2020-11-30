@@ -1,5 +1,4 @@
 Next:
-  * Remove @Slot where not required
   * Remaining settings in settings dialog
   * Store/load settings
   * Apply new settings
