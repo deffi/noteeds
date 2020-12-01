@@ -12,6 +12,8 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
+from noteeds.gui.widgets import TreeWidget
+
 
 class Ui_SettingsDialog(object):
     def setupUi(self, SettingsDialog):
@@ -66,7 +68,7 @@ class Ui_SettingsDialog(object):
 
         self.gridLayout.addWidget(self.removeReposButton, 1, 1, 1, 1)
 
-        self.reposTree = QTreeWidget(self.groupBox)
+        self.reposTree = TreeWidget(self.groupBox)
         self.reposTree.setObjectName(u"reposTree")
         self.reposTree.setDragEnabled(True)
         self.reposTree.setDragDropMode(QAbstractItemView.InternalMove)

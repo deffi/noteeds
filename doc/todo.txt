@@ -1,4 +1,7 @@
-Next:
+Next: settings
+  * Add repos:
+      * "Add" entry (click or space)
+      * Insert key: select newly inserted item
   * Remaining settings in settings dialog
   * Store/load settings
   * Apply new settings

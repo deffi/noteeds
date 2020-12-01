@@ -24,6 +24,8 @@ class SettingsDialog(QDialog):
         self.ui.reposTree.setItemDelegateForColumn(1, ColorDelegate(self))
         self.ui.reposTree.setItemDelegateForColumn(2, PathBrowseDelegate(self))
         self.ui.reposTree.setEditTriggers(QAbstractItemView.AllEditTriggers & ~QAbstractItemView.CurrentChanged)
+        self.ui.reposTree.insert_key.connect(self.repos_insert)
+        self.ui.reposTree.delete_key.connect(self.repos_delete)
 
     def set_config(self, config: Config):
         self.ui.systrayCheckbox.setChecked(config.gui.use_systray)
@@ -44,3 +46,28 @@ class SettingsDialog(QDialog):
 
         for column in range(self.ui.reposTree.columnCount()):
             self.ui.reposTree.resizeColumnToContents(column)
+
+    #########
+    # Repos #
+    #########
+
+    def repos_insert(self):
+        item = QTreeWidgetItem()
+        item.setFlags(item.flags() & ~Qt.ItemIsDropEnabled | Qt.ItemIsEditable)
+        item.setData(0, Qt.CheckStateRole, Qt.Checked)
+        item.setText(0, "")
+        item.setData(1, Qt.DisplayRole, "")
+        item.setData(1, Qt.DecorationRole, None)
+        item.setData(2, Qt.EditRole, "")
+
+        selected = (self.ui.reposTree.selectedItems() or [0])[0]
+        if selected:
+            selected = self.ui.reposTree.indexOfTopLevelItem(selected)
+
+        self.ui.reposTree.insertTopLevelItem(selected, item)
+        item.setSelected(True)
+        self.ui.reposTree.editItem(item, 0)
+
+    def repos_delete(self):
+        for item in self.ui.reposTree.selectedItems():
+            self.ui.reposTree.invisibleRootItem().removeChild(item)

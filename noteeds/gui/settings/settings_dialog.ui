@@ -75,7 +75,7 @@
        </widget>
       </item>
       <item row="0" column="0" rowspan="3">
-       <widget class="QTreeWidget" name="reposTree">
+       <widget class="TreeWidget" name="reposTree">
         <property name="dragEnabled">
          <bool>true</bool>
         </property>
@@ -136,6 +136,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>noteeds.gui.widgets</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>systrayCheckbox</tabstop>
   <tabstop>hotkeyCheckbox</tabstop>
