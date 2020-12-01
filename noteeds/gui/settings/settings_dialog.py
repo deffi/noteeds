@@ -18,6 +18,9 @@ class SettingsDialog(QDialog):
         self.ui = Ui_SettingsDialog()
         self.ui.setupUi(self)
 
+        self.ui.hotkeyInput.editingFinished.connect(self.ui.hotkeyCheckbox.setFocus)
+        self.ui.clearHotkeyButton.clicked.connect(self.ui.hotkeyInput.clear)
+
         self.ui.reposTree.setItemDelegateForColumn(1, ColorDelegate(self))
         self.ui.reposTree.setItemDelegateForColumn(2, PathBrowseDelegate(self))
         self.ui.reposTree.setEditTriggers(QAbstractItemView.AllEditTriggers & ~QAbstractItemView.CurrentChanged)

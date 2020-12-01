@@ -30,19 +30,25 @@ class Ui_SettingsDialog(object):
 
         self.gridLayout_2.addWidget(self.hotkeyCheckbox, 1, 0, 1, 1)
 
-        self.systrayCheckbox = QCheckBox(self.groupBox_2)
-        self.systrayCheckbox.setObjectName(u"systrayCheckbox")
-
-        self.gridLayout_2.addWidget(self.systrayCheckbox, 0, 0, 1, 2)
-
         self.hotkeyInput = QKeySequenceEdit(self.groupBox_2)
         self.hotkeyInput.setObjectName(u"hotkeyInput")
 
         self.gridLayout_2.addWidget(self.hotkeyInput, 1, 1, 1, 1)
 
+        self.clearHotkeyButton = QPushButton(self.groupBox_2)
+        self.clearHotkeyButton.setObjectName(u"clearHotkeyButton")
+
+        self.gridLayout_2.addWidget(self.clearHotkeyButton, 1, 2, 1, 1)
+
+        self.systrayCheckbox = QCheckBox(self.groupBox_2)
+        self.systrayCheckbox.setObjectName(u"systrayCheckbox")
+
+        self.gridLayout_2.addWidget(self.systrayCheckbox, 0, 0, 1, 3)
+
         self.hotkeyInput.raise_()
         self.hotkeyCheckbox.raise_()
         self.systrayCheckbox.raise_()
+        self.clearHotkeyButton.raise_()
 
         self.verticalLayout.addWidget(self.groupBox_2)
 
@@ -85,7 +91,9 @@ class Ui_SettingsDialog(object):
         self.verticalLayout.addWidget(self.buttonBox)
 
         QWidget.setTabOrder(self.systrayCheckbox, self.hotkeyCheckbox)
-        QWidget.setTabOrder(self.hotkeyCheckbox, self.reposTree)
+        QWidget.setTabOrder(self.hotkeyCheckbox, self.hotkeyInput)
+        QWidget.setTabOrder(self.hotkeyInput, self.clearHotkeyButton)
+        QWidget.setTabOrder(self.clearHotkeyButton, self.reposTree)
         QWidget.setTabOrder(self.reposTree, self.addReposButton)
         QWidget.setTabOrder(self.addReposButton, self.removeReposButton)
 
@@ -100,10 +108,11 @@ class Ui_SettingsDialog(object):
         SettingsDialog.setWindowTitle(QCoreApplication.translate("SettingsDialog", u"Settings", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("SettingsDialog", u"GUI", None))
         self.hotkeyCheckbox.setText(QCoreApplication.translate("SettingsDialog", u"Global &hotkey:", None))
+        self.clearHotkeyButton.setText(QCoreApplication.translate("SettingsDialog", u"&Clear", None))
         self.systrayCheckbox.setText(QCoreApplication.translate("SettingsDialog", u"Minimize to &system tray", None))
         self.groupBox.setTitle(QCoreApplication.translate("SettingsDialog", u"&Repositories", None))
         self.addReposButton.setText(QCoreApplication.translate("SettingsDialog", u"&Add", None))
-        self.removeReposButton.setText(QCoreApplication.translate("SettingsDialog", u"&Remove", None))
+        self.removeReposButton.setText(QCoreApplication.translate("SettingsDialog", u"Re&move", None))
         ___qtreewidgetitem = self.reposTree.headerItem()
         ___qtreewidgetitem.setText(2, QCoreApplication.translate("SettingsDialog", u"Path", None));
         ___qtreewidgetitem.setText(1, QCoreApplication.translate("SettingsDialog", u"Color", None));
