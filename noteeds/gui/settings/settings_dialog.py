@@ -26,6 +26,8 @@ class SettingsDialog(QDialog):
         self.ui.reposTree.setEditTriggers(QAbstractItemView.AllEditTriggers & ~QAbstractItemView.CurrentChanged)
         self.ui.reposTree.insert_key.connect(self.repos_insert)
         self.ui.reposTree.delete_key.connect(self.repos_delete)
+        self.ui.reposTree.itemActivated.connect(self.repos_item_activated)
+        self.ui.reposTree.itemClicked.connect(self.repos_item_activated)
 
     def set_config(self, config: Config):
         self.ui.systrayCheckbox.setChecked(config.gui.use_systray)
@@ -44,6 +46,12 @@ class SettingsDialog(QDialog):
 
             self.ui.reposTree.addTopLevelItem(item)
 
+        # The "Add..." item
+        item = QTreeWidgetItem()
+        item.setFlags(item.flags() & ~Qt.ItemIsDropEnabled & ~Qt.ItemIsEditable & ~Qt.ItemIsUserCheckable)
+        item.setData(0, Qt.DisplayRole, "Add...")
+        self.ui.reposTree.addTopLevelItem(item)
+
         for column in range(self.ui.reposTree.columnCount()):
             self.ui.reposTree.resizeColumnToContents(column)
 
@@ -51,7 +59,7 @@ class SettingsDialog(QDialog):
     # Repos #
     #########
 
-    def repos_insert(self):
+    def insert_repo(self, position: int):
         item = QTreeWidgetItem()
         item.setFlags(item.flags() & ~Qt.ItemIsDropEnabled | Qt.ItemIsEditable)
         item.setData(0, Qt.CheckStateRole, Qt.Checked)
@@ -60,14 +68,29 @@ class SettingsDialog(QDialog):
         item.setData(1, Qt.DecorationRole, None)
         item.setData(2, Qt.EditRole, "")
 
-        selected = (self.ui.reposTree.selectedItems() or [0])[0]
-        if selected:
-            selected = self.ui.reposTree.indexOfTopLevelItem(selected)
+        self.ui.reposTree.insertTopLevelItem(position, item)
 
-        self.ui.reposTree.insertTopLevelItem(selected, item)
+        self.ui.reposTree.clearSelection()
+        self.ui.reposTree.setCurrentItem(item)
         item.setSelected(True)
         self.ui.reposTree.editItem(item, 0)
 
+    def repos_insert(self):
+        selected_items = self.ui.reposTree.selectedItems()
+        if selected_items:
+            position = self.ui.reposTree.indexOfTopLevelItem(selected_items[0])
+        else:
+            position = 0
+
+        self.insert_repo(position)
+
     def repos_delete(self):
         for item in self.ui.reposTree.selectedItems():
-            self.ui.reposTree.invisibleRootItem().removeChild(item)
+            index = self.ui.reposTree.indexOfTopLevelItem(item)
+            if index != self.ui.reposTree.invisibleRootItem().childCount() - 1:
+                self.ui.reposTree.invisibleRootItem().removeChild(item)
+
+    def repos_item_activated(self, item: QTreeWidgetItem, column: int):
+        index = self.ui.reposTree.indexOfTopLevelItem(item)
+        if index == self.ui.reposTree.invisibleRootItem().childCount() - 1 and column == 0:
+            self.insert_repo(index)

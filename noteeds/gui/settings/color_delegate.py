@@ -23,21 +23,25 @@ class ColorDelegate(QStyledItemDelegate):
     def initStyleOption(self, option: QStyleOptionViewItem, index: QModelIndex):
         super().initStyleOption(option, index)
 
-        # If we have a color, show it as decoration. Otherwise, show a cross.
-        pixmap = QPixmap(option.decorationSize)
-        color = index.data(Qt.DecorationRole)
-        if color:
-            pixmap.fill(color)
-        else:
-            pixmap.fill(Qt.transparent)
-            painter = QPainter(pixmap)
-            painter.drawLine(0, 0, pixmap.width()-1, pixmap.height()-1)
-            painter.drawLine(0, pixmap.height()-1, pixmap.width()-1, 0)
-            painter.end()
-        option.icon = QIcon(pixmap)
+        if index.siblingAtRow(index.row() + 1).isValid():
+            # If we have a color, show it as decoration. Otherwise, show a cross.
+            pixmap = QPixmap(option.decorationSize)
+            color = index.data(Qt.DecorationRole)
+            if color:
+                pixmap.fill(color)
+            else:
+                pixmap.fill(Qt.transparent)
+                painter = QPainter(pixmap)
+                painter.drawLine(0, 0, pixmap.width()-1, pixmap.height()-1)
+                painter.drawLine(0, pixmap.height()-1, pixmap.width()-1, 0)
+                painter.end()
+            option.icon = QIcon(pixmap)
 
-        # Always show the decoration
-        option.features |= QStyleOptionViewItem.HasDecoration
+            # Always show the decoration
+            option.features |= QStyleOptionViewItem.HasDecoration
+
+        else:
+            option.features &= ~QStyleOptionViewItem.HasDecoration
 
     def paint(self, painter: QPainter, option: QStyleOptionViewItem, index: QModelIndex):
         # Draw the item regularly first, and then redraw it as if it was not

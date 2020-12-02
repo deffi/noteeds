@@ -1,7 +1,4 @@
 Next: settings
-  * Add repos:
-      * "Add" entry (click or space)
-      * Insert key: select newly inserted item
   * Remaining settings in settings dialog
   * Store/load settings
   * Apply new settings
@@ -40,6 +37,7 @@ GUI:
     https://doc.qt.io/qt-5.10/qtwebengine-webenginewidgets-markdowneditor-example.html
   * Show repository names
   * Add global hotkey to systray icon tooltip
+  * Settings dialog repos tree: activate "Add" entry with space
 
 Engine:
   * Extended matching
