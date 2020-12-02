@@ -48,7 +48,7 @@ class SettingsDialog(QDialog):
 
         # The "Add..." item
         item = QTreeWidgetItem()
-        item.setFlags(item.flags() & ~Qt.ItemIsDropEnabled & ~Qt.ItemIsEditable & ~Qt.ItemIsUserCheckable)
+        item.setFlags(item.flags() & ~Qt.ItemIsDropEnabled & ~Qt.ItemIsEditable & ~Qt.ItemIsUserCheckable & ~Qt.ItemIsDragEnabled)
         item.setData(0, Qt.DisplayRole, "Add...")
         self.ui.reposTree.addTopLevelItem(item)
 

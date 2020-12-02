@@ -58,16 +58,6 @@ class Ui_SettingsDialog(object):
         self.groupBox.setObjectName(u"groupBox")
         self.gridLayout = QGridLayout(self.groupBox)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.addReposButton = QPushButton(self.groupBox)
-        self.addReposButton.setObjectName(u"addReposButton")
-
-        self.gridLayout.addWidget(self.addReposButton, 0, 1, 1, 1)
-
-        self.removeReposButton = QPushButton(self.groupBox)
-        self.removeReposButton.setObjectName(u"removeReposButton")
-
-        self.gridLayout.addWidget(self.removeReposButton, 1, 1, 1, 1)
-
         self.reposTree = TreeWidget(self.groupBox)
         self.reposTree.setObjectName(u"reposTree")
         self.reposTree.setDragEnabled(True)
@@ -76,11 +66,7 @@ class Ui_SettingsDialog(object):
         self.reposTree.setRootIsDecorated(False)
         self.reposTree.setColumnCount(3)
 
-        self.gridLayout.addWidget(self.reposTree, 0, 0, 3, 1)
-
-        self.verticalSpacer = QSpacerItem(20, 119, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout.addItem(self.verticalSpacer, 2, 1, 1, 1)
+        self.gridLayout.addWidget(self.reposTree, 0, 0, 2, 1)
 
 
         self.verticalLayout.addWidget(self.groupBox)
@@ -96,8 +82,6 @@ class Ui_SettingsDialog(object):
         QWidget.setTabOrder(self.hotkeyCheckbox, self.hotkeyInput)
         QWidget.setTabOrder(self.hotkeyInput, self.clearHotkeyButton)
         QWidget.setTabOrder(self.clearHotkeyButton, self.reposTree)
-        QWidget.setTabOrder(self.reposTree, self.addReposButton)
-        QWidget.setTabOrder(self.addReposButton, self.removeReposButton)
 
         self.retranslateUi(SettingsDialog)
         self.buttonBox.accepted.connect(SettingsDialog.accept)
@@ -113,8 +97,6 @@ class Ui_SettingsDialog(object):
         self.clearHotkeyButton.setText(QCoreApplication.translate("SettingsDialog", u"&Clear", None))
         self.systrayCheckbox.setText(QCoreApplication.translate("SettingsDialog", u"Minimize to &system tray", None))
         self.groupBox.setTitle(QCoreApplication.translate("SettingsDialog", u"&Repositories", None))
-        self.addReposButton.setText(QCoreApplication.translate("SettingsDialog", u"&Add", None))
-        self.removeReposButton.setText(QCoreApplication.translate("SettingsDialog", u"Re&move", None))
         ___qtreewidgetitem = self.reposTree.headerItem()
         ___qtreewidgetitem.setText(2, QCoreApplication.translate("SettingsDialog", u"Path", None));
         ___qtreewidgetitem.setText(1, QCoreApplication.translate("SettingsDialog", u"Color", None));

@@ -60,21 +60,7 @@
       <string>&amp;Repositories</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="1">
-       <widget class="QPushButton" name="addReposButton">
-        <property name="text">
-         <string>&amp;Add</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="removeReposButton">
-        <property name="text">
-         <string>Re&amp;move</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" rowspan="3">
+      <item row="0" column="0" rowspan="2">
        <widget class="TreeWidget" name="reposTree">
         <property name="dragEnabled">
          <bool>true</bool>
@@ -108,19 +94,6 @@
         </column>
        </widget>
       </item>
-      <item row="2" column="1">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>119</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
      </layout>
     </widget>
    </item>
@@ -149,8 +122,6 @@
   <tabstop>hotkeyInput</tabstop>
   <tabstop>clearHotkeyButton</tabstop>
   <tabstop>reposTree</tabstop>
-  <tabstop>addReposButton</tabstop>
-  <tabstop>removeReposButton</tabstop>
  </tabstops>
  <resources/>
  <connections>
