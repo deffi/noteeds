@@ -2,6 +2,7 @@ import logging
 from typing import Optional
 
 from PySide2.QtCore import Qt
+from PySide2.QtGui import QColor
 from PySide2.QtWidgets import QDialog, QWidget, QTreeWidgetItem, QAbstractItemView
 
 from noteeds.engine.config import Config
@@ -50,6 +51,7 @@ class SettingsDialog(QDialog):
         item = QTreeWidgetItem()
         item.setFlags(item.flags() & ~Qt.ItemIsDropEnabled & ~Qt.ItemIsEditable & ~Qt.ItemIsUserCheckable & ~Qt.ItemIsDragEnabled)
         item.setData(0, Qt.DisplayRole, "Add...")
+        item.setData(0, Qt.TextColorRole, QColor (127, 127, 127))
         self.ui.reposTree.addTopLevelItem(item)
 
         for column in range(self.ui.reposTree.columnCount()):
