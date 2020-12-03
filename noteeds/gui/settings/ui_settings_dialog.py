@@ -12,7 +12,7 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
-from noteeds.gui.widgets import TreeWidget
+from noteeds.gui.settings import ReposTreeWidget
 
 
 class Ui_SettingsDialog(object):
@@ -58,7 +58,7 @@ class Ui_SettingsDialog(object):
         self.groupBox.setObjectName(u"groupBox")
         self.gridLayout = QGridLayout(self.groupBox)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.reposTree = TreeWidget(self.groupBox)
+        self.reposTree = ReposTreeWidget(self.groupBox)
         self.reposTree.setObjectName(u"reposTree")
         self.reposTree.setDragEnabled(True)
         self.reposTree.setDragDropMode(QAbstractItemView.InternalMove)

@@ -4,7 +4,7 @@ from PySide2.QtWidgets import QTreeWidget
 from PySide2.QtGui import QDragMoveEvent
 
 
-class TreeWidget(QTreeWidget):
+class ReposTreeWidget(QTreeWidget):
     delete_key = Signal()
     insert_key = Signal()
 
