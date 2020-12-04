@@ -1,8 +1,7 @@
 Next: settings
-  * Remaining settings in settings dialog
   * Store/load settings
+  * MainWindow: handle settings
   * Apply new settings
-  * Hotkey widget: only allow one key
   * PathBrowseWidget: not focused on open
   * PathBrowseWidget: if empty, browse automatically
   * New repo: auto-assign color
@@ -43,6 +42,11 @@ GUI:
   * Show repository names
   * Add global hotkey to systray icon tooltip
   * Settings dialog repos tree: activate "Add" entry with space
+  * If registering a hotkey fails, we won't know because an exception is thrown
+    in a different thread.
+      * https://pynput.readthedocs.io/en/latest/keyboard.html#global-hotkeys
+      * https://github.com/FunkMastaZ/pyhk3 (probably Windows only)
+      * https://sourceforge.net/projects/pyhook/ (Windows only)
 
 Engine:
   * Extended matching
