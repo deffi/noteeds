@@ -6,7 +6,6 @@ Next: settings
   * PathBrowseWidget: if empty, browse automatically
   * New repo: auto-assign color
   * New repo: browse first, auto-set name
-  * After dropping, the selection is weird
 
 Configuration:
   * Different sets of configuration for production/development on the same

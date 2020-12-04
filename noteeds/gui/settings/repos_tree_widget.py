@@ -5,7 +5,7 @@ from PySide2.QtGui import QKeyEvent
 from PySide2.QtWidgets import QTreeWidget
 from PySide2.QtGui import QDragMoveEvent
 from PySide2.QtCore import Qt
-from PySide2.QtGui import QColor
+from PySide2.QtGui import QColor, QDropEvent
 from PySide2.QtWidgets import QWidget, QTreeWidgetItem, QAbstractItemView
 
 from noteeds.engine.repository import Config as RepoConfig
@@ -46,6 +46,11 @@ class ReposTreeWidget(QTreeWidget):
 
     def top_level_items(self) -> List[QTreeWidgetItem]:
         return [self.topLevelItem(i) for i in range(self.topLevelItemCount())]
+
+    def select_item(self, item: QTreeWidgetItem):
+        self.clearSelection()
+        self.setCurrentItem(item)
+        item.setSelected(True)
 
     #########
     # Items #
@@ -117,9 +122,7 @@ class ReposTreeWidget(QTreeWidget):
         item = self._create_new_repo_item()
         self.insertTopLevelItem(position, item)
 
-        self.clearSelection()
-        self.setCurrentItem(item)
-        item.setSelected(True)
+        self.select_item(item)
         self.editItem(item, 0)
 
     def delete_selected_repos(self):
@@ -174,3 +177,11 @@ class ReposTreeWidget(QTreeWidget):
             self.setDropIndicatorShown(False)
             event.setDropAction(Qt.IgnoreAction)
             event.accept()
+
+    def dropEvent(self, event: QDropEvent):
+        selected = self.selectedItems()
+        super().dropEvent(event)
+        if selected:
+            self.select_item(selected[0])
+
+
