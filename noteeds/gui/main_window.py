@@ -2,8 +2,8 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-from PySide2.QtCore import QSettings, Slot, QModelIndex
-from PySide2.QtGui import QCloseEvent, QColor
+from PySide2.QtCore import QSettings, Slot, QModelIndex, Qt
+from PySide2.QtGui import QCloseEvent, QColor, QKeySequence
 from PySide2.QtWidgets import QMainWindow, QWidget, QApplication
 
 from noteeds.engine import Repository, Query, Engine
@@ -61,6 +61,12 @@ class MainWindow(QMainWindow):
 
     def startup(self):
         QApplication.instance().processEvents()
+
+        # self._hotkey.register(QKeySequence(Qt.ALT + Qt.SHIFT + Qt.Key_W))
+        self._hotkey.register(QKeySequence(Qt.ALT + Qt.META + Qt.Key_Q))
+        # self._hotkey.register(QKeySequence(Qt.ALT + Qt.META + Qt.Key_W))
+        # self._hotkey.register(QKeySequence(Qt.META + Qt.Key_F2))
+
         self._engine = Engine(self._repositories)
         tracker = Tracker(DialogProgressMonitor("Loading", self), delta_t=1/25)
         self._engine.load_all(tracker)
