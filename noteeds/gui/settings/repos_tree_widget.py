@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Optional, List
+import random
 
 from PySide2.QtGui import QKeyEvent
 from PySide2.QtWidgets import QTreeWidget
@@ -84,10 +85,13 @@ class ReposTreeWidget(QTreeWidget):
         item.setFlags(item.flags() | Qt.ItemIsEditable | Qt.ItemIsUserCheckable
                       | Qt.ItemIsDragEnabled & ~Qt.ItemIsDropEnabled )
 
+        hue = random.randrange(0, 256)
+        color = QColor.fromHsl(hue, 255, 223)
+
         item.setData(0, Qt.CheckStateRole, Qt.Checked)
         item.setText(0, "")
         item.setData(1, Qt.DisplayRole, "")
-        item.setData(1, Qt.DecorationRole, None)
+        item.setData(1, Qt.DecorationRole, color)
         item.setData(2, Qt.EditRole, "")
 
         return item

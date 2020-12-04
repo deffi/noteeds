@@ -4,7 +4,6 @@ Next: settings
   * Apply new settings
   * PathBrowseWidget: not focused on open
   * PathBrowseWidget: if empty, browse automatically
-  * New repo: auto-assign color
   * New repo: browse first, auto-set name
 
 Configuration:
