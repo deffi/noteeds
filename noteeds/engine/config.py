@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from PySide2.QtGui import QKeySequence
+
 from noteeds.engine.repository import Config as RepositoryConfig
 
 
@@ -7,7 +9,7 @@ from noteeds.engine.repository import Config as RepositoryConfig
 class GuiConfig:
     use_systray: bool
     use_global_hotkey: bool
-    global_hotkey: tuple[str, ...]
+    global_hotkey: QKeySequence
 
 
 @dataclass(frozen=True)

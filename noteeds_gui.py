@@ -6,8 +6,8 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from PySide2.QtCore import QTimer
-from PySide2.QtGui import QIcon, QColor
+from PySide2.QtCore import QTimer, Qt
+from PySide2.QtGui import QIcon, QColor, QKeySequence
 from PySide2.QtWidgets import QApplication
 
 from noteeds.engine import FileEntry
@@ -68,7 +68,7 @@ def noteeds_gui(args: Args):
             Path(repo),
             QColor.fromHsl(int(255 * index / len(args.repositories)), 255, 223) if index > 0 else None,
             True) for index, repo in enumerate(args.repositories)]
-        gui_config = GuiConfig(True, True, ("alt", "shift", "w"))
+        gui_config = GuiConfig(True, True, QKeySequence(Qt.Key_W | Qt.ShiftModifier | Qt.AltModifier))
         config = Config(gui_config, repos)
         dialog = SettingsDialog(None)
         dialog.set_config(config)
