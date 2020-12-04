@@ -19,8 +19,11 @@ class SettingsDialog(QDialog):
         self.ui = Ui_SettingsDialog()
         self.ui.setupUi(self)
 
-        self.ui.hotkeyInput.editingFinished.connect(self.ui.hotkeyCheckbox.setFocus)
         self.ui.clearHotkeyButton.clicked.connect(self.ui.hotkeyInput.clear)
+
+    #################
+    # Configuration #
+    #################
 
     def set_config(self, config: Config):
         self.ui.systrayCheckbox.setChecked(config.gui.use_systray)

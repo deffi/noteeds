@@ -13,6 +13,7 @@ from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
 from noteeds.gui.settings import ReposTreeWidget
+from noteeds.gui.settings import KeySequenceEdit
 
 
 class Ui_SettingsDialog(object):
@@ -32,7 +33,7 @@ class Ui_SettingsDialog(object):
 
         self.gridLayout_2.addWidget(self.hotkeyCheckbox, 1, 0, 1, 1)
 
-        self.hotkeyInput = QKeySequenceEdit(self.groupBox_2)
+        self.hotkeyInput = KeySequenceEdit(self.groupBox_2)
         self.hotkeyInput.setObjectName(u"hotkeyInput")
 
         self.gridLayout_2.addWidget(self.hotkeyInput, 1, 1, 1, 1)
