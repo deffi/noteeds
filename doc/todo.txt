@@ -4,7 +4,6 @@ Next: settings
         require Qt?
   * MainWindow: handle settings
   * Apply new settings
-  * PathBrowseWidget: not focused on open
 
 Configuration:
   * Different sets of configuration for production/development on the same
@@ -44,6 +43,7 @@ GUI:
   * PathBrowseDelegate: when opening an editor empty, after auto-browsing, the
     editor should be closed (as it is on manual browsing), but isn't.
   * ColorDelegate: clear button in item widget, get rid of ColorEditWidget?
+  * SettingsWindow: after canceling path edit, the repos tree loses focus
 
 Engine:
   * Extended matching

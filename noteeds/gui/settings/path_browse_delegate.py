@@ -24,6 +24,8 @@ class PathBrowseDelegate(QStyledItemDelegate):
         editor = PathBrowseWidget(parent)
         editor.path_selected.connect(self.path_selected)
         self._path_been_set = False
+        # TODO doesn't seem like a good solution
+        QTimer.singleShot(0, editor.ui.pathInput.setFocus)
         return editor
 
     def updateEditorGeometry(self, editor: QWidget, option: QStyleOptionViewItem, index: QModelIndex):
