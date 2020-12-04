@@ -1,5 +1,7 @@
 Next: settings
   * Store/load settings
+      * Use something other than QSettings (appdirs?) so the CLI/CUI doesn't
+        require Qt?
   * MainWindow: handle settings
   * Apply new settings
   * PathBrowseWidget: not focused on open
@@ -7,10 +9,6 @@ Next: settings
 Configuration:
   * Different sets of configuration for production/development on the same
     machine
-  * Mechanism for applying changed configuration
-  * Use something other than QSettings (appdirs?) so the CLI/CUI doesn't require
-    Qt?
-  * ColorDelegate: clear button in delegate, get rid of ColorEditWidget?
 
 GUI:
   * Font in text view is very small
@@ -45,6 +43,7 @@ GUI:
       * https://sourceforge.net/projects/pyhook/ (Windows only)
   * PathBrowseDelegate: when opening an editor empty, after auto-browsing, the
     editor should be closed (as it is on manual browsing), but isn't.
+  * ColorDelegate: clear button in item widget, get rid of ColorEditWidget?
 
 Engine:
   * Extended matching
