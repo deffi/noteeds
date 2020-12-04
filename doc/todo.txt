@@ -2,6 +2,7 @@ Next: settings
   * Remaining settings in settings dialog
   * Store/load settings
   * Apply new settings
+  * Hotkey widget: only allow one key
   * Make GlobalHotkey understand QKeySequence
   * PathBrowseWidget: not focused on open
   * PathBrowseWidget: if empty, browse automatically

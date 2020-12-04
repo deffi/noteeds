@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Optional, List
 
 from PySide2.QtGui import QKeyEvent
@@ -43,6 +44,9 @@ class ReposTreeWidget(QTreeWidget):
         else:
             return 0
 
+    def top_level_items(self) -> List[QTreeWidgetItem]:
+        return [self.topLevelItem(i) for i in range(self.topLevelItemCount())]
+
     #########
     # Items #
     #########
@@ -59,6 +63,15 @@ class ReposTreeWidget(QTreeWidget):
         item.setData(2, Qt.EditRole, str(repo.root))
 
         return item
+
+    @staticmethod
+    def _repo_from_item(item: QTreeWidgetItem) -> RepoConfig:
+        return RepoConfig(
+            name = item.text(0),
+            root = Path(item.text(2)),
+            color = item.data(1, Qt.DecorationRole),
+            enabled = item.data(0, Qt.CheckStateRole) == Qt.Checked,
+        )
 
     @staticmethod
     def _create_new_repo_item() -> QTreeWidgetItem:
@@ -98,7 +111,7 @@ class ReposTreeWidget(QTreeWidget):
         self.addTopLevelItem(self._add_repo_item)
 
     def get_repos(self) -> List[RepoConfig]:
-        return []
+        return [self._repo_from_item(item) for item in self.top_level_items() if item != self._add_repo_item]
 
     def add_repo(self, position: int):
         item = self._create_new_repo_item()

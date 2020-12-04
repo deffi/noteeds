@@ -5,7 +5,7 @@ from PySide2.QtCore import Qt
 from PySide2.QtGui import QColor
 from PySide2.QtWidgets import QDialog, QWidget, QTreeWidgetItem, QAbstractItemView
 
-from noteeds.engine.config import Config
+from noteeds.engine.config import Config, GuiConfig
 from noteeds.gui.settings import ColorDelegate, PathBrowseDelegate
 from noteeds.gui.settings.ui_settings_dialog import Ui_SettingsDialog
 
@@ -29,3 +29,13 @@ class SettingsDialog(QDialog):
 
         self.ui.reposTree.set_repos(config.repositories)
         self.ui.reposTree.resize_columns_to_contents()
+
+    def get_config(self):
+        return Config(
+            gui=GuiConfig(
+                use_systray=self.ui.systrayCheckbox.isChecked(),
+                use_global_hotkey=self.ui.hotkeyCheckbox.isChecked(),
+                global_hotkey=tuple(),
+            ),
+            repositories=self.ui.reposTree.get_repos(),
+        )

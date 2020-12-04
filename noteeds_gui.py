@@ -73,6 +73,10 @@ def noteeds_gui(args: Args):
         dialog = SettingsDialog(None)
         dialog.set_config(config)
         dialog.exec_()
+        config = dialog.get_config()
+        print(config)
+        for repo in config.repositories:
+            print(repo)
     else:
         window = MainWindow(None)
         log_emitter.log.connect(window.log_message)
