@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
 
         # *** Hotkey
         self._hotkey = GlobalHotkey(self)
-        self._hotkey.pressed.connect(self.show_window)
+        self._hotkey.pressed.connect(self.toggle_window)
 
         # *** Data
         self._repositories: list[Repository] = []
@@ -126,6 +126,12 @@ class MainWindow(QMainWindow):
         self.show()
         self.ui.textInput.selectAll()
         self.ui.textInput.setFocus()
+
+    def toggle_window(self):
+        if self.isVisible():
+            self.hide_window()
+        else:
+            self.show_window()
 
     def exit(self):
         self._exit_on_close = True
