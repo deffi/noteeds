@@ -3,7 +3,6 @@ Next: settings
   * MainWindow: handle settings
   * Apply new settings
   * PathBrowseWidget: not focused on open
-  * New repo: browse first, auto-set name
 
 Configuration:
   * Different sets of configuration for production/development on the same

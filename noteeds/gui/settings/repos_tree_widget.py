@@ -3,7 +3,7 @@ from typing import Optional, List
 import random
 
 from PySide2.QtGui import QKeyEvent
-from PySide2.QtWidgets import QTreeWidget
+from PySide2.QtWidgets import QTreeWidget, QFileDialog
 from PySide2.QtGui import QDragMoveEvent
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QColor, QDropEvent
@@ -125,9 +125,16 @@ class ReposTreeWidget(QTreeWidget):
     def add_repo(self, position: int):
         item = self._create_new_repo_item()
         self.insertTopLevelItem(position, item)
-
         self.select_item(item)
-        self.editItem(item, 0)
+
+        # TODO dir=(last used)
+        path = QFileDialog.getExistingDirectory(parent=self, caption="Select repository root")
+        if path:
+            path = str(Path(path))
+            item.setData(2, Qt.EditRole, path)
+            item.setText(0, Path(path).name)
+        else:
+            self.editItem(item, 0)
 
     def delete_selected_repos(self):
         for item in self.selectedItems():
