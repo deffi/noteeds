@@ -68,7 +68,7 @@ def noteeds_gui(args: Args):
             Path(repo),
             QColor.fromHsl(int(255 * index / len(args.repositories)), 255, 223) if index > 0 else None,
             True) for index, repo in enumerate(args.repositories)]
-        gui_config = GuiConfig(True, True, QKeySequence(Qt.Key_W | Qt.ShiftModifier | Qt.AltModifier))
+        gui_config = GuiConfig(True, True, QKeySequence(Qt.ALT + Qt.SHIFT + Qt.Key_W))
         config = Config(gui_config, repos)
         dialog = SettingsDialog(None)
         dialog.set_config(config)
