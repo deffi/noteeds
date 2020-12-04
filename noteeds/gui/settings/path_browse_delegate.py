@@ -1,7 +1,7 @@
 import logging
 
 import PySide2
-from PySide2.QtCore import QModelIndex, Qt, QAbstractItemModel
+from PySide2.QtCore import QModelIndex, Qt, QAbstractItemModel, QTimer
 from PySide2.QtWidgets import QStyledItemDelegate, QWidget, QStyleOptionViewItem
 
 from noteeds.gui.settings import PathBrowseWidget
@@ -14,6 +14,8 @@ class PathBrowseDelegate(QStyledItemDelegate):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        self._path_been_set = False
+
     ########
     # Edit #
     ########
@@ -21,6 +23,7 @@ class PathBrowseDelegate(QStyledItemDelegate):
     def createEditor(self, parent: QWidget, option: QStyleOptionViewItem, index: QModelIndex) -> QWidget:
         editor = PathBrowseWidget(parent)
         editor.path_selected.connect(self.path_selected)
+        self._path_been_set = False
         return editor
 
     def updateEditorGeometry(self, editor: QWidget, option: QStyleOptionViewItem, index: QModelIndex):
@@ -38,6 +41,11 @@ class PathBrowseDelegate(QStyledItemDelegate):
         editor: PathBrowseWidget
         path = index.data(Qt.EditRole)
         editor.set_path(path)
+
+        if not self._path_been_set:
+            self._path_been_set = True
+            if not path:
+                editor.browse()
 
     def setModelData(self, editor: QWidget, model: QAbstractItemModel, index: QModelIndex):
         editor: PathBrowseWidget

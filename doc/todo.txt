@@ -3,7 +3,6 @@ Next: settings
   * MainWindow: handle settings
   * Apply new settings
   * PathBrowseWidget: not focused on open
-  * PathBrowseWidget: if empty, browse automatically
   * New repo: browse first, auto-set name
 
 Configuration:
@@ -45,6 +44,8 @@ GUI:
       * https://pynput.readthedocs.io/en/latest/keyboard.html#global-hotkeys
       * https://github.com/FunkMastaZ/pyhk3 (probably Windows only)
       * https://sourceforge.net/projects/pyhook/ (Windows only)
+  * PathBrowseDelegate: when opening an editor empty, after auto-browsing, the
+    editor should be closed (as it is on manual browsing), but isn't.
 
 Engine:
   * Extended matching
