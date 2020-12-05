@@ -17,10 +17,10 @@ from noteeds.gui import MainWindow, LogEmitter
 
 @dataclass()
 class Args(argparse.Namespace):
-    repositories: list[Path] = None
-    text: str = None
+    config: str = None
     load_delay: float = None
     load_delay_probability: float = 0.05
+    text: str = None
 
 
 def noteeds_gui(args: Args):
@@ -52,7 +52,7 @@ def noteeds_gui(args: Args):
     app = QApplication(sys.argv)
     app.setOrganizationName("noteeds")
     app.setOrganizationDomain("noteeds.invalid")
-    app.setApplicationName("noteeds")
+    app.setApplicationName(args.config)
 
     # icon_path = Path(__file__).parent / "images" / "icon48.png"
     icon_path = Path(__file__).parent / "images" / "icon.ico"
@@ -74,9 +74,9 @@ def noteeds_gui(args: Args):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str, default="noteeds")
     parser.add_argument("--load-delay", type=float)
     parser.add_argument("--load-delay-probability", type=float)
-    parser.add_argument("--repository", "-r", action='append', dest="repositories", type=Path)
     parser.add_argument("text")
     args = parser.parse_args(namespace=Args())
     noteeds_gui(args)

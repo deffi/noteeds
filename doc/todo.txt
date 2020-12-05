@@ -2,12 +2,12 @@ Next: settings
   * Clean up settings/config
 
 Configuration:
-  * Different sets of configuration for production/development on the same
-    machine
   * Alternative to QSettings?
       * CLI should not require Qt
       * appdirs?
       * settingspy? settings-manager? simple-settings? config...?
+  * Exception while saving configuration destroys configuration
+  * Clean up default/none values for color, path
 
 GUI:
   * Exception in startup -> GUI not shown, but program keeps running
