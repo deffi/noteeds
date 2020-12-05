@@ -18,10 +18,20 @@ class GlobalHotkey(QObject):
 
         self._hk = SystemHotkey()
 
+    def is_registered(self, key):
+        key = set(key)
+        return any(set(k) == key for k in self._hk.keybinds)
+
+
     def register(self, key_sequence: Optional[QKeySequence]):
+        key = self.convert_key_sequence(key_sequence)
+
+        if key and self.is_registered(key):
+            logger.debug("Already registered: %s", key)
+            return
+
         self.unregister()
         if key_sequence and not key_sequence.isEmpty():
-            key = self.convert_key_sequence(key_sequence)
             logger.info("Registering hotkey: %s", key)
             # If this fails, we get a system_hotkey.SystemRegisterError
             # exception, but in a different thread - so we can neither catch it
@@ -30,6 +40,9 @@ class GlobalHotkey(QObject):
 
     @staticmethod
     def convert_key_sequence(key_sequence: QKeySequence):
+        if not key_sequence or key_sequence.isEmpty():
+            return None
+
         # Restrict to the first key
         key_sequence = QKeySequence(key_sequence[0])
 

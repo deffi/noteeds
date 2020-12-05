@@ -80,9 +80,14 @@ class MainWindow(QMainWindow):
 
     def apply_settings(self) -> None:
         # self._hotkey.register(QKeySequence(Qt.ALT + Qt.SHIFT + Qt.Key_W))
-        self._hotkey.register(QKeySequence(Qt.ALT + Qt.META + Qt.Key_Q))
+        # self._hotkey.register(QKeySequence(Qt.ALT + Qt.META + Qt.Key_Q))
         # self._hotkey.register(QKeySequence(Qt.ALT + Qt.META + Qt.Key_W))
         # self._hotkey.register(QKeySequence(Qt.META + Qt.Key_F2))
+
+        if self._settings.gui.use_global_hotkey:
+            self._hotkey.register(self._settings.gui.global_hotkey)
+        else:
+            self._hotkey.register(None)
 
         repos = [Repository(config) for config in self._settings.repositories or [] if config.root and config.enabled]
         self._engine = Engine(repos)
