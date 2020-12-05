@@ -21,18 +21,20 @@ class Config:
     def store(self, settings: QSettings):
         settings.setValue("name", self.name)
         settings.setValue("root", str(self.root) if self.root else "")
-        settings.setValue("color", self.color)
+        settings.setValue("color", self.color if self.color and self.color.isValid() else "")
         settings.setValue("enabled", self.enabled)
 
     @classmethod
     def load(cls, settings: QSettings):
         name = settings.value("name", None)
         root = settings.value("root", None)
-        color = QColor(settings.value("color", None))
+        color = settings.value("color", None)
         enabled = settings.value("enabled", True, bool)
 
         if root:
             root = Path(root)
+        if color:
+            color = QColor(color)
 
         return cls(name, root, color, enabled)
 

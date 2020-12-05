@@ -57,7 +57,7 @@ class ColorDelegate(QStyledItemDelegate):
 
     def createEditor(self, parent: QWidget, option: QStyleOptionViewItem, index: QModelIndex) -> QWidget:
         color = index.data(Qt.DecorationRole)
-        if color is None or isinstance(color, QColor):
+        if not color or isinstance(color, QColor):
             editor = ColorEditWidget(parent)
             editor.color_picked.connect(self.color_picked)
             return editor
