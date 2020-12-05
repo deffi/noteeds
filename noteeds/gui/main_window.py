@@ -32,10 +32,9 @@ class MainWindow(QMainWindow):
         self._settings: Optional[Config] = None
 
         # *** Window
-        self._exit_on_close: bool = False
         self._systray_icon = SystrayIcon(self)
         self._systray_icon.show_window.connect(self.show_window)
-        self._systray_icon.exit.connect(self.exit)
+        self._systray_icon.exit.connect(QApplication.instance().exit)
 
         # *** Hotkey
         self._hotkey = GlobalHotkey(self)
@@ -50,7 +49,7 @@ class MainWindow(QMainWindow):
         self._highlighter = Highlighter(self.ui.textView.document())
 
         # *** Menu
-        self.ui.exitAction.triggered.connect(self.exit)
+        self.ui.exitAction.triggered.connect(QApplication.instance().exit)
         self.ui.viewMenu.addAction(self.ui.dock.toggleViewAction())
         self.ui.hideAction.triggered.connect(self.hide_window)
 
@@ -137,17 +136,15 @@ class MainWindow(QMainWindow):
         else:
             self.show_window()
 
-    def exit(self):
-        self._exit_on_close = True
-        self.close()
-
     def closeEvent(self, event: QCloseEvent) -> None:
-        if self._exit_on_close:
-            event.accept()
-            super().closeEvent(event)
-        else:
+        if self._settings.gui.close_to_systray:
+            # Ignore the close event, hide the window (and create the systray
+            # icon) instead
             event.ignore()
             self.hide_window()
+        else:
+            # Go ahead
+            super().closeEvent(event)
 
     ######
     # UI #

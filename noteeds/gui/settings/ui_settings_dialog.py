@@ -94,9 +94,15 @@ class Ui_SettingsDialog(object):
     def retranslateUi(self, SettingsDialog):
         SettingsDialog.setWindowTitle(QCoreApplication.translate("SettingsDialog", u"Settings", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("SettingsDialog", u"GUI", None))
+#if QT_CONFIG(tooltip)
+        self.hotkeyCheckbox.setToolTip(QCoreApplication.translate("SettingsDialog", u"Global hotkey to minimize to and restore from system tray", None))
+#endif // QT_CONFIG(tooltip)
         self.hotkeyCheckbox.setText(QCoreApplication.translate("SettingsDialog", u"Global &hotkey:", None))
         self.clearHotkeyButton.setText(QCoreApplication.translate("SettingsDialog", u"&Clear", None))
-        self.systrayCheckbox.setText(QCoreApplication.translate("SettingsDialog", u"Minimize to &system tray", None))
+#if QT_CONFIG(tooltip)
+        self.systrayCheckbox.setToolTip(QCoreApplication.translate("SettingsDialog", u"Minimize to system tray when closed, instead of exiting the application", None))
+#endif // QT_CONFIG(tooltip)
+        self.systrayCheckbox.setText(QCoreApplication.translate("SettingsDialog", u"Close to &system tray", None))
         self.groupBox.setTitle(QCoreApplication.translate("SettingsDialog", u"&Repositories", None))
         ___qtreewidgetitem = self.reposTree.headerItem()
         ___qtreewidgetitem.setText(2, QCoreApplication.translate("SettingsDialog", u"Path", None));

@@ -1,7 +1,5 @@
 Next: settings
-  * MainWindow: handle GUI settings
   * Clean up settings/config
-  * Clean up hide/minimize/close/exit
 
 Configuration:
   * Different sets of configuration for production/development on the same

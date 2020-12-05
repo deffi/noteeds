@@ -25,6 +25,9 @@
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="1" column="0">
        <widget class="QCheckBox" name="hotkeyCheckbox">
+        <property name="toolTip">
+         <string>Global hotkey to minimize to and restore from system tray</string>
+        </property>
         <property name="text">
          <string>Global &amp;hotkey:</string>
         </property>
@@ -42,8 +45,11 @@
       </item>
       <item row="0" column="0" colspan="3">
        <widget class="QCheckBox" name="systrayCheckbox">
+        <property name="toolTip">
+         <string>Minimize to system tray when closed, instead of exiting the application</string>
+        </property>
         <property name="text">
-         <string>Minimize to &amp;system tray</string>
+         <string>Close to &amp;system tray</string>
         </property>
        </widget>
       </item>

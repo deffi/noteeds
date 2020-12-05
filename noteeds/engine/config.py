@@ -8,19 +8,19 @@ from noteeds.engine.repository import Config as RepositoryConfig
 
 @dataclass(frozen=True)
 class GuiConfig:
-    use_systray: bool
+    close_to_systray: bool
     use_global_hotkey: bool
     global_hotkey: QKeySequence
 
     def store(self, settings: QSettings):
-        settings.setValue("use_systray", self.use_systray)
+        settings.setValue("close_to_systray", self.close_to_systray)
         settings.setValue("use_global_hotkey", self.use_global_hotkey)
         settings.setValue("global_hotkey", self.global_hotkey.toString())
 
     @classmethod
     def load(cls, settings: QSettings):
         return cls(
-            use_systray=settings.value("use_systray", True, bool),
+            close_to_systray=settings.value("close_to_systray", True, bool),
             use_global_hotkey=settings.value("use_global_hotkey", True, bool),
             global_hotkey=QKeySequence.fromString(settings.value("global_hotkey", "", str)),
         )
