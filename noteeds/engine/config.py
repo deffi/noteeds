@@ -21,7 +21,7 @@ class GuiConfig:
     def load(cls, settings: QSettings):
         return cls(
             close_to_systray=settings.value("close_to_systray", True, bool),
-            use_global_hotkey=settings.value("use_global_hotkey", True, bool),
+            use_global_hotkey=settings.value("use_global_hotkey", False, bool),
             global_hotkey=QKeySequence.fromString(settings.value("global_hotkey", "", str)),
         )
 
