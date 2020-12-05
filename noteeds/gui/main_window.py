@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Optional
 
 from PySide2.QtCore import QSettings, Slot, QModelIndex, Qt
-from PySide2.QtGui import QCloseEvent, QColor, QKeySequence
+from PySide2.QtGui import QCloseEvent, QColor, QKeySequence, QTextDocument, QFont
 from PySide2.QtWidgets import QMainWindow, QWidget, QApplication
 
 from noteeds.engine.config import Config
@@ -58,6 +58,7 @@ class MainWindow(QMainWindow):
         self.ui.splitter.setStretchFactor(1, 1)
         self.ui.resultsTree.setModel(self._search_result_model)
         self.ui.resultsTree.selectionModel().currentChanged.connect(self.file_selection_changed)
+
         self.ui.logTable.setModel(self._log_model)
         self.ui.dock.setVisible(False)
 
@@ -65,6 +66,7 @@ class MainWindow(QMainWindow):
         QApplication.instance().processEvents()
 
         self.apply_settings()
+        self.ui.textView.document().setDefaultFont(self.ui.resultsTree.font())
 
     ##############
     # Properties #
@@ -198,3 +200,20 @@ class MainWindow(QMainWindow):
             self._settings = dialog.get_config()
             self._settings.store(QSettings())
             self.apply_settings()
+
+    @Slot()
+    def on_testAction_triggered(self):
+        print(f"{QFont()                                   =}")
+        print(f"{self.font()                               =}")
+        print(f"{self.ui.fileMenu.font()                   =}")
+        print(f"{self.ui.label.font()                      =}")
+        print(f"{self.ui.textInput.font()                  =}")
+        print(f"{self.ui.resultsTree.font()                =}")
+        print(f"{self.ui.textView.font()                   =}")
+        print(f"{self.ui.textView.document().defaultFont() =}")
+
+        # f: QFont = self.ui.resultsTree.font()
+        # f.setPointSize(14)
+        # print(f)
+        # self.ui.textView.setFont(f)
+        # # self.ui.textView.document().setDefaultFont(f)

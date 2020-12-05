@@ -167,6 +167,11 @@
     <string>Ctrl+S</string>
    </property>
   </action>
+  <action name="testAction">
+   <property name="text">
+    <string>&amp;Test</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>resultsTree</tabstop>

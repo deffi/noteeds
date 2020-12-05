@@ -11,7 +11,6 @@ Configuration:
 
 GUI:
   * Exception in startup -> GUI not shown, but program keeps running
-  * Font in text view is very small
   * Scroll to first match in file
   * Handle or disable Cancel while loading? Load in background?
   * Remove root text (we have multiple repositories now)
