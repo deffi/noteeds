@@ -5,8 +5,11 @@ from PySide2.QtGui import QKeyEvent, QKeySequence
 
 class KeySequenceEdit(QKeySequenceEdit):
     def keyPressEvent(self, event: QKeyEvent):
-        if event.key() in [Qt.Key_Escape, Qt.Key_Enter, Qt.Key_Tab]:
-            # Ignore Escape, Enter, and Tab
+        print(f"KeySequenceEdit received a {event.key()} event")
+        if event.key() in [Qt.Key_Escape, Qt.Key_Enter]:
+            # Ignore Escape and Enter to let the dialog receive them. We don't
+            # need to ignore tab; presumable, this is event-filtered by the
+            # dialog.
             event.ignore()
         else:
             super().keyPressEvent(event)
