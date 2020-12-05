@@ -2,8 +2,9 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-from PySide2.QtCore import QSettings, Slot, QModelIndex, Qt
-from PySide2.QtGui import QCloseEvent, QColor, QKeySequence, QTextDocument, QFont
+import PySide2
+from PySide2.QtCore import QSettings, Slot, QModelIndex, Qt, QObject, QEvent
+from PySide2.QtGui import QCloseEvent, QColor, QKeySequence, QTextDocument, QFont, QKeyEvent
 from PySide2.QtWidgets import QMainWindow, QWidget, QApplication
 
 from noteeds.engine.config import Config
@@ -54,6 +55,7 @@ class MainWindow(QMainWindow):
         self.ui.hideAction.triggered.connect(self.hide_window)
 
         # *** Widgets ***
+        self.ui.textInput.installEventFilter(self)
         self.ui.splitter.setStretchFactor(0, 0)
         self.ui.splitter.setStretchFactor(1, 1)
         self.ui.resultsTree.setModel(self._search_result_model)
@@ -217,3 +219,13 @@ class MainWindow(QMainWindow):
         # print(f)
         # self.ui.textView.setFont(f)
         # # self.ui.textView.document().setDefaultFont(f)
+
+    def eventFilter(self, watched: QObject, event: QEvent) -> bool:
+        if watched == self.ui.textInput and event.type() == QEvent.KeyPress:
+            event: QKeyEvent
+            if event.modifiers() == Qt.ControlModifier:
+                if event.key() in [Qt.Key_Down, Qt.Key_Up, Qt.Key_PageDown, Qt.Key_PageUp, Qt.Key_Home, Qt.Key_End]:
+                    QApplication.sendEvent(self.ui.resultsTree, event)
+                    return True
+
+        return super().eventFilter(watched, event)
