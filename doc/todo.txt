@@ -1,6 +1,7 @@
 Next: settings
-  * MainWindow: handle settings
-  * Apply new settings
+  * MainWindow: handle GUI settings
+  * Clean up settings/config
+  * Clean up hide/minimize/close/exit
 
 Configuration:
   * Different sets of configuration for production/development on the same
@@ -11,6 +12,7 @@ Configuration:
       * settingspy? settings-manager? simple-settings? config...?
 
 GUI:
+  * Exception in startup -> GUI not shown, but program keeps running
   * Font in text view is very small
   * Scroll to first match in file
   * Handle or disable Cancel while loading? Load in background?

@@ -6,12 +6,14 @@ from PySide2.QtCore import QSettings, Slot, QModelIndex, Qt
 from PySide2.QtGui import QCloseEvent, QColor, QKeySequence
 from PySide2.QtWidgets import QMainWindow, QWidget, QApplication
 
+from noteeds.engine.config import Config
 from noteeds.engine import Repository, Query, Engine
 from noteeds.engine.repository import Config as RepositoryConfig
 from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor, SystrayIcon, GlobalHotkey
 from noteeds.gui.log_table import LogTable
 from noteeds.gui.ui_main_window import Ui_MainWindow
 from noteeds.util.progress import Tracker
+from noteeds.gui.settings import SettingsDialog
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +29,8 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self._settings: Optional[Config] = None
+
         # *** Window
         self._exit_on_close: bool = False
         self._systray_icon = SystrayIcon(self)
@@ -38,7 +42,6 @@ class MainWindow(QMainWindow):
         self._hotkey.pressed.connect(self.toggle_window)
 
         # *** Data
-        self._repositories: list[Repository] = []
         self._engine: Optional[Engine] = None
 
         # *** Models
@@ -62,30 +65,11 @@ class MainWindow(QMainWindow):
     def startup(self):
         QApplication.instance().processEvents()
 
-        # self._hotkey.register(QKeySequence(Qt.ALT + Qt.SHIFT + Qt.Key_W))
-        self._hotkey.register(QKeySequence(Qt.ALT + Qt.META + Qt.Key_Q))
-        # self._hotkey.register(QKeySequence(Qt.ALT + Qt.META + Qt.Key_W))
-        # self._hotkey.register(QKeySequence(Qt.META + Qt.Key_F2))
-
-        self._engine = Engine(self._repositories)
-        tracker = Tracker(DialogProgressMonitor("Loading", self), delta_t=1/25)
-        self._engine.load_all(tracker)
-        self.search(self.ui.textInput.text())
+        self.apply_settings()
 
     ##############
     # Properties #
     ##############
-
-    def set_repositories(self, paths: list[Path]) -> None:
-        self.ui.rootLabel.setText(f"Root: ...")
-
-        if len(paths) == 1:
-            repos = [RepositoryConfig(None, paths[0], None, True)]
-        else:
-            repos = [RepositoryConfig(None, path, QColor.fromHsv(int(index/len(paths)*255), 10, 255), True)
-                     for index, path in enumerate(paths)]
-
-        self._repositories = [Repository(config) for config in repos]
 
     def set_text(self, text: str) -> None:
         self.ui.textInput.setText(text)
@@ -94,7 +78,22 @@ class MainWindow(QMainWindow):
     # Settings #
     ############
 
-    def store_settings(self) -> None:
+    def apply_settings(self) -> None:
+        # self._hotkey.register(QKeySequence(Qt.ALT + Qt.SHIFT + Qt.Key_W))
+        self._hotkey.register(QKeySequence(Qt.ALT + Qt.META + Qt.Key_Q))
+        # self._hotkey.register(QKeySequence(Qt.ALT + Qt.META + Qt.Key_W))
+        # self._hotkey.register(QKeySequence(Qt.META + Qt.Key_F2))
+
+        repos = [Repository(config) for config in self._settings.repositories or [] if config.root and config.enabled]
+        self._engine = Engine(repos)
+        tracker = Tracker(DialogProgressMonitor("Loading", self), delta_t=1/25)
+        self._engine.load_all(tracker)
+        self.search(self.ui.textInput.text())
+
+    def set_settings(self, settings: Config) -> None:
+        self._settings = settings
+
+    def store_window_settings(self) -> None:
         settings = QSettings()
         settings.beginGroup("main_window")
         settings.setValue("geometry", self.saveGeometry())
@@ -103,7 +102,7 @@ class MainWindow(QMainWindow):
         settings.setValue("log_table_header_state", self.ui.logTable.header().saveState())
         settings.endGroup()
 
-    def load_settings(self) -> None:
+    def load_window_settings(self) -> None:
         # TODO errors here should be caught (individually) and logged
         settings = QSettings()
         settings.beginGroup("main_window")
@@ -187,3 +186,13 @@ class MainWindow(QMainWindow):
             self.ui.textView.clear()
         else:
             self.ui.textView.setPlainText(file_entry.contents())
+
+    @Slot()
+    def on_settingsAction_triggered(self):
+        dialog = SettingsDialog(self)
+        dialog.set_config(self._settings)
+        result = dialog.exec_()
+        if result == SettingsDialog.Accepted:
+            self._settings = dialog.get_config()
+            self._settings.store(QSettings())
+            self.apply_settings()

@@ -94,6 +94,7 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="settingsAction"/>
     <addaction name="exitAction"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
@@ -156,6 +157,14 @@
    </property>
    <property name="shortcut">
     <string>Esc</string>
+   </property>
+  </action>
+  <action name="settingsAction">
+   <property name="text">
+    <string>&amp;Settings</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>

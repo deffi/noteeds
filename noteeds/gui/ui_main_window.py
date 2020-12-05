@@ -23,6 +23,8 @@ class Ui_MainWindow(object):
         self.exitAction.setObjectName(u"exitAction")
         self.hideAction = QAction(MainWindow)
         self.hideAction.setObjectName(u"hideAction")
+        self.settingsAction = QAction(MainWindow)
+        self.settingsAction.setObjectName(u"settingsAction")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
@@ -99,6 +101,7 @@ class Ui_MainWindow(object):
 
         self.menubar.addAction(self.fileMenu.menuAction())
         self.menubar.addAction(self.viewMenu.menuAction())
+        self.fileMenu.addAction(self.settingsAction)
         self.fileMenu.addAction(self.exitAction)
         self.viewMenu.addAction(self.hideAction)
 
@@ -119,6 +122,10 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(shortcut)
         self.hideAction.setShortcut(QCoreApplication.translate("MainWindow", u"Esc", None))
+#endif // QT_CONFIG(shortcut)
+        self.settingsAction.setText(QCoreApplication.translate("MainWindow", u"&Settings", None))
+#if QT_CONFIG(shortcut)
+        self.settingsAction.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+S", None))
 #endif // QT_CONFIG(shortcut)
         self.rootLabel.setText(QCoreApplication.translate("MainWindow", u"Root:", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"&Search:", None))

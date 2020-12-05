@@ -13,7 +13,11 @@ class Engine:
         if progress_tracker is None:
             progress_tracker = Tracker(None)
 
-        self._entries = set.union(*(repo.entries() for repo in self._repositories))
+        if self._repositories:
+            all_entries = (repo.entries() for repo in self._repositories)
+            self._entries = set.union(*all_entries)
+        else:
+            self._entries = set()
 
         progress_tracker.start(len(self._entries))
         entry: FileEntry
