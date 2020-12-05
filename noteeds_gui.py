@@ -6,7 +6,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from PySide2.QtCore import QTimer, Qt
+from PySide2.QtCore import QTimer, Qt, QSettings
 from PySide2.QtGui import QIcon, QColor, QKeySequence
 from PySide2.QtWidgets import QApplication
 
@@ -63,20 +63,23 @@ def noteeds_gui(args: Args):
         from noteeds.gui.settings import SettingsDialog
         from noteeds.engine.config import Config, GuiConfig
         from noteeds.engine.repository import Config as RepositoryConfig
-        repos = [RepositoryConfig(
-            Path(repo).stem.capitalize(),
-            Path(repo),
-            QColor.fromHsl(int(255 * index / len(args.repositories)), 255, 223) if index > 0 else None,
-            True) for index, repo in enumerate(args.repositories)]
-        gui_config = GuiConfig(True, True, QKeySequence(Qt.ALT + Qt.SHIFT + Qt.Key_W))
-        config = Config(gui_config, repos)
+        # repos = [RepositoryConfig(
+        #     Path(repo).stem.capitalize(),
+        #     Path(repo),
+        #     QColor.fromHsl(int(255 * index / len(args.repositories)), 255, 223) if index > 0 else None,
+        #     True) for index, repo in enumerate(args.repositories)]
+        # gui_config = GuiConfig(True, True, QKeySequence(Qt.ALT + Qt.SHIFT + Qt.Key_W))
+        # config = Config(gui_config, repos)
+        config = Config.load(QSettings())
         dialog = SettingsDialog(None)
         dialog.set_config(config)
-        dialog.exec_()
+        result=dialog.exec_()
         config = dialog.get_config()
-        print(config)
-        for repo in config.repositories:
-            print(repo)
+        if result == SettingsDialog.Accepted:
+            config.store(QSettings())
+        # print(config)
+        # for repo in config.repositories:
+        #     print(repo)
     else:
         window = MainWindow(None)
         log_emitter.log.connect(window.log_message)

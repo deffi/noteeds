@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
+from PySide2.QtCore import QSettings
 from PySide2.QtGui import QColor
 
 from noteeds.engine import FileEntry
@@ -16,6 +17,24 @@ class Config:
     root: Optional[Path]
     color: Optional[QColor]
     enabled: bool
+
+    def store(self, settings: QSettings):
+        settings.setValue("name", self.name)
+        settings.setValue("root", str(self.root) if self.root else "")
+        settings.setValue("color", self.color)
+        settings.setValue("enabled", self.enabled)
+
+    @classmethod
+    def load(cls, settings: QSettings):
+        name = settings.value("name", None)
+        root = settings.value("root", None)
+        color = QColor(settings.value("color", None))
+        enabled = settings.value("enabled", True, bool)
+
+        if root:
+            root = Path(root)
+
+        return cls(name, root, color, enabled)
 
 
 class Repository:

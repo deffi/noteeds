@@ -66,15 +66,19 @@ class ReposTreeWidget(QTreeWidget):
         item.setText(0, repo.name or "")
         item.setData(1, Qt.DisplayRole, "")
         item.setData(1, Qt.DecorationRole, repo.color)
-        item.setData(2, Qt.EditRole, str(repo.root))
+        item.setData(2, Qt.EditRole, str(repo.root) if repo.root else None)
 
         return item
 
     @staticmethod
     def _repo_from_item(item: QTreeWidgetItem) -> RepoConfig:
+        root = item.text(2)
+        if root:
+            root = Path(root)
+
         return RepoConfig(
             name = item.text(0),
-            root = Path(item.text(2)),
+            root = root,
             color = item.data(1, Qt.DecorationRole),
             enabled = item.data(0, Qt.CheckStateRole) == Qt.Checked,
         )
