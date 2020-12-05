@@ -136,6 +136,8 @@ class ReposTreeWidget(QTreeWidget):
         else:
             self.editItem(item, 0)
 
+        self.resize_columns_to_contents()
+
     def delete_selected_repos(self):
         for item in self.selectedItems():
             if item != self._add_repo_item:
