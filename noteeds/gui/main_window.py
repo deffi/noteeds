@@ -1,11 +1,13 @@
 import logging
 from pathlib import Path
 from typing import Optional
+import subprocess
+from shutil import which
 
 import PySide2
 from PySide2.QtCore import QSettings, Slot, QModelIndex, Qt, QObject, QEvent
 from PySide2.QtGui import QCloseEvent, QColor, QKeySequence, QTextDocument, QFont, QKeyEvent, QTextCursor, QTextCharFormat
-from PySide2.QtWidgets import QMainWindow, QWidget, QApplication
+from PySide2.QtWidgets import QMainWindow, QWidget, QApplication, QMessageBox
 
 from noteeds.engine.config import Config
 from noteeds.engine import Repository, Query, Engine
@@ -213,9 +215,11 @@ class MainWindow(QMainWindow):
 
         if file_entry is None:
             self.ui.textView.clear()
+            self.ui.editAction.setEnabled(False)
         else:
             self.ui.textView.setPlainText(file_entry.contents())
             self.highlight()
+            self.ui.editAction.setEnabled(True)
 
     @Slot()
     def on_settingsAction_triggered(self):
@@ -253,3 +257,32 @@ class MainWindow(QMainWindow):
                     return True
 
         return super().eventFilter(watched, event)
+
+    @Slot()
+    def on_editAction_triggered(self):
+        editor = self._settings.gui.external_editor.strip()
+        if editor:
+            current_index = self.ui.resultsTree.currentIndex()
+            if current_index.isValid():
+                file_entry = self._search_result_model.file_entry(current_index)
+                if file_entry:
+                    args = {
+                        "file": str(file_entry.absolute_path),
+                        "search_term": self.ui.textInput.text(),
+                    }
+
+                    command = editor.split()
+                    # TODO handle KeyError
+                    # TODO if {file} is not specified, append the file name. How can we determine that?
+                    command = [part.format(**args) for part in command]
+                    command_0 = which(command[0])
+                    if command_0:
+                        command[0] = command_0
+                        logger.info("Run external editor: %s", command)
+                        subprocess.Popen(command)
+                    else:
+                        QMessageBox.critical(self, self.windowTitle(), f"Editor not found: {command[0]}")
+                else:
+                    QMessageBox.critical(self, self.windowTitle(), "No file selected")
+        else:
+            QMessageBox.critical(self, self.windowTitle(), "No external editor configured")

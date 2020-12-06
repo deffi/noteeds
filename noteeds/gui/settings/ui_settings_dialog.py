@@ -33,25 +33,37 @@ class Ui_SettingsDialog(object):
 
         self.gridLayout_2.addWidget(self.hotkeyCheckbox, 1, 0, 1, 1)
 
-        self.hotkeyInput = KeySequenceEdit(self.groupBox_2)
-        self.hotkeyInput.setObjectName(u"hotkeyInput")
-
-        self.gridLayout_2.addWidget(self.hotkeyInput, 1, 1, 1, 1)
-
         self.clearHotkeyButton = QPushButton(self.groupBox_2)
         self.clearHotkeyButton.setObjectName(u"clearHotkeyButton")
 
         self.gridLayout_2.addWidget(self.clearHotkeyButton, 1, 2, 1, 1)
+
+        self.hotkeyInput = KeySequenceEdit(self.groupBox_2)
+        self.hotkeyInput.setObjectName(u"hotkeyInput")
+
+        self.gridLayout_2.addWidget(self.hotkeyInput, 1, 1, 1, 1)
 
         self.systrayCheckbox = QCheckBox(self.groupBox_2)
         self.systrayCheckbox.setObjectName(u"systrayCheckbox")
 
         self.gridLayout_2.addWidget(self.systrayCheckbox, 0, 0, 1, 3)
 
+        self.label = QLabel(self.groupBox_2)
+        self.label.setObjectName(u"label")
+
+        self.gridLayout_2.addWidget(self.label, 2, 0, 1, 1)
+
+        self.externalEditorInput = QLineEdit(self.groupBox_2)
+        self.externalEditorInput.setObjectName(u"externalEditorInput")
+
+        self.gridLayout_2.addWidget(self.externalEditorInput, 2, 1, 1, 2)
+
         self.hotkeyInput.raise_()
         self.hotkeyCheckbox.raise_()
         self.systrayCheckbox.raise_()
         self.clearHotkeyButton.raise_()
+        self.label.raise_()
+        self.externalEditorInput.raise_()
 
         self.verticalLayout.addWidget(self.groupBox_2)
 
@@ -79,10 +91,14 @@ class Ui_SettingsDialog(object):
 
         self.verticalLayout.addWidget(self.buttonBox)
 
+#if QT_CONFIG(shortcut)
+        self.label.setBuddy(self.externalEditorInput)
+#endif // QT_CONFIG(shortcut)
         QWidget.setTabOrder(self.systrayCheckbox, self.hotkeyCheckbox)
         QWidget.setTabOrder(self.hotkeyCheckbox, self.hotkeyInput)
         QWidget.setTabOrder(self.hotkeyInput, self.clearHotkeyButton)
-        QWidget.setTabOrder(self.clearHotkeyButton, self.reposTree)
+        QWidget.setTabOrder(self.clearHotkeyButton, self.externalEditorInput)
+        QWidget.setTabOrder(self.externalEditorInput, self.reposTree)
 
         self.retranslateUi(SettingsDialog)
         self.buttonBox.accepted.connect(SettingsDialog.accept)
@@ -103,6 +119,7 @@ class Ui_SettingsDialog(object):
         self.systrayCheckbox.setToolTip(QCoreApplication.translate("SettingsDialog", u"Minimize to system tray when closed, instead of exiting the application", None))
 #endif // QT_CONFIG(tooltip)
         self.systrayCheckbox.setText(QCoreApplication.translate("SettingsDialog", u"Close to &system tray", None))
+        self.label.setText(QCoreApplication.translate("SettingsDialog", u"External &editor:", None))
         self.groupBox.setTitle(QCoreApplication.translate("SettingsDialog", u"&Repositories", None))
         ___qtreewidgetitem = self.reposTree.headerItem()
         ___qtreewidgetitem.setText(2, QCoreApplication.translate("SettingsDialog", u"Path", None));

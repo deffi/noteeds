@@ -98,6 +98,7 @@
      <string>&amp;File</string>
     </property>
     <addaction name="settingsAction"/>
+    <addaction name="editAction"/>
     <addaction name="exitAction"/>
    </widget>
    <widget class="QMenu" name="viewMenu">
@@ -173,6 +174,14 @@
   <action name="testAction">
    <property name="text">
     <string>&amp;Test</string>
+   </property>
+  </action>
+  <action name="editAction">
+   <property name="text">
+    <string>&amp;Edit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
   </action>
  </widget>

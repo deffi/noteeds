@@ -1,7 +1,4 @@
 Next:
-  * [High] Open in external editor
-        Args without search: eg. vim ["{file_name}"]
-        Args with search:    eg. vim ["+/{search_term}", "{file_name}"]
 
 Configuration:
   * [Medium] Clean up settings/config
@@ -14,6 +11,7 @@ Configuration:
 
 GUI:
   * [High] Scroll to first match in file only if a "in contents" result is selected
+  * [High] Open editor with search term only if a "in contents" result is selected
   * [High] Remove root text (we have multiple repositories now)
   * [High] Reload changed files
   * [Medium] Shortcut for selecting files
