@@ -77,7 +77,7 @@ def main():
     parser.add_argument("--config", type=str, default="noteeds")
     parser.add_argument("--load-delay", type=float)
     parser.add_argument("--load-delay-probability", type=float)
-    parser.add_argument("text")
+    parser.add_argument("text", default="", nargs="?")
     args = parser.parse_args(namespace=Args())
     noteeds_gui(args)
 
