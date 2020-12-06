@@ -120,6 +120,10 @@ class Ui_SettingsDialog(object):
 #endif // QT_CONFIG(tooltip)
         self.systrayCheckbox.setText(QCoreApplication.translate("SettingsDialog", u"Close to &system tray", None))
         self.label.setText(QCoreApplication.translate("SettingsDialog", u"External &editor:", None))
+#if QT_CONFIG(tooltip)
+        self.externalEditorInput.setToolTip(QCoreApplication.translate("SettingsDialog", u"<html><head/><body><p>If the command isn't an absolute path, the PATH environment variable will be used.</p><p>Optionally, you can use {file} and/or {search_term}. If you don't use {file}, the file name will be appended.</p><p>Examples:</p><ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">notepad</li><li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">notepad.exe</li><li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">c:\\windows\\system32\\notepad.exe</li><li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">notepad {file}</li><li style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0"
+                        "; text-indent:0px;\">gvim +/{search_term}</li></ul></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.groupBox.setTitle(QCoreApplication.translate("SettingsDialog", u"&Repositories", None))
         ___qtreewidgetitem = self.reposTree.headerItem()
         ___qtreewidgetitem.setText(2, QCoreApplication.translate("SettingsDialog", u"Path", None));
