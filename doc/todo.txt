@@ -8,6 +8,8 @@ Configuration:
       * settingspy? settings-manager? simple-settings? config...?
   * [Medium] Clean up default/none values for color, path
   * [Medium] Exception while saving configuration destroys configuration
+  * [Low]: Action on Escape (ignore/exit/hide-to-systray/minimize);
+           Action on close (ignore/exit/hide-to-systray/minimize)
 
 GUI:
   * [High] Scroll to first match in file only if a "in contents" result is selected
