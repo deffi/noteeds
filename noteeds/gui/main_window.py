@@ -279,8 +279,7 @@ class MainWindow(QMainWindow):
 
                     # If the file was not specified, append it
                     if "file" in formatter.unused:
-                        # TODO add formatter[...] which also does the formatting
-                        command.append(str(formatter.kwargs["file"]))
+                        command.append(formatter.format_field("file"))
 
                     command_0 = which(command[0])
                     if command_0:
