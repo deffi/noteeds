@@ -4,7 +4,7 @@ from typing import Optional
 
 import PySide2
 from PySide2.QtCore import QSettings, Slot, QModelIndex, Qt, QObject, QEvent
-from PySide2.QtGui import QCloseEvent, QColor, QKeySequence, QTextDocument, QFont, QKeyEvent
+from PySide2.QtGui import QCloseEvent, QColor, QKeySequence, QTextDocument, QFont, QKeyEvent, QTextCursor, QTextCharFormat
 from PySide2.QtWidgets import QMainWindow, QWidget, QApplication
 
 from noteeds.engine.config import Config
@@ -47,7 +47,7 @@ class MainWindow(QMainWindow):
         # *** Models
         self._search_result_model = SearchResultModel(self)
         self._log_model = LogTable(self)
-        self._highlighter = Highlighter(self.ui.textView.document())
+        # self._highlighter = Highlighter(self.ui.textView.document())
 
         # *** Menu
         self.ui.exitAction.triggered.connect(QApplication.instance().exit)
@@ -175,12 +175,38 @@ class MainWindow(QMainWindow):
         self._search_result_model.set_result(result)
         self.ui.resultsTree.expandAll()
 
-        if self._highlighter is not None:
-            self._highlighter.set_search_term(text)
+        # if self._highlighter is not None:
+        #     self._highlighter.set_search_term(text)
+        self.highlight()
 
     @Slot(str)
     def on_textInput_textChanged(self, text: str) -> None:
         self.search(text)
+
+    def highlight(self):
+        text_format = QTextCharFormat()
+        text_format.setFontWeight(QFont.Bold)
+        text_format.setForeground(Qt.darkMagenta)
+        text_format.setBackground(Qt.yellow)
+
+        term = self.ui.textInput.text()
+        view = self.ui.textView
+        doc: QTextDocument = view.document()
+
+        cursor = QTextCursor (doc)
+        cursor.movePosition(QTextCursor.Start)
+        cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+        cursor.setCharFormat(QTextCharFormat())
+
+        cursor = QTextCursor (doc)
+        positions = []
+        while not (cursor := doc.find(term, cursor)).isNull():
+            cursor.setCharFormat(text_format)
+            positions.append(cursor)
+        if positions:
+            view.setTextCursor(positions[0])
+            view.ensureCursorVisible()
+            view.setTextCursor(QTextCursor())
 
     # noinspection PyUnusedLocal
     def file_selection_changed(self, index: QModelIndex, previous_index: QModelIndex) -> None:
@@ -192,6 +218,7 @@ class MainWindow(QMainWindow):
             self.ui.textView.clear()
         else:
             self.ui.textView.setPlainText(file_entry.contents())
+            self.highlight()
 
     @Slot()
     def on_settingsAction_triggered(self):

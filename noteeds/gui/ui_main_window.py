@@ -66,6 +66,7 @@ class Ui_MainWindow(object):
         self.textView.setObjectName(u"textView")
         self.textView.setTabChangesFocus(True)
         self.textView.setReadOnly(True)
+        self.textView.setCenterOnScroll(True)
         self.splitter.addWidget(self.textView)
 
         self.gridLayout.addWidget(self.splitter, 2, 0, 1, 1)
