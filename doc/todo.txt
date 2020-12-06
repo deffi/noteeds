@@ -1,70 +1,63 @@
-Next: settings
-  * Clean up settings/config
+Next:
+  * [High] Open in external editor
+        Args without search: eg. vim ["{file_name}"]
+        Args with search:    eg. vim ["+/{search_term}", "{file_name}"]
 
 Configuration:
-  * Alternative to QSettings?
+  * [Medium] Clean up settings/config
+  * [Medium] Alternative to QSettings?
       * CLI should not require Qt
       * appdirs?
       * settingspy? settings-manager? simple-settings? config...?
-  * Exception while saving configuration destroys configuration
-  * Clean up default/none values for color, path
+  * [Medium] Clean up default/none values for color, path
+  * [Medium] Exception while saving configuration destroys configuration
 
 GUI:
-  * Exception in startup -> GUI not shown, but program keeps running
-  * Scroll to first match in file
-  * Handle or disable Cancel while loading? Load in background?
-  * Remove root text (we have multiple repositories now)
-  * Show number of files per category (result set), number of matches per file
-  * Reload changed files
-  * Launch editor (and reload), e. g. VIM:
-        Args without search: ["{file_name}"]
-        Args with search:    ["+/{search_term}", "{file_name}"]
-  * When changing the text, always select
-    * the previous file if it is still there
-    * the first one if not
-  * Speed of QTextEdit OK with large files?
-    QTextEdit: setText and setPlainText takes the same time. QPlainTextEdit has
-    setPlainText only.
-  * Jump to next/previous match
-  * Speed up highlighter?
-  * Some files can take long to load
-    * Progress bar?
-    * Use QtWebKit? Qt web engine?
-  * Qt Markdown example with QWebChannel und QWebEngineView
-    https://doc.qt.io/qt-5.10/qtwebengine-webenginewidgets-markdowneditor-example.html
-  * Show repository names
-  * Add global hotkey to systray icon tooltip
-  * Settings dialog repos tree: activate "Add" entry with space
-  * If registering a hotkey fails, we won't know because an exception is thrown
+  * [High] Scroll to first match in file only if a "in contents" result is selected
+  * [High] Remove root text (we have multiple repositories now)
+  * [High] Reload changed files
+  * [Medium] Shortcut for selecting files
+  * [Medium] Find next/previous: from current position
+  * [Medium] Exception in startup -> GUI not shown, but program keeps running
+  * [Medium] Handle or disable Cancel while loading? Load in background?
+  * [Low] Show number of files per category (result set), number of matches per file
+  * [Low] When changing the text, always select
+      * the previous file if it is still there
+      * the first one if not
+  * [Low] Find in file
+  * [Low] Show repository names in result tree
+  * [Low] Add global hotkey to systray icon tooltip
+  * [Low] Settings dialog repos tree: activate "Add" entry with space
+  * [Medium] If registering a hotkey fails, we won't know because an exception is thrown
     in a different thread.
       * https://pynput.readthedocs.io/en/latest/keyboard.html#global-hotkeys
       * https://github.com/FunkMastaZ/pyhk3 (probably Windows only)
       * https://sourceforge.net/projects/pyhook/ (Windows only)
-  * PathBrowseDelegate: when opening an editor empty, after auto-browsing, the
-    editor should be closed (as it is on manual browsing), but isn't.
-  * ColorDelegate: clear button in item widget, get rid of ColorEditWidget?
-  * SettingsWindow: after canceling path edit, the repos tree loses focus
+  * [Medium] PathBrowseDelegate: when opening an editor empty, after auto-
+    browsing, the editor should be closed (as it is on manual browsing), but
+    isn't.
+  * [Medium] ColorDelegate: clear button in item widget, get rid of ColorEditWidget?
+  * [Medium] SettingsWindow: after canceling path edit, the repos tree loses focus
 
 Engine:
-  * Extended matching
+  * [Medium] Inexact file name matching
+      * Ignore underscores
+  * [Low] Extended matching
       * qaim -> QAbstractItemModel/q_abstract_item_model
       * ä / ae
       * https://github.com/garybernhardt/selecta
       * https://github.com/forrestthewoods/lib_fts/blob/master/docs/fuzzy_match.md
-
-  * In "[[x]]", is x recognized as a single word?
-  * Inexact file name matching
-      * Ignore underscores
-  * Matching multiple criteria (e. g. Python and integer)
+  * [Low] In "[[x]]", is x recognized as a single word?
+  * [Low] Matching multiple criteria (e. g. Python and integer)
       * Search in selected file?
-  * Test: file name with spaces and other fancy characters
-  * We might want to exclude certain patterns from the "file contains"
+  * [Low] Test: file name with spaces and other fancy characters
+  * [Low] We might want to exclude certain patterns from the "file contains"
     categories, e. g. [[foo]] if a file foo also exists.
-  * Match headings (""== xxx ==" or "## xxx")
+  * [Medium] Match headings (""== xxx ==" or "## xxx")
 
 CLI:
-  * Don't load all? All will be loaded when searching
+  * [Low] Don't load all? All will be loaded when searching
 
 CUI:
-  * Investigate CUI frameworks
-  * Tests: Windows, Linux, WSL, Putty, JuiceSSH
+  * [Low] Investigate CUI frameworks
+  * [Low] Tests: Windows, Linux, WSL, Putty, JuiceSSH
