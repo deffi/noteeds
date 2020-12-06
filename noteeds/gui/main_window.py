@@ -9,6 +9,7 @@ from PySide2.QtCore import QSettings, Slot, QModelIndex, Qt, QObject, QEvent
 from PySide2.QtGui import QCloseEvent, QColor, QKeySequence, QTextDocument, QFont, QKeyEvent, QTextCursor, QTextCharFormat
 from PySide2.QtWidgets import QMainWindow, QWidget, QApplication, QMessageBox
 
+from noteeds.util import MultiFormatter
 from noteeds.engine.config import Config
 from noteeds.engine import Repository, Query, Engine
 from noteeds.engine.repository import Config as RepositoryConfig
@@ -266,15 +267,21 @@ class MainWindow(QMainWindow):
             if current_index.isValid():
                 file_entry = self._search_result_model.file_entry(current_index)
                 if file_entry:
-                    args = {
-                        "file": str(file_entry.absolute_path),
-                        "search_term": self.ui.textInput.text(),
-                    }
+                    formatter = MultiFormatter(
+                        file = file_entry.absolute_path,
+                        search_term = self.ui.textInput.text()
+                    )
 
                     command = editor.split()
+
                     # TODO handle KeyError
-                    # TODO if {file} is not specified, append the file name. How can we determine that?
-                    command = [part.format(**args) for part in command]
+                    command = list(map(formatter.format, command))
+
+                    # If the file was not specified, append it
+                    if "file" in formatter.unused:
+                        # TODO add formatter[...] which also does the formatting
+                        command.append(str(formatter.kwargs["file"]))
+
                     command_0 = which(command[0])
                     if command_0:
                         command[0] = command_0
