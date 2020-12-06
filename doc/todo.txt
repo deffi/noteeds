@@ -36,6 +36,7 @@ GUI:
     isn't.
   * [Medium] ColorDelegate: clear button in item widget, get rid of ColorEditWidget?
   * [Medium] SettingsWindow: after canceling path edit, the repos tree loses focus
+  * [Medium] --hide option
 
 Engine:
   * [Medium] Inexact file name matching
