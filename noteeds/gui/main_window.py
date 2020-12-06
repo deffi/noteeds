@@ -10,7 +10,7 @@ from PySide2.QtWidgets import QMainWindow, QWidget, QApplication
 from noteeds.engine.config import Config
 from noteeds.engine import Repository, Query, Engine
 from noteeds.engine.repository import Config as RepositoryConfig
-from noteeds.gui import SearchResultModel, Highlighter, DialogProgressMonitor, SystrayIcon, GlobalHotkey
+from noteeds.gui import SearchResultModel, DialogProgressMonitor, SystrayIcon, GlobalHotkey
 from noteeds.gui.log_table import LogTable
 from noteeds.gui.ui_main_window import Ui_MainWindow
 from noteeds.util.progress import Tracker
@@ -47,7 +47,6 @@ class MainWindow(QMainWindow):
         # *** Models
         self._search_result_model = SearchResultModel(self)
         self._log_model = LogTable(self)
-        # self._highlighter = Highlighter(self.ui.textView.document())
 
         # *** Menu
         self.ui.exitAction.triggered.connect(QApplication.instance().exit)
@@ -175,8 +174,6 @@ class MainWindow(QMainWindow):
         self._search_result_model.set_result(result)
         self.ui.resultsTree.expandAll()
 
-        # if self._highlighter is not None:
-        #     self._highlighter.set_search_term(text)
         self.highlight()
 
     @Slot(str)
