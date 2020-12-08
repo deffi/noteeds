@@ -33,10 +33,10 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.rootLabel = QLabel(self.centralwidget)
-        self.rootLabel.setObjectName(u"rootLabel")
+        self.repositoriesLabel = QLabel(self.centralwidget)
+        self.repositoriesLabel.setObjectName(u"repositoriesLabel")
 
-        self.gridLayout.addWidget(self.rootLabel, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.repositoriesLabel, 0, 0, 1, 1)
 
         self.widget_2 = QWidget(self.centralwidget)
         self.widget_2.setObjectName(u"widget_2")
@@ -138,7 +138,7 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.editAction.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+E", None))
 #endif // QT_CONFIG(shortcut)
-        self.rootLabel.setText(QCoreApplication.translate("MainWindow", u"Root:", None))
+        self.repositoriesLabel.setText(QCoreApplication.translate("MainWindow", u"Repositories:", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"&Search:", None))
         self.fileMenu.setTitle(QCoreApplication.translate("MainWindow", u"&File", None))
         self.viewMenu.setTitle(QCoreApplication.translate("MainWindow", u"&View", None))

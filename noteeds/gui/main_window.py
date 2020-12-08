@@ -10,6 +10,7 @@ from PySide2.QtWidgets import QMainWindow, QWidget, QApplication, QMessageBox
 from noteeds.util import MultiFormatter
 from noteeds.engine.config import Config
 from noteeds.engine import Repository, Query, Engine
+from noteeds.engine.repository import Config as RepoConfig
 from noteeds.gui import SearchResultModel, DialogProgressMonitor, SystrayIcon, GlobalHotkey
 from noteeds.gui.log import LogTable
 from noteeds.gui.ui_main_window import Ui_MainWindow
@@ -90,6 +91,10 @@ class MainWindow(QMainWindow):
             self._hotkey.register(self._settings.gui.global_hotkey)
         else:
             self._hotkey.register(None)
+
+        def format_repo(repo: RepoConfig):
+            return f'<span style="background-color:{repo.color.name()}">{repo.name}</span>'
+        self.ui.repositoriesLabel.setText(f'Repos: {" ".join(format_repo(repo) for repo in self._settings.repositories)}')
 
         repos = [Repository(config) for config in self._settings.repositories or [] if config.root and config.enabled]
         self._engine = Engine(repos)

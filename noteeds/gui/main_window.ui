@@ -19,9 +19,9 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,1">
     <item row="0" column="0">
-     <widget class="QLabel" name="rootLabel">
+     <widget class="QLabel" name="repositoriesLabel">
       <property name="text">
-       <string>Root:</string>
+       <string>Repositories:</string>
       </property>
      </widget>
     </item>
