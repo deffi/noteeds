@@ -1,6 +1,6 @@
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QKeySequenceEdit
-from PySide2.QtGui import QKeyEvent, QKeySequence
+from PySide2.QtGui import QKeyEvent
 
 
 class KeySequenceEdit(QKeySequenceEdit):

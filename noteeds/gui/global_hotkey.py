@@ -4,7 +4,7 @@ from typing import Optional
 from PySide2.QtCore import QObject, Signal
 from PySide2.QtGui import QKeySequence
 
-from system_hotkey import SystemHotkey, SystemRegisterError
+from system_hotkey import SystemHotkey
 
 
 logger = logging.getLogger(__name__)
@@ -21,7 +21,6 @@ class GlobalHotkey(QObject):
     def is_registered(self, key):
         key = set(key)
         return any(set(k) == key for k in self._hk.keybinds)
-
 
     def register(self, key_sequence: Optional[QKeySequence]):
         key = self.convert_key_sequence(key_sequence)

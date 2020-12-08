@@ -77,10 +77,10 @@ class ReposTreeWidget(QTreeWidget):
             root = Path(root)
 
         return RepoConfig(
-            name = item.text(0),
-            root = root,
-            color = item.data(1, Qt.DecorationRole),
-            enabled = item.data(0, Qt.CheckStateRole) == Qt.Checked,
+            name=item.text(0),
+            root=root,
+            color=item.data(1, Qt.DecorationRole),
+            enabled=item.data(0, Qt.CheckStateRole) == Qt.Checked,
         )
 
     @staticmethod

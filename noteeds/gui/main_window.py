@@ -265,8 +265,8 @@ class MainWindow(QMainWindow):
                 file_entry = self._search_result_model.file_entry(current_index)
                 if file_entry:
                     formatter = MultiFormatter(
-                        file = file_entry.absolute_path,
-                        search_term = self.ui.textInput.text()
+                        file=file_entry.absolute_path,
+                        search_term=self.ui.textInput.text()
                     )
 
                     command = editor.split()
