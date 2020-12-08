@@ -4,7 +4,7 @@ from PySide2.QtCore import Qt, QModelIndex, QObject
 from PySide2.QtGui import QFont
 
 from noteeds.engine import SearchResult, FileEntry
-from noteeds.gui import AbstractTreeModel
+from noteeds.util import AbstractTreeModel
 
 
 class SearchResultModel(AbstractTreeModel):

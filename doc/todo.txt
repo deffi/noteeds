@@ -1,4 +1,6 @@
 Next:
+  * Open editor: option to add search term only if it is actually in the file
+  * Open editor with new file (select repo)
 
 Configuration:
   * [Medium] Clean up settings/config
@@ -12,14 +14,17 @@ Configuration:
            Action on close (ignore/exit/hide-to-systray/minimize)
 
 GUI:
+  * [High] Select, copy&paste from text view
   * [High] Scroll to first match in file only if a "in contents" result is selected
   * [High] Open editor with search term only if a "in contents" result is selected
   * [High] Remove root text (we have multiple repositories now)
   * [High] Reload changed files
+  * [Medium] Edit with ctrl+enter
   * [Medium] Shortcut for selecting files
   * [Medium] Find next/previous: from current position
   * [Medium] Exception in startup -> GUI not shown, but program keeps running
   * [Medium] Handle or disable Cancel while loading? Load in background?
+  * [Medium] Edit history
   * [Low] Show number of files per category (result set), number of matches per file
   * [Low] When changing the text, always select
       * the previous file if it is still there

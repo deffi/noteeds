@@ -1,20 +1,17 @@
 import logging
-from pathlib import Path
 from typing import Optional
 import subprocess
 from shutil import which
 
-import PySide2
 from PySide2.QtCore import QSettings, Slot, QModelIndex, Qt, QObject, QEvent
-from PySide2.QtGui import QCloseEvent, QColor, QKeySequence, QTextDocument, QFont, QKeyEvent, QTextCursor, QTextCharFormat
+from PySide2.QtGui import QCloseEvent, QTextDocument, QFont, QKeyEvent, QTextCursor, QTextCharFormat
 from PySide2.QtWidgets import QMainWindow, QWidget, QApplication, QMessageBox
 
 from noteeds.util import MultiFormatter
 from noteeds.engine.config import Config
 from noteeds.engine import Repository, Query, Engine
-from noteeds.engine.repository import Config as RepositoryConfig
 from noteeds.gui import SearchResultModel, DialogProgressMonitor, SystrayIcon, GlobalHotkey
-from noteeds.gui.log_table import LogTable
+from noteeds.gui.log import LogTable
 from noteeds.gui.ui_main_window import Ui_MainWindow
 from noteeds.util.progress import Tracker
 from noteeds.gui.settings import SettingsDialog
