@@ -93,7 +93,10 @@ class MainWindow(QMainWindow):
             self._hotkey.register(None)
 
         def format_repo(repo: RepoConfig):
-            return f'<span style="background-color:{repo.color.name()}">{repo.name}</span>'
+            if repo.color:
+                return f'<span style="background-color:{repo.color.name()}">{repo.name}</span>'
+            else:
+                return repo.name
         self.ui.repositoriesLabel.setText(f'Repos: {" ".join(format_repo(repo) for repo in self._settings.repositories)}')
 
         repos = [Repository(config) for config in self._settings.repositories or [] if config.root and config.enabled]
