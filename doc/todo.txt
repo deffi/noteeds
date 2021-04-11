@@ -1,9 +1,3 @@
-Next: slowness
-  * Highlight only when scrolled into view? Finding still takes some time, but
-    not nearly as bad
-  * Allow interrupting the highlighting
-  * If necessary, highlight from different thread
-
 Then:
   * Open editor: option to add search term only if it is actually in the file
   * Open editor with new file (select repo)

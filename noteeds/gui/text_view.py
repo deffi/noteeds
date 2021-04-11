@@ -1,8 +1,8 @@
 import logging
 from typing import Optional
 
-from PySide2.QtCore import Signal, Qt
-from PySide2.QtGui import QTextDocument, QFont, QKeyEvent, QTextCursor, QTextCharFormat, QGuiApplication
+from PySide2.QtCore import Qt
+from PySide2.QtGui import QFont, QTextCursor, QTextCharFormat
 from PySide2.QtWidgets import QPlainTextEdit, QWidget
 
 logger = logging.getLogger(__name__)
@@ -10,17 +10,15 @@ logger = logging.getLogger(__name__)
 
 # noinspection PyPep8Naming
 class TextView(QPlainTextEdit):
-    progress_maximum = Signal(int)
-    progress_value = Signal(int)
-
     def __init__(self, parent: Optional[QWidget]):
         super().__init__(parent)
 
         self.setTabChangesFocus(True)
-        self.setReadOnly(True)
+        self.setReadOnly(False)
         self.setCenterOnScroll(True)
 
-        self._progress_steps = 1000
+        self.verticalScrollBar().valueChanged.connect(self.highlight_visible)
+
         self._search_term = None
 
         self._text_format = QTextCharFormat()
@@ -33,12 +31,13 @@ class TextView(QPlainTextEdit):
 
     def set_text(self, text: Optional[str]):
         super().setPlainText(text)
-        self.highlight()
+        self.scroll_to_first_location()
+        self.highlight_visible()
 
     def set_search_term(self, search_term: Optional[str]):
         self._search_term = search_term
         self.unhighlight()
-        self.highlight()
+        self.highlight_visible()
 
     def unhighlight(self):
         cursor = QTextCursor (self.document())
@@ -46,27 +45,33 @@ class TextView(QPlainTextEdit):
         cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
         cursor.setCharFormat(QTextCharFormat())
 
-    def highlight(self):
-        document = self.document()
-        document_length = document.characterCount()
-        first_location: Optional[QTextCursor] = None
-
-        self.progress_maximum.emit(self._progress_steps)
-        self.progress_value.emit(0)
-
-        cursor = QTextCursor (document)
-        while not (cursor := document.find(self._search_term, cursor)).isNull():
-            if not first_location:
-                first_location = cursor
-
-            cursor.setCharFormat(self._text_format)
-
-            progress = cursor.selectionStart() / document_length
-            self.progress_value.emit(int(progress * self._progress_steps))
-
-            QGuiApplication.processEvents()
-
-        if first_location:
-            self.setTextCursor(first_location)
+    def scroll_to_first_location(self):
+        cursor = self.document().find(self._search_term)
+        if not cursor.isNull():
+            self.setTextCursor(cursor)
             self.ensureCursorVisible()
             self.setTextCursor(QTextCursor())
+
+    def start_cursor(self):
+        return self.cursorForPosition(self.viewport().rect().topLeft())
+
+    def end_cursor(self):
+        return self.cursorForPosition(self.viewport().rect().bottomRight())
+
+    def highlight_visible(self):
+        # Might not work with RTL text
+        document = self.document()
+        end = self.end_cursor()
+
+        # Highlighting is a little slow for large documents, so we limit
+        # highlighting to the visible range.
+        # We should be searching in the visible range (start to end), but it
+        # seems like we can't do that. So we search as long as we find anything,
+        # and stop when it is beyond the visible range. This means that we might
+        # be searching more text than we need to.
+        cursor = self.start_cursor()
+        while not (cursor := document.find(self._search_term, cursor)).isNull():
+            if cursor.position() > end.position():
+                break
+
+            cursor.setCharFormat(self._text_format)

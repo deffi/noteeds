@@ -49,10 +49,6 @@ class MainWindow(QMainWindow):
         self._search_result_model = SearchResultModel(self)
         self._log_model = LogTable(self)
 
-        # *** Text view
-        self.ui.textView.progress_maximum.connect(self.ui.progressBar.setMaximum)
-        self.ui.textView.progress_value.connect(self.ui.progressBar.setValue)
-
         # *** Menu
         self.ui.exitAction.triggered.connect(QApplication.instance().exit)
         self.ui.viewMenu.addAction(self.ui.dock.toggleViewAction())
