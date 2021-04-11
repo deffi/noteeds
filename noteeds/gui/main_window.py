@@ -4,7 +4,7 @@ import subprocess
 from shutil import which
 
 from PySide2.QtCore import QSettings, Slot, QModelIndex, Qt, QObject, QEvent
-from PySide2.QtGui import QCloseEvent, QTextDocument, QFont, QKeyEvent, QTextCursor, QTextCharFormat
+from PySide2.QtGui import QCloseEvent, QTextDocument, QFont, QKeyEvent, QTextCursor, QTextCharFormat, QGuiApplication
 from PySide2.QtWidgets import QMainWindow, QWidget, QApplication, QMessageBox
 
 from noteeds.util import MultiFormatter
@@ -205,9 +205,13 @@ class MainWindow(QMainWindow):
 
         cursor = QTextCursor (doc)
         positions = []
+        document_length = doc.characterCount()
         while not (cursor := doc.find(term, cursor)).isNull():
+            self.ui.progressBar.setValue(cursor.selectionStart() / document_length * self.ui.progressBar.maximum())
+            QGuiApplication.processEvents()
             cursor.setCharFormat(text_format)
             positions.append(cursor)
+        self.ui.progressBar.setValue(self.ui.progressBar.maximum())
         if positions:
             view.setTextCursor(positions[0])
             view.ensureCursorVisible()

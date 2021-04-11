@@ -71,9 +71,16 @@ class Ui_MainWindow(object):
         self.textView.setCenterOnScroll(True)
         self.splitter.addWidget(self.textView)
 
-        self.gridLayout.addWidget(self.splitter, 2, 0, 1, 1)
+        self.gridLayout.addWidget(self.splitter, 3, 0, 1, 1)
 
-        self.gridLayout.setRowStretch(2, 1)
+        self.progressBar = QProgressBar(self.centralwidget)
+        self.progressBar.setObjectName(u"progressBar")
+        self.progressBar.setMaximum(1000)
+        self.progressBar.setValue(1000)
+
+        self.gridLayout.addWidget(self.progressBar, 2, 0, 1, 1)
+
+        self.gridLayout.setRowStretch(3, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
