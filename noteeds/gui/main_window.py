@@ -138,6 +138,7 @@ class MainWindow(QMainWindow):
     def show_window(self):
         self._systray_icon.hide()
         self.show()
+        # Might need self.activateWindow()
         self.ui.textInput.selectAll()
         self.ui.textInput.setFocus()
 
