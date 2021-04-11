@@ -49,6 +49,10 @@ class MainWindow(QMainWindow):
         self._search_result_model = SearchResultModel(self)
         self._log_model = LogTable(self)
 
+        # *** Text view
+        self.ui.textView.progress_maximum.connect(self.ui.progressBar.setMaximum)
+        self.ui.textView.progress_value.connect(self.ui.progressBar.setValue)
+
         # *** Menu
         self.ui.exitAction.triggered.connect(QApplication.instance().exit)
         self.ui.viewMenu.addAction(self.ui.dock.toggleViewAction())
@@ -182,40 +186,10 @@ class MainWindow(QMainWindow):
         self._search_result_model.set_result(result)
         self.ui.resultsTree.expandAll()
 
-        self.highlight()
-
     @Slot(str)
     def on_textInput_textChanged(self, text: str) -> None:
         self.search(text)
-
-    def highlight(self):
-        text_format = QTextCharFormat()
-        text_format.setFontWeight(QFont.Bold)
-        text_format.setForeground(Qt.darkMagenta)
-        text_format.setBackground(Qt.yellow)
-
-        term = self.ui.textInput.text()
-        view = self.ui.textView
-        doc: QTextDocument = view.document()
-
-        cursor = QTextCursor (doc)
-        cursor.movePosition(QTextCursor.Start)
-        cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
-        cursor.setCharFormat(QTextCharFormat())
-
-        cursor = QTextCursor (doc)
-        positions = []
-        document_length = doc.characterCount()
-        while not (cursor := doc.find(term, cursor)).isNull():
-            self.ui.progressBar.setValue(cursor.selectionStart() / document_length * self.ui.progressBar.maximum())
-            QGuiApplication.processEvents()
-            cursor.setCharFormat(text_format)
-            positions.append(cursor)
-        self.ui.progressBar.setValue(self.ui.progressBar.maximum())
-        if positions:
-            view.setTextCursor(positions[0])
-            view.ensureCursorVisible()
-            view.setTextCursor(QTextCursor())
+        self.ui.textView.set_search_term(text)
 
     # noinspection PyUnusedLocal
     def file_selection_changed(self, index: QModelIndex, previous_index: QModelIndex) -> None:
@@ -227,8 +201,7 @@ class MainWindow(QMainWindow):
             self.ui.textView.clear()
             self.ui.editAction.setEnabled(False)
         else:
-            self.ui.textView.setPlainText(file_entry.contents())
-            self.highlight()
+            self.ui.textView.set_text(file_entry.contents())
             self.ui.editAction.setEnabled(True)
 
     @Slot()

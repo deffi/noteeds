@@ -12,6 +12,8 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
+from noteeds.gui.text_view import TextView
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -64,11 +66,8 @@ class Ui_MainWindow(object):
         self.resultsTree.setUniformRowHeights(True)
         self.splitter.addWidget(self.resultsTree)
         self.resultsTree.header().setVisible(False)
-        self.textView = QPlainTextEdit(self.splitter)
+        self.textView = TextView(self.splitter)
         self.textView.setObjectName(u"textView")
-        self.textView.setTabChangesFocus(True)
-        self.textView.setReadOnly(True)
-        self.textView.setCenterOnScroll(True)
         self.splitter.addWidget(self.textView)
 
         self.gridLayout.addWidget(self.splitter, 3, 0, 1, 1)

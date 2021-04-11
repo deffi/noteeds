@@ -69,17 +69,7 @@
         <bool>false</bool>
        </attribute>
       </widget>
-      <widget class="QPlainTextEdit" name="textView">
-       <property name="tabChangesFocus">
-        <bool>true</bool>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-       <property name="centerOnScroll">
-        <bool>true</bool>
-       </property>
-      </widget>
+      <widget class="TextView" name="textView"/>
      </widget>
     </item>
     <item row="2" column="0">
@@ -195,6 +185,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TextView</class>
+   <extends>QPlainTextEdit</extends>
+   <header>noteeds.gui.text_view</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>resultsTree</tabstop>
   <tabstop>textView</tabstop>
