@@ -264,6 +264,7 @@ class MainWindow(QMainWindow):
                         command[0] = command_0
                         logger.info("Run external editor: %s", command)
                         subprocess.Popen(command)
+                        self.hide_window()
                     else:
                         QMessageBox.critical(self, self.windowTitle(), f"Editor not found: {command[0]}")
                 else:
