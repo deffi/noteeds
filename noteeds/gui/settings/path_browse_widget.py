@@ -2,8 +2,8 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-from PySide2.QtCore import Signal, Qt
-from PySide2.QtWidgets import QWidget, QFileDialog, QStyleOptionButton, QStyle
+from PySide6.QtCore import Signal, Qt
+from PySide6.QtWidgets import QWidget, QFileDialog, QStyleOptionButton, QStyle
 
 from noteeds.gui.settings.ui_path_browse_widget import Ui_PathBrowseWidget
 

@@ -3,9 +3,9 @@ from typing import Optional
 import subprocess
 from shutil import which
 
-from PySide2.QtCore import QSettings, Slot, QModelIndex, Qt, QObject, QEvent
-from PySide2.QtGui import QCloseEvent, QTextDocument, QFont, QKeyEvent, QTextCursor, QTextCharFormat, QGuiApplication
-from PySide2.QtWidgets import QMainWindow, QWidget, QApplication, QMessageBox
+from PySide6.QtCore import QSettings, Slot, QModelIndex, Qt, QObject, QEvent
+from PySide6.QtGui import QCloseEvent, QTextDocument, QFont, QKeyEvent, QTextCursor, QTextCharFormat, QGuiApplication
+from PySide6.QtWidgets import QMainWindow, QWidget, QApplication, QMessageBox
 
 from noteeds.util import MultiFormatter
 from noteeds.engine.config import Config

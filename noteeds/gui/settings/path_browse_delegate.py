@@ -1,8 +1,8 @@
 import logging
 
-import PySide2
-from PySide2.QtCore import QModelIndex, Qt, QAbstractItemModel, QTimer
-from PySide2.QtWidgets import QStyledItemDelegate, QWidget, QStyleOptionViewItem
+import PySide6
+from PySide6.QtCore import QModelIndex, Qt, QAbstractItemModel, QTimer
+from PySide6.QtWidgets import QStyledItemDelegate, QWidget, QStyleOptionViewItem
 
 from noteeds.gui.settings import PathBrowseWidget
 from noteeds.util.geometry import adjust_size
@@ -39,7 +39,7 @@ class PathBrowseDelegate(QStyledItemDelegate):
 
         editor.setGeometry(geometry)
 
-    def setEditorData(self, editor: QWidget, index: PySide2.QtCore.QModelIndex):
+    def setEditorData(self, editor: QWidget, index: PySide6.QtCore.QModelIndex):
         editor: PathBrowseWidget
         path = index.data(Qt.EditRole)
         editor.set_path(path)

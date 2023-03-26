@@ -1,6 +1,6 @@
 from typing import Optional
 
-from PySide2.QtWidgets import QProgressDialog, QWidget, QApplication
+from PySide6.QtWidgets import QProgressDialog, QWidget, QApplication
 
 from noteeds.util.progress import Monitor, CancelException
 

@@ -1,7 +1,7 @@
 from typing import Optional, Any
 
-from PySide2.QtCore import Qt, QModelIndex, QObject
-from PySide2.QtGui import QFont
+from PySide6.QtCore import Qt, QModelIndex, QObject
+from PySide6.QtGui import QFont
 
 from noteeds.engine import SearchResult, FileEntry
 from noteeds.util import AbstractTreeModel
@@ -88,7 +88,7 @@ class SearchResultModel(AbstractTreeModel):
             if len(location) == 1:
                 return self._list_description_font
 
-        elif role == Qt.BackgroundColorRole:
+        elif role == Qt.BackgroundRole:
             if len(location) == 2:
                 return self._lists[location[0]][location[1]].repository.config.color
 

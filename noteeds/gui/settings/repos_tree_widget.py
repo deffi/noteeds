@@ -2,12 +2,12 @@ from pathlib import Path
 from typing import Optional, List
 import random
 
-from PySide2.QtGui import QKeyEvent
-from PySide2.QtWidgets import QTreeWidget, QFileDialog
-from PySide2.QtGui import QDragMoveEvent
-from PySide2.QtCore import Qt
-from PySide2.QtGui import QColor, QDropEvent
-from PySide2.QtWidgets import QWidget, QTreeWidgetItem, QAbstractItemView
+from PySide6.QtGui import QKeyEvent
+from PySide6.QtWidgets import QTreeWidget, QFileDialog
+from PySide6.QtGui import QDragMoveEvent
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QColor, QDropEvent
+from PySide6.QtWidgets import QWidget, QTreeWidgetItem, QAbstractItemView
 
 from noteeds.engine.repository import Config as RepoConfig
 from noteeds.gui.settings import ColorDelegate, PathBrowseDelegate
@@ -107,7 +107,7 @@ class ReposTreeWidget(QTreeWidget):
                       & ~Qt.ItemIsDragEnabled & ~Qt.ItemIsDropEnabled )
 
         item.setData(0, Qt.DisplayRole, "Add...")
-        item.setData(0, Qt.TextColorRole, QColor (127, 127, 127))
+        item.setData(0, Qt.ForegroundRole, QColor (127, 127, 127))
 
         return item
 

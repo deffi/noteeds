@@ -1,10 +1,10 @@
 import logging
 from typing import Optional
 
-from PySide2.QtCore import QTimer
-from PySide2.QtCore import Signal
-from PySide2.QtGui import QColor, QPalette
-from PySide2.QtWidgets import QWidget, QColorDialog
+from PySide6.QtCore import QTimer
+from PySide6.QtCore import Signal
+from PySide6.QtGui import QColor, QPalette
+from PySide6.QtWidgets import QWidget, QColorDialog
 
 from noteeds.gui.settings.ui_color_widget import Ui_ColorWidget
 

@@ -1,10 +1,10 @@
 import logging
 
-import PySide2
-from PySide2.QtCore import QModelIndex, Qt, QAbstractItemModel
-from PySide2.QtGui import QColor
-from PySide2.QtGui import QPixmap, QIcon, QPainter
-from PySide2.QtWidgets import QStyledItemDelegate, QWidget, QStyleOptionViewItem, QStyle
+import PySide6
+from PySide6.QtCore import QModelIndex, Qt, QAbstractItemModel
+from PySide6.QtGui import QColor
+from PySide6.QtGui import QPixmap, QIcon, QPainter
+from PySide6.QtWidgets import QStyledItemDelegate, QWidget, QStyleOptionViewItem, QStyle
 
 from noteeds.gui.settings import ColorEditWidget
 from noteeds.util.geometry import adjust_size
@@ -76,7 +76,7 @@ class ColorDelegate(QStyledItemDelegate):
 
         editor.setGeometry(geometry)
 
-    def setEditorData(self, editor: QWidget, index: PySide2.QtCore.QModelIndex):
+    def setEditorData(self, editor: QWidget, index: PySide6.QtCore.QModelIndex):
         editor: ColorEditWidget
         color = index.data(Qt.DecorationRole)
         editor.set_color(color)

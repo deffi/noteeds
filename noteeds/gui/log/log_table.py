@@ -3,7 +3,7 @@ import time
 import traceback
 from typing import Any, List, Optional
 
-from PySide2.QtCore import QAbstractTableModel, QModelIndex, Qt, QObject
+from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt, QObject
 
 
 class LogTable(QAbstractTableModel):

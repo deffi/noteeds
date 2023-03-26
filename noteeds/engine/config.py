@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from PySide2.QtCore import QSettings
-from PySide2.QtGui import QKeySequence
+from PySide6.QtCore import QSettings
+from PySide6.QtGui import QKeySequence
 
 from noteeds.engine.repository import Config as RepositoryConfig
 

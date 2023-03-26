@@ -1,6 +1,6 @@
 from typing import Any
 
-from PySide2.QtCore import QAbstractItemModel, QModelIndex, Qt
+from PySide6.QtCore import QAbstractItemModel, QModelIndex, Qt
 
 
 class AbstractTreeModel(QAbstractItemModel):

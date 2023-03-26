@@ -1,7 +1,7 @@
 import logging
 from typing import Optional
 
-from PySide2.QtWidgets import QDialog, QWidget
+from PySide6.QtWidgets import QDialog, QWidget
 
 from noteeds.engine.config import Config, GuiConfig
 from noteeds.gui.settings.ui_settings_dialog import Ui_SettingsDialog

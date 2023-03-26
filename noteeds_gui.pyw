@@ -6,9 +6,9 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from PySide2.QtCore import QTimer, Qt, QSettings
-from PySide2.QtGui import QIcon, QColor, QKeySequence
-from PySide2.QtWidgets import QApplication
+from PySide6.QtCore import QTimer, Qt, QSettings
+from PySide6.QtGui import QIcon, QColor, QKeySequence
+from PySide6.QtWidgets import QApplication
 
 from noteeds.engine.config import Config
 from noteeds.engine import FileEntry
@@ -67,7 +67,7 @@ def noteeds_gui(args: Args):
     window.set_text(text)
     window.show()
     QTimer.singleShot(0, window.startup)
-    result = app.exec_()
+    result = app.exec()
     window.store_window_settings()
     sys.exit(result)
 

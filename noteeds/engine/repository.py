@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
-from PySide2.QtCore import QSettings
-from PySide2.QtGui import QColor
+from PySide6.QtCore import QSettings
+from PySide6.QtGui import QColor
 
 from noteeds.engine import FileEntry
 

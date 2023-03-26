@@ -1,9 +1,9 @@
 import logging
 from typing import Optional
 
-from PySide2.QtCore import Qt
-from PySide2.QtGui import QFont, QTextCursor, QTextCharFormat
-from PySide2.QtWidgets import QPlainTextEdit, QWidget
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QFont, QTextCursor, QTextCharFormat
+from PySide6.QtWidgets import QPlainTextEdit, QWidget
 
 logger = logging.getLogger(__name__)
 

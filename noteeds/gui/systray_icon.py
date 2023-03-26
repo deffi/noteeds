@@ -1,8 +1,8 @@
 import logging
 
-from PySide2.QtCore import Signal, QObject
-from PySide2.QtGui import QIcon, QFont
-from PySide2.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QAction, QWidget
+from PySide6.QtCore import Signal, QObject
+from PySide6.QtGui import QIcon, QFont, QAction
+from PySide6.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QWidget
 
 logger = logging.getLogger(__name__)
 

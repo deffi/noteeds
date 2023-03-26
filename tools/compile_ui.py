@@ -1,9 +1,9 @@
 from pathlib import Path
 from subprocess import run
 
-import PySide2
+import PySide6
 
-uic = Path(PySide2.__file__).parent / "uic"
+uic = Path(PySide6.__file__).parent / "uic"
 
 
 def auto_compile(base_path: Path = Path.cwd()):

@@ -1,4 +1,4 @@
-from PySide2.QtCore import QRect, Qt
+from PySide6.QtCore import QRect, Qt
 
 
 def adjust_size(rect: QRect, dw: int, dh: int, layout_direction: Qt.LayoutDirection) -> None:
