@@ -45,6 +45,8 @@ GUI:
   * [Medium] ColorDelegate: clear button in item widget, get rid of ColorEditWidget?
   * [Medium] SettingsWindow: after canceling path edit, the repos tree loses focus
   * [Medium] --hide option
+  * [Low] Better solution for global hotkey
+  * [Medium] Configuration: whether to hide window after opening editor
 
 Engine:
   * [Medium] Inexact file name matching
