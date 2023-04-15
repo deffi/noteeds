@@ -1,9 +1,40 @@
-Then:
-  * Reload repos
+Project layout with src/tests
+Add copyright notice
+Modern annotations
+
+Options without GUI config (for now)
+
+GUI:
+  * Option: Start minimized/systray
+  * Option: Confirm exit
+  * Icon/name in task manager
+  * Action on Escape (ignore/exit/hide-to-systray/minimize);
+    Action on close (ignore/exit/hide-to-systray/minimize)
+
+Editing:
+  * Open editor with/without search, at line
   * Open editor: option to add search term only if it is actually in the file
   * Open editor with new file (select repo)
+  * Configuration: Hide on edit
 
-Configuration:
+Repo:
+  * Add tools (TortoiseGitProc.exe /command:sync)
+  * Manual re-load all files, changed files
+  * Exclude images
+  * Deal with unavailable directories (e. g. not mounted)
+  * Repo not accessible: warn, but continue
+
+Preview:
+  * Show outline view
+  * Scroll to next/previous search result
+
+Log:
+  * Colored log table
+
+CLI
+
+
+GUI Configuration:
   * [Medium] Clean up settings/config
   * [Medium] Alternative to QSettings?
       * CLI should not require Qt
@@ -11,8 +42,15 @@ Configuration:
       * settingspy? settings-manager? simple-settings? config...?
   * [Medium] Clean up default/none values for color, path
   * [Medium] Exception while saving configuration destroys configuration
-  * [Low]: Action on Escape (ignore/exit/hide-to-systray/minimize);
-           Action on close (ignore/exit/hide-to-systray/minimize)
+  * More systematic options
+  * ColorWidget keyboard:
+      * Use tab to change focus?
+      * Use Space and Backspace to set and reset?
+  * PathBrowseWidget keyboard:
+      * When editor activated (F2, type, click), set focus
+      * We can already tab to browse button
+  * https://doc.qt.io/qt-5/qtwidgets-tools-settingseditor-example.html
+  * Qt Designer
 
 GUI:
   * [High] Select, copy&paste from text view
